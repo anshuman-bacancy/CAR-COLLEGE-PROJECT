@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords"
+        content="wrappixel, admin dashboard, html css dashboard, web dashboard, bootstrap 4 admin, bootstrap 4, css3 dashboard, bootstrap 4 dashboard, Ample lite admin bootstrap 4 dashboard, frontend, responsive bootstrap 4 admin template, Ample admin lite dashboard bootstrap 4 dashboard template">
+    <meta name="description"
+        content="Ample Admin Lite is powerful and clean admin dashboard template, inpired from Bootstrap Framework">
+    <meta name="robots" content="noindex,nofollow">
+    <title>ADMIN</title>
+    <link rel="canonical" href="https://www.wrappixel.com/templates/ample-admin-lite/" />
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/plugins/images/favicon.png">
+    <!-- Custom CSS -->
+    <link href="/static/css/style.min.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+    <style>
+        td {
+            color: black;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- ============================================================== -->
+    <!-- Preloader - style you can find in spinners.css -->
+    <!-- ============================================================== -->
+    <div class="preloader">
+        <div class="lds-ripple">
+            <div class="lds-pos"></div>
+            <div class="lds-pos"></div>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- Main wrapper - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+    <div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
+        data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
+        <!-- ============================================================== -->
+        <!-- Topbar header - style you can find in pages.scss -->
+        <!-- ============================================================== -->
+        <header class="topbar" data-navbarbg="skin5">
+            <nav class="navbar top-navbar navbar-expand-md navbar-dark">
+                <div class="navbar-header" data-logobg="skin6">
+                    <!-- ============================================================== -->
+                    <!-- Logo -->
+                    <!-- ============================================================== -->
+                    <a class="navbar-brand" href="/admin/vehicle">
+                        <!-- Logo icon -->
+                        <b class="logo-icon">
+                            <!-- Dark Logo icon -->
+                            <img src="/static/plugins/images/logo-icon.png" alt="homepage" />
+                        </b>
+                        <!--End Logo icon -->
+                        <!-- Logo text -->
+                        <span class="logo-text">
+                            <!-- dark Logo text -->
+                            <img src="/static/plugins/images/logo-text.png" alt="homepage" />
+                        </span>
+                    </a>
+                    <!-- ============================================================== -->
+                    <!-- End Logo -->
+                    <!-- ============================================================== -->
+                    <!-- ============================================================== -->
+                    <!-- toggle and nav items -->
+                    <!-- ============================================================== -->
+                    <a class="nav-toggler waves-effect waves-light text-dark d-block d-md-none"
+                        href="javascript:void(0)"><i class="ti-menu ti-close"></i></a>
+                </div>
+                <!-- ============================================================== -->
+                <!-- End Logo -->
+                <!-- ============================================================== -->
+                <div class="navbar-collapse collapse" id="navbarSupportedContent" data-navbarbg="skin5">
+                    <ul class="navbar-nav d-none d-md-block d-lg-none">
+                        <li class="nav-item">
+                            <a class="nav-toggler nav-link waves-effect waves-light text-white"
+                                href="javascript:void(0)"><i class="ti-menu ti-close"></i></a>
+                        </li>
+                    </ul>
+                    <!-- ============================================================== -->
+                    <!-- Right side toggle and nav items -->
+                    <!-- ============================================================== -->
+                    <ul class="navbar-nav ml-auto d-flex align-items-center">
+
+                        <!-- ============================================================== -->
+                        <!-- Search -->
+                        <!-- ============================================================== -->
+
+                        <!-- ============================================================== -->
+                        <!-- User profile and search -->
+                        <!-- ============================================================== -->
+                        <li>
+                            <a class="profile-pic" href="/admin/logout">
+                                <img src="/static/plugins/images/users/varun.jpg" alt="user-img" width="36"
+                                    class="img-circle"><span class="text-white font-medium">Logout</span></a>
+                        </li>
+                        <!-- ============================================================== -->
+                        <!-- User profile and search -->
+                        <!-- ============================================================== -->
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <!-- ============================================================== -->
+        <!-- End Topbar header -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        <aside class="left-sidebar" data-sidebarbg="skin6">
+            <!-- Sidebar scroll-->
+            <div class="scroll-sidebar">
+                <!-- Sidebar navigation-->
+                <nav class="sidebar-nav">
+                    <ul id="sidebarnav">
+                        <!-- User Profile-->
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link active"
+                                href="/admin/vehicle" aria-expanded="false"><i class="fas fa-clock fa-fw"
+                                    aria-hidden="true"></i><span class="hide-menu">Vehicles</span></a></li>
+                    </ul>
+
+                </nav>
+                <!-- End Sidebar navigation -->
+            </div>
+            <!-- End Sidebar scroll-->
+        </aside>
+        <!-- ============================================================== -->
+        <!-- End Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Page wrapper  -->
+        <!-- ============================================================== -->
+        <div class="page-wrapper" style="min-height: 250px;">
+            <!-- ============================================================== -->
+            <!-- Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <div class="page-breadcrumb bg-white">
+                <div class="row align-items-center">
+                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                        <h4 class="page-title text-uppercase font-medium font-14">Vehicles</h4>
+                    </div>
+
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- Container fluid  -->
+            <!-- ============================================================== -->
+            <div class="container-fluid">
+                <!-- ============================================================== -->
+                <!-- Start Page Content -->
+                <!-- ============================================================== -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="white-box">
+                            <a href="/admin/vehicle" class="btn btn-primary text-white">Back</a>
+                            <br><br><br>
+                            <h1>Create Vehicle</h1>
+                            <br>
+                            <form id="viewform" action="/admin/vehicle" method="POST" enctype="multipart/form-data">
+
+                                <div class="form-group">
+                                    <label style="color:black">VIN number</label>
+                                    <input type="text" autocomplete="off" id="vin"
+                                        style="border:1px solid black;color:black" class="form-control" name="vin"
+                                        placeholder="Please Enter vin number">
+                                </div>
+                                <div class="form-group">
+                                    <label style="color:black">Year</label>
+                                    <input type="text" autocomplete="off" id="year"
+                                        style="border:1px solid black;color:black" class="form-control" name="year"
+                                        placeholder="Please Enter year">
+                                </div>
+                                <div class="form-group">
+                                    <label style="color:black">Model</label>
+                                    <input type="text" autocomplete="off" id="mode"
+                                        style="border:1px solid black;color:black" class="form-control" name="model"
+                                        placeholder="Please Enter model">
+                                </div>
+
+                                <div class="form-group">
+                                    <label style="color:black">Title Number</label>
+                                    <input type="text" autocomplete="off" id="title"
+                                        style="border:1px solid black;color:black" class="form-control" name="title"
+                                        placeholder="Please Enter title number">
+                                </div>
+
+                                <div class="form-group">
+                                    <label style="color:black">Price</label>
+                                    <input type="text" autocomplete="off" id="price"
+                                        style="border:1px solid black;color:black" class="form-control" name="price"
+                                        placeholder="Please Enter price">
+                                </div>
+
+                                <label for="grade" style="color: black;">
+                                    <h5>Fule Type:</h5>
+                                </label>
+
+                                <select name="fueltype" style="color: black;border:1px solid black" class="form-control"
+                                    required id="fueltype">
+                                    <option style="padding:10px;padding-left:20px;padding-right:20px" selected
+                                        class="form-control" value="gas">Gas</option>
+                                    <option style="padding:10px;padding-left:20px;padding-right:20px"
+                                        class="form-control" value="diesel">Diesel</option>
+                                </select>
+                                <br>
+                                <div class="form-group">
+                                    <label style="color:black">Mileage</label>
+                                    <input type="text" autocomplete="off" id="mileage"
+                                        style="border:1px solid black;color:black" class="form-control" name="mileage"
+                                        placeholder="Please Enter mileage">
+                                </div>
+
+                                <div class="form-group">
+                                    <label style="color:black">Stock</label>
+                                    <input type="text" autocomplete="off" id="stock"
+                                        style="border:1px solid black;color:black" class="form-control" name="stock"
+                                        placeholder="Please Enter stock">
+                                </div>
+
+                                <div class="form-group">
+                                    <label style="color:black">Upload Vehicle Image</label>
+                                    <input type="file" autocomplete="off" id="image"
+                                        style="border:1px solid black;color:black" class="form-control" name="image"
+                                        >
+                                </div>
+
+                                <input type="submit" value="save" class="btn btn-info">
+                            </form>
+
+
+
+                        </div>
+                    </div>
+                </div>
+                <!-- ============================================================== -->
+                <!-- End PAge Content -->
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
+                <!-- Right sidebar -->
+                <!-- ============================================================== -->
+                <!-- .right-sidebar -->
+                <!-- ============================================================== -->
+                <!-- End Right sidebar -->
+                <!-- ============================================================== -->
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Container fluid  -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- footer -->
+            <!-- ============================================================== -->
+
+            <!-- ============================================================== -->
+            <!-- End footer -->
+            <!-- ============================================================== -->
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Page wrapper  -->
+        <!-- ============================================================== -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Wrapper -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- All Jquery -->
+    <!-- ============================================================== -->
+    <script src="/static/plugins/bower_components/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap tether Core JavaScript -->
+    <script src="/static/plugins/bower_components/popper.js/dist/umd/popper.min.js"></script>
+    <script src="/static/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/static/js/app-style-switcher.js"></script>
+    <!--Wave Effects -->
+    <script src="/static/js/waves.js"></script>
+    <!--Menu sidebar -->
+    <script src="/static/js/sidebarmenu.js"></script>
+    <!--Custom JavaScript -->
+    <script src="/static/js/custom.js"></script>
+</body>
+
+</html>
