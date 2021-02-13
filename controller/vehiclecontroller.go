@@ -28,8 +28,8 @@ var vehiclesave bool
 var deletevehicle bool
 var updatevehicle bool
 
-//SalespersonIndexpageProcess is..
-func SalespersonIndexpageProcess(w http.ResponseWriter, r *http.Request) {
+//AdminIndexpageProcess is..
+func AdminIndexpageProcess(w http.ResponseWriter, r *http.Request) {
 	var message string
 	var hasmessge bool
 	if vehiclesave {
@@ -50,7 +50,7 @@ func SalespersonIndexpageProcess(w http.ResponseWriter, r *http.Request) {
 		message = "Vehicle updated successfully"
 	}
 	vehicles := service.GetAllVehicle()
-	path := build.Default.GOPATH + "/src/project/template/salesperson/*"
+	path := build.Default.GOPATH + "/src/project/template/admin/*"
 	tpl := template.Must(template.New("").Funcs(fm).ParseGlob(path))
 	tpl.ExecuteTemplate(w, "index.html", struct {
 		HasMessage bool
@@ -61,7 +61,7 @@ func SalespersonIndexpageProcess(w http.ResponseWriter, r *http.Request) {
 
 //NotFound is...
 func NotFound(w http.ResponseWriter, r *http.Request) {
-	path := build.Default.GOPATH + "/src/project/template/salesperson/*"
+	path := build.Default.GOPATH + "/src/project/template/admin/*"
 	tpl := template.Must(template.New("").Funcs(fm).ParseGlob(path))
 	tpl.ExecuteTemplate(w, "404.html", nil)
 }
@@ -75,7 +75,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		message = "Username or Password is wrong"
 		chekerror = false
 	}
-	path := build.Default.GOPATH + "/src/project/template/salesperson/*"
+	path := build.Default.GOPATH + "/src/project/template/admin/*"
 	tpl := template.Must(template.New("").Funcs(fm).ParseGlob(path))
 	tpl.ExecuteTemplate(w, "login.html", struct {
 		HasMessage bool
@@ -114,7 +114,7 @@ func Logout(w http.ResponseWriter, r *http.Request) {
 
 //CreateVehicleform is....
 func CreateVehicleform(w http.ResponseWriter, r *http.Request) {
-	path := build.Default.GOPATH + "/src/project/template/salesperson/*"
+	path := build.Default.GOPATH + "/src/project/template/admin/*"
 	tpl := template.Must(template.New("").Funcs(fm).ParseGlob(path))
 	tpl.ExecuteTemplate(w, "createvehicle.html", nil)
 }
@@ -135,7 +135,7 @@ func Authentication(handler http.HandlerFunc) http.HandlerFunc {
 
 //ServerError is...
 func ServerError(w http.ResponseWriter, r *http.Request) {
-	path := build.Default.GOPATH + "/src/project/template/salesperson/*"
+	path := build.Default.GOPATH + "/src/project/template/admin/*"
 	tpl := template.Must(template.New("").Funcs(fm).ParseGlob(path))
 	tpl.ExecuteTemplate(w, "error.html", nil)
 }
@@ -154,7 +154,7 @@ func SaveVehicle(w http.ResponseWriter, r *http.Request) {
 //GetoneVehicleforview is...
 func GetoneVehicleforview(w http.ResponseWriter, r *http.Request) {
 	vehicle := service.GetOneVehicle(r)
-	path := build.Default.GOPATH + "/src/project/template/salesperson/*"
+	path := build.Default.GOPATH + "/src/project/template/admin/*"
 	tpl := template.Must(template.New("").Funcs(fm).ParseGlob(path))
 	tpl.ExecuteTemplate(w, "viewvehicle.html", vehicle)
 }
@@ -164,7 +164,7 @@ func GetoneVehicleforview(w http.ResponseWriter, r *http.Request) {
 //GetoneVehicleforedit is..
 func GetoneVehicleforedit(w http.ResponseWriter, r *http.Request) {
 	vehicle := service.GetOneVehicle(r)
-	path := build.Default.GOPATH + "/src/project/template/salesperson/*"
+	path := build.Default.GOPATH + "/src/project/template/admin/*"
 	tpl := template.Must(template.New("").Funcs(fm).ParseGlob(path))
 	tpl.ExecuteTemplate(w, "editvehicle.html", vehicle)
 }

@@ -198,7 +198,7 @@
                                             <td>{{.ID}}</td>
                                             <td>{{.Vin}}</td>
                                             <td>{{.ModelName}}</td>
-                                            <td><img src="data:image/jpeg;base64,{{.Image}}" height="100px" width=100px" /></td>
+                                            <td><a href="/admin/vehicle/view/{{.ID}}"><img src="data:image/jpeg;base64,{{.Image}}" height="100px" width=100px" /></a></td>
                                             <td><a href="/admin/vehicle/view/{{.ID}}" class="btn btn-info">View</a></td>
                                             <td><a href="/admin/vehicle/{{.ID}}" class="btn btn-primary">Edit</a></td>
                                             <td><button type="button" id="{{ .ID }}" class="deletevehicle btn btn-danger"><i style="font-size:24px" class="fa">&#xf014;</i><strong> Delete</strong></button></td>

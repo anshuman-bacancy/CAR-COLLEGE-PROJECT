@@ -17,7 +17,8 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/static/plugins/images/favicon.png">
     <!-- Custom CSS -->
     <link href="/static/css/style.min.css" rel="stylesheet">
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -28,6 +29,12 @@
         td {
             color: black;
         }
+        .error{
+                    color:red;
+                    margin-top:5px;
+                    font-size:17px;
+                    font-weight:bold;
+                }
     </style>
 </head>
 
@@ -170,7 +177,7 @@
                             <br><br><br>
                             <h1>Create Vehicle</h1>
                             <br>
-                            <form id="viewform" action="/admin/vehicle" method="POST" enctype="multipart/form-data">
+                            <form id="vehicle-form" action="/admin/vehicle" method="POST" enctype="multipart/form-data">
 
                                 <div class="form-group">
                                     <label style="color:black">VIN number</label>
@@ -272,13 +279,46 @@
         <!-- End Page wrapper  -->
         <!-- ============================================================== -->
     </div>
+    <script>
+        $(document).ready(function () {
+
+            $("#vehicle-form").validate({
+                rules: {
+                    vin: "required",
+                    year: "required",
+                    model: "required",
+                    title: "required",
+                    price: "required",
+                    fueltype: "required",
+                    mileage: "required",
+                    stock: "required",
+                    image: "required",
+
+                },
+
+                messages: {
+                    vin: "*PLEASE ENTER VIN NUMBER",
+                    year: "*PLEASE ENTER YEAR",
+                    model: "*PLEASE ENTER MODEL",
+                    title: "*PLEASE ENTER TITLE",
+                    price: "*PLEASE ENTER PRICE",
+                    fueltype: "*PLEASE ENTER FUELTYPE",
+                    mileage: "*PLEASE ENTER MIELAGE",
+                    stock: "*PLEASE ENTER STOCK",
+                    image: "*PLEASE ENTER IMAGE",
+
+                }
+            });
+
+        });
+    </script>
     <!-- ============================================================== -->
     <!-- End Wrapper -->
     <!-- ============================================================== -->
     <!-- ============================================================== -->
     <!-- All Jquery -->
     <!-- ============================================================== -->
-    <script src="/static/plugins/bower_components/jquery/dist/jquery.min.js"></script>
+
     <!-- Bootstrap tether Core JavaScript -->
     <script src="/static/plugins/bower_components/popper.js/dist/umd/popper.min.js"></script>
     <script src="/static/bootstrap/dist/js/bootstrap.min.js"></script>

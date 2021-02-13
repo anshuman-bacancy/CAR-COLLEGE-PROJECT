@@ -32,7 +32,7 @@ func InitializeRoutesfrontend() {
 	r.HandleFunc("/admin", controller.Login).Methods("GET")
 	r.HandleFunc("/admin/logout", controller.Logout).Methods("GET")
 	r.HandleFunc("/error", controller.Authentication(controller.ServerError)).Methods("GET")
-	r.HandleFunc("/admin/vehicle", controller.Authentication(controller.SalespersonIndexpageProcess)).Methods("GET")
+	r.HandleFunc("/admin/vehicle", controller.Authentication(controller.AdminIndexpageProcess)).Methods("GET")
 	r.HandleFunc("/admin/create/vehicle", controller.Authentication(controller.CreateVehicleform)).Methods("GET")
 	r.HandleFunc("/admin/vehicle/view/{id}", controller.Authentication(controller.GetoneVehicleforview)).Methods("GET")
 	r.HandleFunc("/admin/vehicle/{id}", controller.Authentication(controller.GetoneVehicleforedit)).Methods("GET")
