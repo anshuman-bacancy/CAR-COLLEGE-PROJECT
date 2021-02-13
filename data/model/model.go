@@ -26,3 +26,13 @@ type Vehicle struct {
 	Stock       string `json:"stock"`
 	Image       string `json:"image"`
 }
+
+//Customer is...
+type Customer struct {
+	gorm.Model
+	Name     string `json:"name"`
+	Email    string `gorm:"unique" json:"email"`
+	Password string `json:"password"`
+	Mobile   string `json:"mobile"`
+	City     string `json:"city"`
+}

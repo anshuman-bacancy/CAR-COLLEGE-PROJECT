@@ -45,6 +45,7 @@ func Initialmigration() {
 	connection := GetDatabase()
 	connection.AutoMigrate(&model.SalesPerson{})
 	connection.AutoMigrate(&model.Vehicle{})
+	connection.AutoMigrate(&model.Customer{})
 	defer Closedatabase(connection)
 	fmt.Println("migration done")
 }

@@ -22,8 +22,19 @@ func CreateRouter() {
 	r = mux.NewRouter()
 }
 
-//InitializeRoutesfrontend is..
-func InitializeRoutesfrontend() {
+//InitializeRoutesfrontendCustomer is..
+func InitializeRoutesfrontendCustomer() {
+	r.HandleFunc("/Registration", controller.CustomerRegister).Methods("GET")
+	r.HandleFunc("/Login", controller.CustomerLogin).Methods("GET")
+}
+
+//InitializeRoutesbackendCustomer is...
+func InitializeRoutesbackendCustomer() {
+	r.HandleFunc("/customer/register", controller.CustomerRegisterPOST).Methods("POST")
+}
+
+//InitializeRoutesfrontendAdmin is..
+func InitializeRoutesfrontendAdmin() {
 	path := build.Default.GOPATH + "/src/project/static/"
 	fs := http.StripPrefix("/static/", http.FileServer(http.Dir(path)))
 	r.PathPrefix("/static/").Handler(fs)
@@ -40,12 +51,11 @@ func InitializeRoutesfrontend() {
 
 }
 
-//InitializeRoutesbackend is...
-func InitializeRoutesbackend() {
-
+//InitializeRoutesbackendAdmin is...
+func InitializeRoutesbackendAdmin() {
 	r.HandleFunc("/admin/login", controller.LoginPost).Methods("POST")
 	r.HandleFunc("/admin/vehicle", controller.Authentication(controller.SaveVehicle)).Methods("POST")
-	r.HandleFunc("/admin/vehicle/{id}", controller.UpdateVehicle).Methods("PUT")
+	r.HandleFunc("/admin/vehicle/{id}", controller.Authentication(controller.UpdateVehicle)).Methods("PUT")
 	r.HandleFunc("/admin/vehicle/{id}", controller.Authentication(controller.DeleteVehicle)).Methods("DELETE")
 	r.NotFoundHandler = http.HandlerFunc(controller.NotFound)
 }
