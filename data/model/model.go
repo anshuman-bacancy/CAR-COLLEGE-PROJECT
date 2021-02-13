@@ -13,6 +13,13 @@ type SalesPerson struct {
 	Phonenumber string `json:"phonenumber"`
 }
 
+//Company is...
+type Company struct {
+	gorm.Model
+	Name string `json:"name"`
+	Logo string `json:"logo"`
+}
+
 //Vehicle is...
 type Vehicle struct {
 	gorm.Model
@@ -25,6 +32,7 @@ type Vehicle struct {
 	Mileage     string `json:"mileage"`
 	Stock       string `json:"stock"`
 	Image       string `json:"image"`
+	CompanyID   uint
 }
 
 //Customer is...

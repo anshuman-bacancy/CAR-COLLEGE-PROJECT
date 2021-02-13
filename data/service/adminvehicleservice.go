@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"project/common"
 	"project/data/model"
+	"strconv"
 
 	"github.com/gorilla/mux"
 )
@@ -25,6 +26,10 @@ func SaveVehicle(r *http.Request) error {
 		return err
 	}
 	bookimagestring := base64.StdEncoding.EncodeToString(imagebyte)
+	companyid, err := strconv.Atoi(r.FormValue("company"))
+	if err != nil {
+		return err
+	}
 	vehicle := model.Vehicle{
 		Vin:         r.FormValue("vin"),
 		Year:        r.FormValue("year"),
@@ -35,6 +40,7 @@ func SaveVehicle(r *http.Request) error {
 		Mileage:     r.FormValue("mileage"),
 		Stock:       r.FormValue("stock"),
 		Image:       bookimagestring,
+		CompanyID:   uint(companyid),
 	}
 	connection.Create(&vehicle)
 	return nil
@@ -91,4 +97,34 @@ func UpdateVehicle(r *http.Request) ([]byte, error) {
 	}
 	return bytedata, nil
 
+}
+
+//SaveCompanyLogo is...
+func SaveCompanyLogo(r *http.Request) error {
+	connection := common.GetDatabase()
+	image, _, err := r.FormFile("logo")
+	defer common.Closedatabase(connection)
+	if err != nil {
+		return err
+	}
+	imagebyte, err := ioutil.ReadAll(image)
+	if err != nil {
+		return err
+	}
+	logoimagestring := base64.StdEncoding.EncodeToString(imagebyte)
+	company := model.Company{
+		Name: r.FormValue("companyname"),
+		Logo: logoimagestring,
+	}
+	connection.Create(&company)
+	return nil
+}
+
+//GetAllVehicleComapnyLogo is...
+func GetAllVehicleComapnyLogo(r *http.Request) []model.Company {
+	connection := common.GetDatabase()
+	defer common.Closedatabase(connection)
+	var companies []model.Company
+	connection.Find(&companies)
+	return companies
 }

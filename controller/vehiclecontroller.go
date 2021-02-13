@@ -106,11 +106,12 @@ func Logout(w http.ResponseWriter, r *http.Request) {
 func CreateVehicleform(w http.ResponseWriter, r *http.Request) {
 	path := build.Default.GOPATH + "/src/project/template/admin/*"
 	tpl := template.Must(template.ParseGlob(path))
-	tpl.ExecuteTemplate(w, "createvehicle.html", nil)
+	logos := service.GetAllVehicleComapnyLogo(r)
+	tpl.ExecuteTemplate(w, "createvehicle.html", logos)
 }
 
-//Authentication is..
-func Authentication(handler http.HandlerFunc) http.HandlerFunc {
+//AuthenticationAdmin is..
+func AuthenticationAdmin(handler http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		session, _ := store.Get(r, "username")
 		_, ok := session.Values["username"]
@@ -177,4 +178,21 @@ func UpdateVehicle(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(data)
 	//http.Redirect(w, r, "/admin/vehicle", http.StatusSeeOther)
+}
+
+//CreateLogoCompany is..
+func CreateLogoCompany(w http.ResponseWriter, r *http.Request) {
+	path := build.Default.GOPATH + "/src/project/template/admin/*"
+	tpl := template.Must(template.ParseGlob(path))
+	tpl.ExecuteTemplate(w, "createlogo.html", nil)
+}
+
+//CreateLogoPost is..
+func CreateLogoPost(w http.ResponseWriter, r *http.Request) {
+	err := service.SaveCompanyLogo(r)
+	if err != nil {
+		http.Redirect(w, r, "/error", http.StatusSeeOther)
+		return
+	}
+	fmt.Fprintf(w, "logo stored")
 }

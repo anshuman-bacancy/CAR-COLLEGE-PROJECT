@@ -10,10 +10,10 @@ import (
 func SaveCustomer(r *http.Request) (bool, error) {
 	connection := common.GetDatabase()
 	defer common.Closedatabase(connection)
-	sqldb, err := connection.DB()
-	if err != nil {
-		return false, err
-	}
+	sqldb := connection.DB()
+	// if err != nil {
+	// 	return false, err
+	// }
 	rows, err := sqldb.Query("SELECT email FROM customers")
 	defer rows.Close()
 	if err != nil {
@@ -38,4 +38,13 @@ func SaveCustomer(r *http.Request) (bool, error) {
 	}
 	connection.Create(&customer)
 	return false, nil
+}
+
+//GetAllCustomer is..
+func GetAllCustomer(r *http.Request) []model.Customer {
+	connection := common.GetDatabase()
+	defer common.Closedatabase(connection)
+	var customers []model.Customer
+	connection.Find(&customers)
+	return customers
 }

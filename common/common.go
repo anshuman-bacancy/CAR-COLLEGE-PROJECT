@@ -6,8 +6,8 @@ import (
 	"project/data/model"
 	"text/template"
 
-	"gorm.io/driver/postgres"
-	"gorm.io/gorm"
+	"github.com/jinzhu/gorm"
+	_ "github.com/jinzhu/gorm/dialects/postgres"
 )
 
 var db *sql.DB
@@ -16,10 +16,9 @@ var tpl *template.Template
 
 //GetDatabase is return db connection
 func GetDatabase() *gorm.DB {
-	connection, err := gorm.Open(postgres.Open("postgres://postgres:1312@localhost/CarProject?sslmode=disable"), &gorm.Config{})
+	connection, err := gorm.Open("postgres", "postgres://postgres:1312@localhost/CarProject?sslmode=disable")
 	CheckError(err)
-	sqldb, err := connection.DB()
-	CheckError(err)
+	sqldb := connection.DB()
 	err = sqldb.Ping()
 	CheckError(err)
 	fmt.Println("connected to database")
@@ -28,8 +27,7 @@ func GetDatabase() *gorm.DB {
 
 //Closedatabase is...
 func Closedatabase(connection *gorm.DB) {
-	sqldb, err := connection.DB()
-	CheckError(err)
+	sqldb := connection.DB()
 	sqldb.Close()
 }
 
@@ -44,8 +42,11 @@ func CheckError(err error) {
 func Initialmigration() {
 	connection := GetDatabase()
 	connection.AutoMigrate(&model.SalesPerson{})
+	connection.AutoMigrate(&model.Company{})
 	connection.AutoMigrate(&model.Vehicle{})
+	connection.Model(&model.Vehicle{}).AddForeignKey("company_id", "companies(id)", "CASCADE", "CASCADE")
 	connection.AutoMigrate(&model.Customer{})
+
 	defer Closedatabase(connection)
 	fmt.Println("migration done")
 }

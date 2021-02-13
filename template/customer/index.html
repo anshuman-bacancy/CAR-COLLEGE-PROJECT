@@ -11,14 +11,13 @@
     <meta name="description"
         content="Ample Admin Lite is powerful and clean admin dashboard template, inpired from Bootstrap Framework">
     <meta name="robots" content="noindex,nofollow">
-    <title>ADMIN</title>
+    <title>Customer</title>
     <link rel="canonical" href="https://www.wrappixel.com/templates/ample-admin-lite/" />
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="/static/plugins/images/favicon.png">
     <!-- Custom CSS -->
     <link href="/static/css/style.min.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -29,12 +28,6 @@
         td {
             color: black;
         }
-        .error{
-                    color:red;
-                    margin-top:5px;
-                    font-size:17px;
-                    font-weight:bold;
-                }
     </style>
 </head>
 
@@ -62,18 +55,20 @@
                     <!-- ============================================================== -->
                     <!-- Logo -->
                     <!-- ============================================================== -->
-                    <a class="navbar-brand" href="/admin/vehicle">
+                    <a class="navbar-brand" href="/customer/index">
                         <!-- Logo icon -->
-                        <b class="logo-icon">
+                        <b class="logo-icon"> -->
                             <!-- Dark Logo icon -->
                             <img src="/static/plugins/images/logo-icon.png" alt="homepage" />
-                        </b>
+                         </b>
+                            <div style="color: black;">CARBAZAR</div>
                         <!--End Logo icon -->
                         <!-- Logo text -->
-                        <span class="logo-text">
+                        <!-- <span class="logo-text"> -->
                             <!-- dark Logo text -->
-                            <img src="/static/plugins/images/logo-text.png" alt="homepage" />
-                        </span>
+                            <!-- <img src="/static/plugins/images/logo-text.png" alt="homepage" /> -->
+                            
+                        <!-- </span> -->
                     </a>
                     <!-- ============================================================== -->
                     <!-- End Logo -->
@@ -107,7 +102,7 @@
                         <!-- User profile and search -->
                         <!-- ============================================================== -->
                         <li>
-                            <a class="profile-pic" href="/admin/logout">
+                            <a class="profile-pic" href="/customer/Logout">
                                 <img src="/static/plugins/images/users/varun.jpg" alt="user-img" width="36"
                                     class="img-circle"><span class="text-white font-medium">Logout</span></a>
                         </li>
@@ -132,8 +127,10 @@
                     <ul id="sidebarnav">
                         <!-- User Profile-->
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link active"
-                                href="/admin/vehicle" aria-expanded="false"><i class="fas fa-clock fa-fw"
+                                href="/customer/index" aria-expanded="false"><i class="fas fa-clock fa-fw"
                                     aria-hidden="true"></i><span class="hide-menu">Vehicles</span></a></li>
+
+        
                     </ul>
 
                 </nav>
@@ -173,98 +170,68 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="white-box">
-                            <a href="/admin/vehicle" class="btn btn-primary text-white">Back</a>
-                            <br><br><br>
-                            <h1>Create Vehicle</h1>
-                            <br>
-                            <form id="vehicle-form" action="/admin/vehicle" method="POST" enctype="multipart/form-data">
-
-                                <div class="form-group">
-                                    <label style="color:black">VIN number</label>
-                                    <input type="text" autocomplete="off" id="vin"
-                                        style="border:1px solid black;color:black" class="form-control" name="vin"
-                                        placeholder="Please Enter vin number">
-                                </div>
-                                <div class="form-group">
-                                    <label style="color:black">Year</label>
-                                    <input type="text" autocomplete="off" id="year"
-                                        style="border:1px solid black;color:black" class="form-control" name="year"
-                                        placeholder="Please Enter year">
-                                </div>
-                                <div class="form-group">
-                                    <label style="color:black">Model</label>
-                                    <input type="text" autocomplete="off" id="mode"
-                                        style="border:1px solid black;color:black" class="form-control" name="model"
-                                        placeholder="Please Enter model">
-                                </div>
-
-                                <div class="form-group">
-                                    <label style="color:black">Title Number</label>
-                                    <input type="text" autocomplete="off" id="title"
-                                        style="border:1px solid black;color:black" class="form-control" name="title"
-                                        placeholder="Please Enter title number">
-                                </div>
-
-                                <div class="form-group">
-                                    <label style="color:black">Price</label>
-                                    <input type="text" autocomplete="off" id="price"
-                                        style="border:1px solid black;color:black" class="form-control" name="price"
-                                        placeholder="Please Enter price">
-                                </div>
-
-                            
-                                <label for="grade" style="color: black;">
-                                    <h5>Select Company:</h5>
-                                </label>
-                                <select name="company" style="color: black;border:1px solid black" class="form-control" required id="fueltype">
-                                    {{range .}}
-                                    <option style="padding:10px;padding-left:20px;padding-right:20px" selected class="form-control" value="{{.ID}}">{{.Name}}
-                                    </option>
-                                    {{end}}
-
-                                </select>
-
-                                <br>
-                                <label for="grade" style="color: black;">
-                                    <h5>Fule Type:</h5>
-                                </label>
-                                <select name="fueltype" style="color: black;border:1px solid black" class="form-control"
-                                    required id="fueltype">
-                                    <option style="padding:10px;padding-left:20px;padding-right:20px" selected
-                                        class="form-control" value="gas">Gas</option>
-                                    <option style="padding:10px;padding-left:20px;padding-right:20px"
-                                        class="form-control" value="diesel">Diesel</option>
-                                </select>
-                                <br>
-                                <div class="form-group">
-                                    <label style="color:black">Mileage</label>
-                                    <input type="text" autocomplete="off" id="mileage"
-                                        style="border:1px solid black;color:black" class="form-control" name="mileage"
-                                        placeholder="Please Enter mileage">
-                                </div>
-
-                                <div class="form-group">
-                                    <label style="color:black">Stock</label>
-                                    <input type="text" autocomplete="off" id="stock"
-                                        style="border:1px solid black;color:black" class="form-control" name="stock"
-                                        placeholder="Please Enter stock">
-                                </div>
-
-                                <div class="form-group">
-                                    <label style="color:black">Upload Vehicle Image</label>
-                                    <input type="file" autocomplete="off" id="image"
-                                        style="border:1px solid black;color:black" class="form-control" name="image"
-                                        >
-                                </div>
-
-                                <input type="submit" value="save" class="btn btn-info">
-                            </form>
-
-
-
+                            <div class="row">
+                            {{range .}}
+                                
+                                    <div class="col-md-4">
+                                        <img src="data:image/jpeg;base64,{{.Image}}" height="300px" width=400px" />
+                                    </div>
+                             
+                             
+                            {{end}}
+                            </div>
                         </div>
                     </div>
                 </div>
+
+                <script>
+                    function myFunction() {
+                        var input, filter, table, tr, td, i, txtValue;
+                        input = document.getElementById("myInput");
+                        filter = input.value.toUpperCase();
+                        table = document.getElementById("myTable");
+                        tr = table.getElementsByTagName("tr");
+                        for (i = 0; i < tr.length; i++) {
+                            td = tr[i].getElementsByTagName("td")[2];
+                            if (td) {
+                                txtValue = td.textContent || td.innerText;
+                                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                                    tr[i].style.display = "";
+                                } else {
+                                    tr[i].style.display = "none";
+                                }
+                            }
+                        }
+                    }
+                </script>
+
+
+
+                <script type="text/javascript">
+                    $(document).ready(function () {
+                        $(".deletevehicle").each(function () {
+                            $(this).on("click", function () {
+                                var el = this;
+                                vehicleid = $(this).attr("id");
+                                if (confirm("Are you sure you want to delete the Vehicle with ID " + vehicleid + " ? ")) {
+
+                                    fetch('/admin/vehicle/' + vehicleid, {
+                                        method: 'DELETE',
+                                    })
+                                        .then(res => {
+                                            $(el).closest('tr').css('background', 'tomato');
+                                            $(el).closest('tr').fadeOut(500, function () {
+                                                $(this).remove();
+                                                window.location = "/admin/vehicle"
+                                            });
+                                        })
+                                }
+
+                            });
+                        });
+
+                    });
+                </script>
                 <!-- ============================================================== -->
                 <!-- End PAge Content -->
                 <!-- ============================================================== -->
@@ -291,46 +258,13 @@
         <!-- End Page wrapper  -->
         <!-- ============================================================== -->
     </div>
-    <script>
-        $(document).ready(function () {
-
-            $("#vehicle-form").validate({
-                rules: {
-                    vin: "required",
-                    year: "required",
-                    model: "required",
-                    title: "required",
-                    price: "required",
-                    fueltype: "required",
-                    mileage: "required",
-                    stock: "required",
-                    image: "required",
-
-                },
-
-                messages: {
-                    vin: "*PLEASE ENTER VIN NUMBER",
-                    year: "*PLEASE ENTER YEAR",
-                    model: "*PLEASE ENTER MODEL",
-                    title: "*PLEASE ENTER TITLE",
-                    price: "*PLEASE ENTER PRICE",
-                    fueltype: "*PLEASE ENTER FUELTYPE",
-                    mileage: "*PLEASE ENTER MIELAGE",
-                    stock: "*PLEASE ENTER STOCK",
-                    image: "*PLEASE ENTER IMAGE",
-
-                }
-            });
-
-        });
-    </script>
     <!-- ============================================================== -->
     <!-- End Wrapper -->
     <!-- ============================================================== -->
     <!-- ============================================================== -->
     <!-- All Jquery -->
     <!-- ============================================================== -->
-
+    <script src="/static/plugins/bower_components/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap tether Core JavaScript -->
     <script src="/static/plugins/bower_components/popper.js/dist/umd/popper.min.js"></script>
     <script src="/static/bootstrap/dist/js/bootstrap.min.js"></script>
