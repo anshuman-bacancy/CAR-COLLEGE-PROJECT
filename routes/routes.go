@@ -13,8 +13,8 @@ var r *mux.Router
 
 //StartServer is started at 8082
 func StartServer() {
-	fmt.Println("Server is started at 8083")
-	http.ListenAndServe(":8083", r)
+	fmt.Println("Server is started at 8082")
+	http.ListenAndServe(":8082", r)
 }
 
 //CreateRouter is...
@@ -29,6 +29,7 @@ func InitializeRoutesfrontend() {
 	r.PathPrefix("/static/").Handler(fs)
 
 	http.Handle("/static/", r)
+	r.HandleFunc("/", controller.HomePage).Methods("GET")
 	r.HandleFunc("/admin", controller.Login).Methods("GET")
 	r.HandleFunc("/admin/logout", controller.Logout).Methods("GET")
 	r.HandleFunc("/error", controller.Authentication(controller.ServerError)).Methods("GET")
@@ -36,6 +37,7 @@ func InitializeRoutesfrontend() {
 	r.HandleFunc("/admin/create/vehicle", controller.Authentication(controller.CreateVehicleform)).Methods("GET")
 	r.HandleFunc("/admin/vehicle/view/{id}", controller.Authentication(controller.GetoneVehicleforview)).Methods("GET")
 	r.HandleFunc("/admin/vehicle/{id}", controller.Authentication(controller.GetoneVehicleforedit)).Methods("GET")
+
 }
 
 //InitializeRoutesbackend is...

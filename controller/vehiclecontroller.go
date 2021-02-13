@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"encoding/base64"
 	"fmt"
 	"go/build"
 	"log"
@@ -12,15 +11,6 @@ import (
 
 	"github.com/gorilla/sessions"
 )
-
-var fm = template.FuncMap{
-	"convstring": convertimagetostring,
-}
-
-func convertimagetostring(image []byte) string {
-	imagestring := base64.StdEncoding.EncodeToString(image)
-	return imagestring
-}
 
 var chekerror bool
 var store = sessions.NewCookieStore([]byte("t0p-s3cr3t"))
@@ -51,7 +41,7 @@ func AdminIndexpageProcess(w http.ResponseWriter, r *http.Request) {
 	}
 	vehicles := service.GetAllVehicle()
 	path := build.Default.GOPATH + "/src/project/template/admin/*"
-	tpl := template.Must(template.New("").Funcs(fm).ParseGlob(path))
+	tpl := template.Must(template.ParseGlob(path))
 	tpl.ExecuteTemplate(w, "index.html", struct {
 		HasMessage bool
 		Message    string
@@ -62,7 +52,7 @@ func AdminIndexpageProcess(w http.ResponseWriter, r *http.Request) {
 //NotFound is...
 func NotFound(w http.ResponseWriter, r *http.Request) {
 	path := build.Default.GOPATH + "/src/project/template/admin/*"
-	tpl := template.Must(template.New("").Funcs(fm).ParseGlob(path))
+	tpl := template.Must(template.ParseGlob(path))
 	tpl.ExecuteTemplate(w, "404.html", nil)
 }
 
@@ -76,7 +66,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		chekerror = false
 	}
 	path := build.Default.GOPATH + "/src/project/template/admin/*"
-	tpl := template.Must(template.New("").Funcs(fm).ParseGlob(path))
+	tpl := template.Must(template.ParseGlob(path))
 	tpl.ExecuteTemplate(w, "login.html", struct {
 		HasMessage bool
 		Message    string
@@ -108,14 +98,14 @@ func Logout(w http.ResponseWriter, r *http.Request) {
 	delete(session.Values, "username")
 	session.Save(r, w)
 	//fmt.Fprintf(w, "username is cleared")
-	http.Redirect(w, r, "/admin", http.StatusSeeOther)
+	http.Redirect(w, r, "/", http.StatusSeeOther)
 	//return
 }
 
 //CreateVehicleform is....
 func CreateVehicleform(w http.ResponseWriter, r *http.Request) {
 	path := build.Default.GOPATH + "/src/project/template/admin/*"
-	tpl := template.Must(template.New("").Funcs(fm).ParseGlob(path))
+	tpl := template.Must(template.ParseGlob(path))
 	tpl.ExecuteTemplate(w, "createvehicle.html", nil)
 }
 
@@ -136,7 +126,7 @@ func Authentication(handler http.HandlerFunc) http.HandlerFunc {
 //ServerError is...
 func ServerError(w http.ResponseWriter, r *http.Request) {
 	path := build.Default.GOPATH + "/src/project/template/admin/*"
-	tpl := template.Must(template.New("").Funcs(fm).ParseGlob(path))
+	tpl := template.Must(template.ParseGlob(path))
 	tpl.ExecuteTemplate(w, "error.html", nil)
 }
 
@@ -155,7 +145,7 @@ func SaveVehicle(w http.ResponseWriter, r *http.Request) {
 func GetoneVehicleforview(w http.ResponseWriter, r *http.Request) {
 	vehicle := service.GetOneVehicle(r)
 	path := build.Default.GOPATH + "/src/project/template/admin/*"
-	tpl := template.Must(template.New("").Funcs(fm).ParseGlob(path))
+	tpl := template.Must(template.ParseGlob(path))
 	tpl.ExecuteTemplate(w, "viewvehicle.html", vehicle)
 }
 
@@ -165,7 +155,7 @@ func GetoneVehicleforview(w http.ResponseWriter, r *http.Request) {
 func GetoneVehicleforedit(w http.ResponseWriter, r *http.Request) {
 	vehicle := service.GetOneVehicle(r)
 	path := build.Default.GOPATH + "/src/project/template/admin/*"
-	tpl := template.Must(template.New("").Funcs(fm).ParseGlob(path))
+	tpl := template.Must(template.ParseGlob(path))
 	tpl.ExecuteTemplate(w, "editvehicle.html", vehicle)
 }
 
