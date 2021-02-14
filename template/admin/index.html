@@ -129,7 +129,7 @@
                                     aria-hidden="true"></i><span class="hide-menu">Vehicles</span></a>
                         </li>
 
-                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link active" href="/admin/brand"
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link " href="/admin/brand"
                                 aria-expanded="false"><i class="fas fa-clipboard-list" aria-hidden="true"></i><span
                                     class="hide-menu">Brand</span></a>
                         </li>
@@ -192,6 +192,7 @@
                                             <th class="border-top-0">#</th>
                                             <th class="border-top-0">Vin</th>
                                             <th class="border-top-0">Model Name</th>
+                                            <th class="border-top-0">Brand Name</th>
                                             <th class="border-top-0">Image</th>
                                             <th  class="border-top-0">View</th>
                                             <th class="border-top-0">Edit</th>
@@ -203,7 +204,8 @@
                                         <tr>
                                             <td>{{.ID}}</td>
                                             <td>{{.Vin}}</td>
-                                            <td>{{.ModelName}}</td>
+                                            <td>{{.ModelName}} {{getbrand .CompanyID}}</td>
+                                            <td>{{getbrand .CompanyID}}</td>
                                             <td><a href="/admin/vehicle/view/{{.ID}}"><img src="data:image/jpeg;base64,{{.Image}}" height="100px" width=100px" /></a></td>
                                             <td><a href="/admin/vehicle/view/{{.ID}}" class="btn btn-info">View</a></td>
                                             <td><a href="/admin/vehicle/{{.ID}}" class="btn btn-primary">Edit</a></td>

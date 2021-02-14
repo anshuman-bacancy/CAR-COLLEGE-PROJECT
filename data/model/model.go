@@ -32,7 +32,7 @@ type Vehicle struct {
 	Mileage     string `json:"mileage"`
 	Stock       string `json:"stock"`
 	Image       string `json:"image"`
-	CompanyID   uint
+	CompanyID   uint   `json:"companyid,string"`
 }
 
 //Customer is...

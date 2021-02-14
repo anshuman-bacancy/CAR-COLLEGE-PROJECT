@@ -17,6 +17,15 @@ var vehiclesave bool
 var deletevehicle bool
 var updatevehicle bool
 var brandsave bool
+var deletebrand bool
+var updatebrand bool
+var fm = template.FuncMap{
+	"getbrand": getbrand,
+}
+
+func getbrand(id uint) string {
+	return service.GetOneBrandNameByID(id)
+}
 
 //AdminIndexpageProcess is..
 func AdminIndexpageProcess(w http.ResponseWriter, r *http.Request) {
@@ -41,7 +50,7 @@ func AdminIndexpageProcess(w http.ResponseWriter, r *http.Request) {
 	}
 	vehicles := service.GetAllVehicle()
 	path := build.Default.GOPATH + "/src/project/template/admin/*"
-	tpl := template.Must(template.ParseGlob(path))
+	tpl := template.Must(template.New("").Funcs(fm).ParseGlob(path))
 	tpl.ExecuteTemplate(w, "index.html", struct {
 		HasMessage bool
 		Message    string
@@ -52,7 +61,7 @@ func AdminIndexpageProcess(w http.ResponseWriter, r *http.Request) {
 //NotFound is...
 func NotFound(w http.ResponseWriter, r *http.Request) {
 	path := build.Default.GOPATH + "/src/project/template/admin/*"
-	tpl := template.Must(template.ParseGlob(path))
+	tpl := template.Must(template.New("").Funcs(fm).ParseGlob(path))
 	tpl.ExecuteTemplate(w, "404.html", nil)
 }
 
@@ -66,7 +75,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		chekerror = false
 	}
 	path := build.Default.GOPATH + "/src/project/template/admin/*"
-	tpl := template.Must(template.ParseGlob(path))
+	tpl := template.Must(template.New("").Funcs(fm).ParseGlob(path))
 	tpl.ExecuteTemplate(w, "login.html", struct {
 		HasMessage bool
 		Message    string
@@ -105,8 +114,8 @@ func Logout(w http.ResponseWriter, r *http.Request) {
 //CreateVehicleform is....
 func CreateVehicleform(w http.ResponseWriter, r *http.Request) {
 	path := build.Default.GOPATH + "/src/project/template/admin/*"
-	tpl := template.Must(template.ParseGlob(path))
-	brands := service.GetAllVehicleComapnyBrand(r)
+	tpl := template.Must(template.New("").Funcs(fm).ParseGlob(path))
+	brands := service.GetAllBrand(r)
 	tpl.ExecuteTemplate(w, "createvehicle.html", brands)
 }
 
@@ -127,7 +136,7 @@ func AuthenticationAdmin(handler http.HandlerFunc) http.HandlerFunc {
 //ServerError is...
 func ServerError(w http.ResponseWriter, r *http.Request) {
 	path := build.Default.GOPATH + "/src/project/template/admin/*"
-	tpl := template.Must(template.ParseGlob(path))
+	tpl := template.Must(template.New("").Funcs(fm).ParseGlob(path))
 	tpl.ExecuteTemplate(w, "error.html", nil)
 }
 
@@ -146,7 +155,7 @@ func SaveVehicle(w http.ResponseWriter, r *http.Request) {
 func GetoneVehicleforview(w http.ResponseWriter, r *http.Request) {
 	vehicle := service.GetOneVehicle(r)
 	path := build.Default.GOPATH + "/src/project/template/admin/*"
-	tpl := template.Must(template.ParseGlob(path))
+	tpl := template.Must(template.New("").Funcs(fm).ParseGlob(path))
 	tpl.ExecuteTemplate(w, "viewvehicle.html", vehicle)
 }
 
@@ -154,8 +163,12 @@ func GetoneVehicleforview(w http.ResponseWriter, r *http.Request) {
 func GetoneVehicleforedit(w http.ResponseWriter, r *http.Request) {
 	vehicle := service.GetOneVehicle(r)
 	path := build.Default.GOPATH + "/src/project/template/admin/*"
-	tpl := template.Must(template.ParseGlob(path))
-	tpl.ExecuteTemplate(w, "editvehicle.html", vehicle)
+	tpl := template.Must(template.New("").Funcs(fm).ParseGlob(path))
+	brands := service.GetAllBrand(r)
+	tpl.ExecuteTemplate(w, "editvehicle.html", struct {
+		Vehicle model.Vehicle
+		Brands  []model.Company
+	}{vehicle, brands})
 }
 
 //DeleteVehicle is....
@@ -177,15 +190,15 @@ func UpdateVehicle(w http.ResponseWriter, r *http.Request) {
 	//http.Redirect(w, r, "/admin/vehicle", http.StatusSeeOther)
 }
 
-//CreateCompanyBrand is..
-func CreateCompanyBrand(w http.ResponseWriter, r *http.Request) {
+//CreateBrandform is..
+func CreateBrandform(w http.ResponseWriter, r *http.Request) {
 	path := build.Default.GOPATH + "/src/project/template/admin/*"
-	tpl := template.Must(template.ParseGlob(path))
-	tpl.ExecuteTemplate(w, "createlogo.html", nil)
+	tpl := template.Must(template.New("").Funcs(fm).ParseGlob(path))
+	tpl.ExecuteTemplate(w, "createbrand.html", nil)
 }
 
-//CreateCompanyBrandPOST is..
-func CreateCompanyBrandPOST(w http.ResponseWriter, r *http.Request) {
+//SaveBrand is..
+func SaveBrand(w http.ResponseWriter, r *http.Request) {
 	err := service.SaveCompanyLogo(r)
 	if err != nil {
 		http.Redirect(w, r, "/error", http.StatusSeeOther)
@@ -205,12 +218,68 @@ func GetAllBrand(w http.ResponseWriter, r *http.Request) {
 		message = "Brand data stored successfully"
 		brandsave = false
 	}
-	brands := service.GetAllVehicleComapnyBrand(r)
+
+	if updatebrand {
+		updatebrand = false
+		hasmessge = true
+		message = "Brand updated successfully"
+	}
+
+	if deletebrand {
+		deletebrand = false
+		hasmessge = true
+		message = "Brand deleted successfully"
+	}
+
+	brands := service.GetAllBrand(r)
 	path := build.Default.GOPATH + "/src/project/template/admin/*"
-	tpl := template.Must(template.ParseGlob(path))
+	tpl := template.Must(template.New("").Funcs(fm).ParseGlob(path))
 	tpl.ExecuteTemplate(w, "brandlist.html", struct {
 		HasMessage bool
 		Message    string
 		Brands     []model.Company
 	}{hasmessge, message, brands})
+}
+
+//DeleteBrand is....
+func DeleteBrand(w http.ResponseWriter, r *http.Request) {
+	service.DeleteOneBrand(r)
+	deletebrand = true
+}
+
+//GetoneBrandforedit is..
+func GetoneBrandforedit(w http.ResponseWriter, r *http.Request) {
+	brand := service.GetOneBrand(r)
+	path := build.Default.GOPATH + "/src/project/template/admin/*"
+	tpl := template.Must(template.New("").Funcs(fm).ParseGlob(path))
+	tpl.ExecuteTemplate(w, "editbrand.html", brand)
+}
+
+//UpdateBrand is...
+func UpdateBrand(w http.ResponseWriter, r *http.Request) {
+	data, err := service.UpdateBrand(r)
+	if err != nil {
+		log.Fatalln(err)
+		return
+	}
+	updatebrand = true
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(data)
+}
+
+//GetoneBrandforview is...
+func GetoneBrandforview(w http.ResponseWriter, r *http.Request) {
+	brand := service.GetOneBrand(r)
+	vehicles := service.GetParticlullarBrandVehicle(brand.ID)
+	// if err != nil {
+	// 	fmt.Println(err)
+	// 	http.Redirect(w, r, "/error", http.StatusSeeOther)
+	// 	return
+	// }
+	path := build.Default.GOPATH + "/src/project/template/admin/*"
+	tpl := template.Must(template.New("").Funcs(fm).ParseGlob(path))
+	tpl.ExecuteTemplate(w, "viewbrand.html", struct {
+		Brand    model.Company
+		Vehicles []model.Vehicle
+	}{brand, vehicles})
 }

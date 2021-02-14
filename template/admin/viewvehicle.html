@@ -26,6 +26,7 @@
 <![endif]-->
     <style>
         td ,th {
+            text-transform: uppercase;
             color: black;
         }
     </style>
@@ -124,9 +125,15 @@
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
                         <!-- User Profile-->
-                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link active"
-                                href="/admin" aria-expanded="false"><i class="fas fa-clock fa-fw"
-                                    aria-hidden="true"></i><span class="hide-menu">Vehicles</span></a></li>
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link active" href="/admin/vehicle"
+                                aria-expanded="false"><i class="fas fa-clock fa-fw" aria-hidden="true"></i><span
+                                    class="hide-menu">Vehicles</span></a>
+                        </li>
+                        
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link " href="/admin/brand"
+                                aria-expanded="false"><i class="fas fa-clipboard-list" aria-hidden="true"></i><span
+                                    class="hide-menu">Brand</span></a>
+                        </li>
                     </ul>
 
                 </nav>
@@ -171,7 +178,7 @@
 
                                 <a href="/admin/vehicle" class="btn btn-primary text-white">Back</a>
                                 <br><br><br>
-                                <h1>Model Name {{.ModelName}}</h1>
+                                <h1>Model Name {{.ModelName}} {{getbrand .CompanyID}}</h1>
                                 <img src="data:image/jpeg;base64,{{ .Image}}" />
                                 <div   class="col-md-6">
                                         <table class="table table-bordered">
@@ -189,6 +196,14 @@
                                                 </th>
                                                 <td>
                                                     {{.Vin}}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>
+                                                    BRAND NAME
+                                                </th>
+                                                <td>
+                                                {{getbrand .CompanyID}}
                                                 </td>
                                             </tr>
                                             <tr>

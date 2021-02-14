@@ -118,11 +118,71 @@ func SaveCompanyLogo(r *http.Request) error {
 	return nil
 }
 
-//GetAllVehicleComapnyLogo is...
-func GetAllVehicleComapnyBrand(r *http.Request) []model.Company {
+//GetAllBrand is...
+func GetAllBrand(r *http.Request) []model.Company {
 	connection := common.GetDatabase()
 	defer common.Closedatabase(connection)
 	var companies []model.Company
 	connection.Find(&companies)
 	return companies
+}
+
+//DeleteOneBrand is..
+func DeleteOneBrand(r *http.Request) {
+	id := mux.Vars(r)["id"]
+	var company model.Company
+	connection := common.GetDatabase()
+	defer common.Closedatabase(connection)
+	connection.Delete(&company, id)
+}
+
+//GetOneBrand is...
+func GetOneBrand(r *http.Request) model.Company {
+	id := mux.Vars(r)["id"]
+	connection := common.GetDatabase()
+	defer common.Closedatabase(connection)
+	var company model.Company
+	connection.First(&company, id)
+	return company
+}
+
+//GetOneBrandNameByID is...
+func GetOneBrandNameByID(id uint) string {
+	connection := common.GetDatabase()
+	defer common.Closedatabase(connection)
+	var company model.Company
+	connection.First(&company, id)
+	return company.Name
+}
+
+//UpdateBrand is....
+func UpdateBrand(r *http.Request) ([]byte, error) {
+	connection := common.GetDatabase()
+	defer common.Closedatabase(connection)
+	id := mux.Vars(r)["id"]
+	var company model.Company
+	connection.First(&company, id)
+	bodydata, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		return nil, err
+	}
+	err = json.Unmarshal(bodydata, &company)
+	if err != nil {
+		return nil, err
+	}
+	connection.Save(&company)
+	bytedata, err := json.MarshalIndent(company, "", "  ")
+	if err != nil {
+		return nil, err
+	}
+	return bytedata, nil
+}
+
+//GetParticlullarBrandVehicle is...
+func GetParticlullarBrandVehicle(id uint) []model.Vehicle {
+	connection := common.GetDatabase()
+	defer common.Closedatabase(connection)
+	var vehicles []model.Vehicle
+	connection.Where("company_id = ?", id).Find(&vehicles)
+	return vehicles
 }

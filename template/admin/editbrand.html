@@ -135,12 +135,12 @@
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link active"
                                 href="/admin/vehicle" aria-expanded="false"><i class="fas fa-clock fa-fw"
                                     aria-hidden="true"></i><span class="hide-menu">Vehicles</span></a>
-                                </li>
+                        </li>
 
-                                <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link active" href="/admin/brand"
-                                        aria-expanded="false"><i class="fas fa-clipboard-list" aria-hidden="true"></i><span
-                                            class="hide-menu">Brand</span></a>
-                                </li>
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link active"
+                                href="/admin/brand" aria-expanded="false"><i class="fas fa-clipboard-list"
+                                    aria-hidden="true"></i><span class="hide-menu">Brand</span></a>
+                        </li>
                     </ul>
 
                 </nav>
@@ -180,20 +180,20 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="white-box">
-                            <a href="/admin/vehicle" class="btn btn-primary text-white">Back</a>
+                            <a href="/admin/brand" class="btn btn-primary text-white">Back</a>
                             <br><br><br>
                             <h1>Create Brand</h1>
                             <br>
-                            <form id="brand-form" action="/admin/brand" method="POST" enctype="multipart/form-data">
-
+                            <form id="brand-form"  method="POST">
+                                <input type="hidden" id="id" name="id" value="{{.ID}}" />
                                 <div class="form-group">
                                     <label style="color:black">Brand Name</label>
                                     <input type="text" autocomplete="off" id="companyname"
-                                        style="border:1px solid black;color:black" class="form-control" name="companyname"
-                                        placeholder="Please Brand Name">
+                                        style="border:1px solid black;color:black" value="{{.Name}}" class="form-control"
+                                        name="companyname" placeholder="Please Brand Name">
                                 </div>
-                              
-                                
+
+
                                 <div class="form-group">
                                     <label style="color:black">Upload Brand Image</label>
                                     <input type="file" autocomplete="off" id="logo"
@@ -247,7 +247,34 @@
                     companyname: "*PLEASE ENTER BRAND NAME",
                     logo: "*PLEASE ENTER IMAGE",
 
+                },
+                submitHandler: function (form) {
+                    //e.preventDefault();
+
+                    var file = document.getElementById("logo").files[0];
+                    var reader = new FileReader();
+                    reader.onload = function () {
+                        //console.log(reader.result);
+                        var brandid = $("#id").val();
+                        var image = reader.result.slice(23);
+                        fetch('/admin/brand/' + brandid, {
+                            method: 'PUT',
+                            body: JSON.stringify({
+                                "name": $("#companyname").val(),
+                                "logo": image,
+                            }),
+                            headers: {
+                                'Content-type': 'application/json; charset=UTF-8'
+                            }
+                        }).then(function (response) {
+                            window.location = "/admin/brand"
+                        });
+
+                    };
+                    reader.readAsDataURL(file);
+
                 }
+
             });
 
         });

@@ -29,12 +29,13 @@
         td {
             color: black;
         }
-        .error{
-                    color:red;
-                    margin-top:5px;
-                    font-size:17px;
-                    font-weight:bold;
-                }
+
+        .error {
+            color: red;
+            margin-top: 5px;
+            font-size: 17px;
+            font-weight: bold;
+        }
     </style>
 </head>
 
@@ -131,15 +132,15 @@
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
                         <!-- User Profile-->
-                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link active" href="/admin/vehicle"
-                                aria-expanded="false"><i class="fas fa-clock fa-fw" aria-hidden="true"></i><span
-                                    class="hide-menu">Vehicles</span></a>
-                        </li>
-                        
-                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link " href="/admin/brand"
-                                aria-expanded="false"><i class="fas fa-clipboard-list" aria-hidden="true"></i><span
-                                    class="hide-menu">Brand</span></a>
-                        </li>
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link "
+                                href="/admin/vehicle" aria-expanded="false"><i class="fas fa-clock fa-fw"
+                                    aria-hidden="true"></i><span class="hide-menu">Vehicles</span></a>
+                                </li>
+
+                                <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link active" href="/admin/brand"
+                                        aria-expanded="false"><i class="fas fa-clipboard-list" aria-hidden="true"></i><span
+                                            class="hide-menu">Brand</span></a>
+                                </li>
                     </ul>
 
                 </nav>
@@ -160,7 +161,7 @@
             <div class="page-breadcrumb bg-white">
                 <div class="row align-items-center">
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                        <h4 class="page-title text-uppercase font-medium font-14">Vehicles</h4>
+                        <h4 class="page-title text-uppercase font-medium font-14">BRAND</h4>
                     </div>
 
                 </div>
@@ -179,91 +180,24 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="white-box">
-                            <a href="/admin/vehicle" class="btn btn-primary text-white">Back</a>
+                            <a href="/admin/brand" class="btn btn-primary text-white">Back</a>
                             <br><br><br>
-                            <h1>Create Vehicle</h1>
+                            <h1>Create Brand</h1>
                             <br>
-                            <form id="vehicle-form" action="/admin/vehicle" method="POST" enctype="multipart/form-data">
+                            <form id="brand-form" action="/admin/brand" method="POST" enctype="multipart/form-data">
 
                                 <div class="form-group">
-                                    <label style="color:black">VIN number</label>
-                                    <input type="text" autocomplete="off" id="vin"
-                                        style="border:1px solid black;color:black" class="form-control" name="vin"
-                                        placeholder="Please Enter vin number">
+                                    <label style="color:black">Brand Name</label>
+                                    <input type="text" autocomplete="off" id="companyname"
+                                        style="border:1px solid black;color:black" class="form-control" name="companyname"
+                                        placeholder="Please Brand Name">
                                 </div>
+                              
+                                
                                 <div class="form-group">
-                                    <label style="color:black">Year</label>
-                                    <input type="text" autocomplete="off" id="year"
-                                        style="border:1px solid black;color:black" class="form-control" name="year"
-                                        placeholder="Please Enter year">
-                                </div>
-                                <div class="form-group">
-                                    <label style="color:black">Model</label>
-                                    <input type="text" autocomplete="off" id="mode"
-                                        style="border:1px solid black;color:black" class="form-control" name="model"
-                                        placeholder="Please Enter model">
-                                </div>
-
-                                <div class="form-group">
-                                    <label style="color:black">Title Number</label>
-                                    <input type="text" autocomplete="off" id="title"
-                                        style="border:1px solid black;color:black" class="form-control" name="title"
-                                        placeholder="Please Enter title number">
-                                </div>
-
-                                <div class="form-group">
-                                    <label style="color:black">Price</label>
-                                    <input type="text" autocomplete="off" id="price"
-                                        style="border:1px solid black;color:black" class="form-control" name="price"
-                                        placeholder="Please Enter price">
-                                </div>
-
-                            
-                                <label for="company" style="color: black;">
-                                    <h5>Select Company:</h5>
-                                </label>
-                                <select name="company" style="color: black;border:1px solid black" class="form-control" required id="company">
-                                    {{range .}}
-                                    <option style="padding:10px;padding-left:20px;padding-right:20px" selected class="form-control" value="{{.ID}}">{{.Name}}
-                                    </option>
-                                    {{end}}
-
-                                </select>
-
-                                <br>
-                                <label for="grade" style="color: black;">
-                                    <h5>Fule Type:</h5>
-                                </label>
-                                <select name="fueltype" style="color: black;border:1px solid black" class="form-control"
-                                    required id="fueltype">
-                                    <option style="padding:10px;padding-left:20px;padding-right:20px" selected
-                                        class="form-control" value="gas">Gas</option>
-                                    <option style="padding:10px;padding-left:20px;padding-right:20px"
-                                        class="form-control" value="diesel">Diesel</option>
-                                        <option style="padding:10px;padding-left:20px;padding-right:20px" 
-                                        class="form-control" value="petrol">Petrol</option>
-                                </select>
-                                <br>
-                                <div class="form-group">
-                                    <label style="color:black">Mileage</label>
-                                    <input type="text" autocomplete="off" id="mileage"
-                                        style="border:1px solid black;color:black" class="form-control" name="mileage"
-                                        placeholder="Please Enter mileage">
-                                </div>
-
-                                <div class="form-group">
-                                    <label style="color:black">Stock</label>
-                                    <input type="text" autocomplete="off" id="stock"
-                                        style="border:1px solid black;color:black" class="form-control" name="stock"
-                                        placeholder="Please Enter stock">
-                                </div>
-                                <img id="displayimage" src="#" alt="your image" height="400px" width="400px"/>
-                                <br>
-                                <div class="form-group">
-                                    <label style="color:black">Upload Vehicle Image</label>
-                                    <input type="file" autocomplete="off" id="image"
-                                        style="border:1px solid black;color:black" class="form-control" name="image"
-                                        >
+                                    <label style="color:black">Upload Brand Image</label>
+                                    <input type="file" autocomplete="off" id="logo"
+                                        style="border:1px solid black;color:black" class="form-control" name="logo">
                                 </div>
 
                                 <input type="submit" value="save" class="btn btn-info">
@@ -301,49 +235,18 @@
         <!-- ============================================================== -->
     </div>
     <script>
-        function readURL(input) {
-                if (input.files && input.files[0]) {
-                    var reader = new FileReader();
-
-                    reader.onload = function (e) {
-                        $('#displayimage').attr('src', e.target.result);
-                    }
-
-                    reader.readAsDataURL(input.files[0]); // convert to base64 string
-                }
-            }
-
-            $("#image").change(function () {
-                readURL(this);
-             });
-
         $(document).ready(function () {
 
-            $("#vehicle-form").validate({
+            $("#brand-form").validate({
                 rules: {
-                    vin: "required",
-                    year: "required",
-                    model: "required",
-                    title: "required",
-                    price: "required",
-                    fueltype: "required",
-                    mileage: "required",
-                    stock: "required",
-                    image: "required",
-                    company: "required",
+                    companyname: "required",
+                    logo: "required",
                 },
 
                 messages: {
-                    vin: "*PLEASE ENTER VIN NUMBER",
-                    year: "*PLEASE ENTER YEAR",
-                    model: "*PLEASE ENTER MODEL",
-                    title: "*PLEASE ENTER TITLE",
-                    price: "*PLEASE ENTER PRICE",
-                    fueltype: "*PLEASE SELECT FUELTYPE",
-                    mileage: "*PLEASE ENTER MIELAGE",
-                    stock: "*PLEASE ENTER STOCK",
-                    image: "*PLEASE ENTER IMAGE",
-                     company:  "*PLEASE SELECT BRAND",
+                    companyname: "*PLEASE ENTER BRAND NAME",
+                    logo: "*PLEASE ENTER IMAGE",
+
                 }
             });
 

@@ -132,9 +132,15 @@
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
                         <!-- User Profile-->
-                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link active"
-                                href="/admin" aria-expanded="false"><i class="fas fa-clock fa-fw"
-                                    aria-hidden="true"></i><span class="hide-menu">Vehicles</span></a></li>
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link active" href="/admin/vehicle"
+                                aria-expanded="false"><i class="fas fa-clock fa-fw" aria-hidden="true"></i><span
+                                    class="hide-menu">Vehicles</span></a>
+                        </li>
+                        
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link " href="/admin/brand"
+                                aria-expanded="false"><i class="fas fa-clipboard-list" aria-hidden="true"></i><span
+                                    class="hide-menu">Brand</span></a>
+                        </li>
                     </ul>
 
                 </nav>
@@ -179,30 +185,30 @@
                             <h1>Edit Vehicle</h1>
                             <br>
                             <form method="POST" id="vehicle-form" >
-                                <input type="hidden" id="id" name="id" value="{{.ID}}" />
+                                <input type="hidden" id="id" name="id" value="{{.Vehicle.ID}}" />
                                 <div class="form-group">
                                     <label style="color:black">VIN number</label>
                                     <input type="text" autocomplete="off" id="vin"
-                                        style="border:1px solid black;color:black" value="{{.Vin}}" class="form-control"
+                                        style="border:1px solid black;color:black" value="{{.Vehicle.Vin}}" class="form-control"
                                         id="vin" name="vin" placeholder="Please Enter vin number">
                                 </div>
                                 <div class="form-group">
                                     <label style="color:black">Year</label>
                                     <input type="text" autocomplete="off" id="year"
-                                        style="border:1px solid black;color:black" value="{{.Year}}"
+                                        style="border:1px solid black;color:black" value="{{.Vehicle.Year}}"
                                         class="form-control" id="vin" name="year" placeholder="Please Enter year">
                                 </div>
                                 <div class="form-group">
                                     <label style="color:black">Model</label>
                                     <input type="text" autocomplete="off" id="model"
-                                        style="border:1px solid black;color:black" value="{{.ModelName}}"
+                                        style="border:1px solid black;color:black" value="{{.Vehicle.ModelName}}"
                                         class="form-control" id="vin" name="model" placeholder="Please Enter model">
                                 </div>
 
                                 <div class="form-group">
                                     <label style="color:black">Title Number</label>
                                     <input type="text" autocomplete="off" id="title"
-                                        style="border:1px solid black;color:black" value="{{.TitleNumber}}"
+                                        style="border:1px solid black;color:black" value="{{.Vehicle.TitleNumber}}"
                                         class="form-control" id="vin" name="title"
                                         placeholder="Please Enter title number">
                                 </div>
@@ -210,26 +216,68 @@
                                 <div class="form-group">
                                     <label style="color:black">Price</label>
                                     <input type="text" autocomplete="off" id="price"
-                                        style="border:1px solid black;color:black" value="{{.Price}}"
+                                        style="border:1px solid black;color:black" value="{{.Vehicle.Price}}"
                                         class="form-control" id="vin" name="price" placeholder="Please Enter price">
                                 </div>
 
+                                <label for="company" style="color: black;">
+                                    <h5>Select Company:</h5>
+                                </label>
+                                <select name="company" style="color: black;border:1px solid black" class="form-control" required id="company">
+                                    {{$companyid := .Vehicle.CompanyID}}
+                                    {{range .Brands}}
+                                   
+                                    {{if eq $companyid .ID }}
+                                    <option style="padding:10px;padding-left:20px;padding-right:20px" selected class="form-control" value="{{.ID}}">
+                                        {{.Name}}
+                                    </option>
+                                   
+                                    {{else}}
+                                        <option style="padding:10px;padding-left:20px;padding-right:20px"  class="form-control" value="{{.ID}}">
+                                            {{.Name}}
+                                        </option>
+                                    {{end}}
+                                    {{end}}
+                                </select>
+                                
+                                <br>
+                                
                                 <label for="grade" style="color: black;">
                                     <h5>Fule Type:</h5>
                                 </label>
 
                                 <select name="fueltype" style="color: black;border:1px solid black" class="form-control"
                                     required id="fueltype" >
+                                    {{if eq .Vehicle.FuelType "gas"}}
                                     <option style="padding:10px;padding-left:20px;padding-right:20px" selected
                                         class="form-control" value="gas">Gas</option>
                                     <option style="padding:10px;padding-left:20px;padding-right:20px"
                                         class="form-control" value="diesel">Diesel</option>
+                                    <option style="padding:10px;padding-left:20px;padding-right:20px"
+                                         class="form-control" value="petrol">Petrol</option>
+                                    {{else if eq .Vehicle.FuelType "diesel" }}
+                                        <option style="padding:10px;padding-left:20px;padding-right:20px" 
+                                         class="form-control" value="gas">Gas</option>
+                                        <option style="padding:10px;padding-left:20px;padding-right:20px" 
+                                        selected class="form-control" value="diesel">Diesel</option>
+                                        <option style="padding:10px;padding-left:20px;padding-right:20px" 
+                                        class="form-control" value="petrol">Petrol</option>
+                                    {{else}}
+                                    <option style="padding:10px;padding-left:20px;padding-right:20px" 
+                                    class="form-control" value="gas">Gas</option>
+                                    <option style="padding:10px;padding-left:20px;padding-right:20px"
+                                      class="form-control" value="diesel">Diesel
+                                    </option>
+                                    <option style="padding:10px;padding-left:20px;padding-right:20px" 
+                                  selected  class="form-control" value="petrol">Petrol</option>
+                                    {{end}}
+
                                 </select>
                                 <br>
                                 <div class="form-group">
                                     <label style="color:black">Mileage</label>
                                     <input type="text" autocomplete="off" id="mileage"
-                                        style="border:1px solid black;color:black" value="{{.Mileage}}"
+                                        style="border:1px solid black;color:black" value="{{.Vehicle.Mileage}}"
                                         class="form-control" name="mileage" placeholder="Please Enter mileage">
                                 </div>
 
@@ -237,9 +285,10 @@
                                     <label style="color:black">Stock</label>
                                     <input type="text" autocomplete="off" id="stock"
                                         style="border:1px solid black;color:black" class="form-control"
-                                        value="{{.Stock}}" name="stock" placeholder="Please Enter stock">
+                                        value="{{.Vehicle.Stock}}" name="stock" placeholder="Please Enter stock">
                                 </div>
-
+                                <img id="displayimage" src="#" alt="your image" height="400px" width="400px" />
+                                <br>
                                 <div class="form-group">
                                     <label style="color:black">Upload Vehicle Image</label>
                                     <input type="file" autocomplete="off" id="image"
@@ -256,6 +305,21 @@
                 </div>
 
                 <script>
+                     function readURL(input) {
+                            if (input.files && input.files[0]) {
+                                var reader = new FileReader();
+
+                                reader.onload = function (e) {
+                                    $('#displayimage').attr('src', e.target.result);
+                                }
+
+                                reader.readAsDataURL(input.files[0]); // convert to base64 string
+                            }
+                        }
+
+                        $("#image").change(function () {
+                            readURL(this);
+                        });
                     $(document).ready(function () {
 
                         $("#vehicle-form").validate({
@@ -293,7 +357,7 @@
                                         //console.log(reader.result);
                                         var vehicleid = $("#id").val();
                                         var image = reader.result.slice(23);
-                                        console.log(vehicleid)
+                                        
                                          fetch('/admin/vehicle/' + vehicleid, {
                                             method: 'PUT',
                                             body: JSON.stringify({
@@ -302,10 +366,11 @@
                                                 "model": $("#model").val(),
                                                 "title": $("#title").val(),
                                                 "price": $("#price").val(),
-                                                "fueltype": $('#fueltype :selected').text(),
+                                                "fueltype": $('#fueltype :selected').val(),
                                                 "mileage": $("#mileage").val(),
                                                 "stock": $("#stock").val(),
                                                 "image": image,
+                                                "companyid": $('#company :selected').val(),
                                             }),
                                             headers: {
                                                 'Content-type': 'application/json; charset=UTF-8'

@@ -204,10 +204,10 @@
                                                 <tr>
                                                     <td>{{.ID}}</td>
                                                     <td>{{.Name}}</td>
-                                                    <td><img src="data:image/jpeg;base64,{{.Logo}}" height="100px" width=100px" /></td>
-                                                    <td><a href="/admin/vehicle/view/{{.ID}}" class="btn btn-info">View</a></td>
-                                                    <td><a href="/admin/vehicle/{{.ID}}" class="btn btn-primary">Edit</a></td>
-                                                    <td><button type="button" id="{{ .ID }}" class="deletevehicle btn btn-danger"><i style="font-size:24px"
+                                                    <td><a href="/admin/brand/view/{{.ID}}"><img src="data:image/jpeg;base64,{{.Logo}}" height="100px" width=100px" /></a></td>
+                                                    <td><a href="/admin/brand/view/{{.ID}}" class="btn btn-info">View</a></td>
+                                                    <td><a href="/admin/brand/{{.ID}}" class="btn btn-primary">Edit</a></td>
+                                                    <td><button type="button" id="{{ .ID }}" class="deletebrand btn btn-danger"><i style="font-size:24px"
                                                                 class="fa">&#xf014;</i><strong> Delete</strong></button></td>
                                                 </tr>
                                             {{end}}
@@ -243,20 +243,20 @@
 
                 <script type="text/javascript">
                     $(document).ready(function () {
-                        $(".deletevehicle").each(function () {
+                        $(".deletebrand").each(function () {
                             $(this).on("click", function () {
                                 var el = this;
-                                vehicleid = $(this).attr("id");
-                                if (confirm("Are you sure you want to delete the Vehicle with ID " + vehicleid + " ? ")) {
+                                brandid = $(this).attr("id");
+                                if (confirm("Are you sure you want to delete the Brand with ID " + brandid + " ? ")) {
 
-                                    fetch('/admin/vehicle/' + vehicleid, {
+                                    fetch('/admin/brand/' + brandid, {
                                         method: 'DELETE',
                                     })
                                         .then(res => {
                                             $(el).closest('tr').css('background', 'tomato');
                                             $(el).closest('tr').fadeOut(500, function () {
                                                 $(this).remove();
-                                                window.location = "/admin/vehicle"
+                                                window.location = "/admin/brand"
                                             });
                                         })
                                 }
