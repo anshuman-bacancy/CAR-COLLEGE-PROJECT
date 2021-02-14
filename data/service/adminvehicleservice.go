@@ -3,7 +3,6 @@ package service
 import (
 	"encoding/base64"
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"net/http"
 	"project/common"
@@ -85,7 +84,6 @@ func UpdateVehicle(r *http.Request) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	fmt.Println(r.Body)
 	err = json.Unmarshal(bodydata, &findvehicle)
 	if err != nil {
 		return nil, err
@@ -121,7 +119,7 @@ func SaveCompanyLogo(r *http.Request) error {
 }
 
 //GetAllVehicleComapnyLogo is...
-func GetAllVehicleComapnyLogo(r *http.Request) []model.Company {
+func GetAllVehicleComapnyBrand(r *http.Request) []model.Company {
 	connection := common.GetDatabase()
 	defer common.Closedatabase(connection)
 	var companies []model.Company

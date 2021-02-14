@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"fmt"
 	"go/build"
 	"log"
 	"net/http"
@@ -17,6 +16,7 @@ var store = sessions.NewCookieStore([]byte("t0p-s3cr3t"))
 var vehiclesave bool
 var deletevehicle bool
 var updatevehicle bool
+var brandsave bool
 
 //AdminIndexpageProcess is..
 func AdminIndexpageProcess(w http.ResponseWriter, r *http.Request) {
@@ -106,8 +106,8 @@ func Logout(w http.ResponseWriter, r *http.Request) {
 func CreateVehicleform(w http.ResponseWriter, r *http.Request) {
 	path := build.Default.GOPATH + "/src/project/template/admin/*"
 	tpl := template.Must(template.ParseGlob(path))
-	logos := service.GetAllVehicleComapnyLogo(r)
-	tpl.ExecuteTemplate(w, "createvehicle.html", logos)
+	brands := service.GetAllVehicleComapnyBrand(r)
+	tpl.ExecuteTemplate(w, "createvehicle.html", brands)
 }
 
 //AuthenticationAdmin is..
@@ -150,8 +150,6 @@ func GetoneVehicleforview(w http.ResponseWriter, r *http.Request) {
 	tpl.ExecuteTemplate(w, "viewvehicle.html", vehicle)
 }
 
-//ViewVehiclepage is...
-
 //GetoneVehicleforedit is..
 func GetoneVehicleforedit(w http.ResponseWriter, r *http.Request) {
 	vehicle := service.GetOneVehicle(r)
@@ -168,7 +166,6 @@ func DeleteVehicle(w http.ResponseWriter, r *http.Request) {
 
 //UpdateVehicle is....
 func UpdateVehicle(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("call donw")
 	data, err := service.UpdateVehicle(r)
 	if err != nil {
 		log.Fatalln(err)
@@ -180,19 +177,40 @@ func UpdateVehicle(w http.ResponseWriter, r *http.Request) {
 	//http.Redirect(w, r, "/admin/vehicle", http.StatusSeeOther)
 }
 
-//CreateLogoCompany is..
-func CreateLogoCompany(w http.ResponseWriter, r *http.Request) {
+//CreateCompanyBrand is..
+func CreateCompanyBrand(w http.ResponseWriter, r *http.Request) {
 	path := build.Default.GOPATH + "/src/project/template/admin/*"
 	tpl := template.Must(template.ParseGlob(path))
 	tpl.ExecuteTemplate(w, "createlogo.html", nil)
 }
 
-//CreateLogoPost is..
-func CreateLogoPost(w http.ResponseWriter, r *http.Request) {
+//CreateCompanyBrandPOST is..
+func CreateCompanyBrandPOST(w http.ResponseWriter, r *http.Request) {
 	err := service.SaveCompanyLogo(r)
 	if err != nil {
 		http.Redirect(w, r, "/error", http.StatusSeeOther)
 		return
 	}
-	fmt.Fprintf(w, "logo stored")
+	brandsave = true
+	http.Redirect(w, r, "/admin/brand", http.StatusSeeOther)
+}
+
+//GetAllBrand is....
+func GetAllBrand(w http.ResponseWriter, r *http.Request) {
+	var message string
+	var hasmessge bool
+
+	if brandsave {
+		hasmessge = true
+		message = "Brand data stored successfully"
+		brandsave = false
+	}
+	brands := service.GetAllVehicleComapnyBrand(r)
+	path := build.Default.GOPATH + "/src/project/template/admin/*"
+	tpl := template.Must(template.ParseGlob(path))
+	tpl.ExecuteTemplate(w, "brandlist.html", struct {
+		HasMessage bool
+		Message    string
+		Brands     []model.Company
+	}{hasmessge, message, brands})
 }

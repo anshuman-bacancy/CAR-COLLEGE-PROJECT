@@ -18,7 +18,6 @@
     <!-- Custom CSS -->
     <link href="/static/css/style.min.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -28,13 +27,6 @@
     <style>
         td {
             color: black;
-        }
-
-        .error {
-            color: red;
-            margin-top: 5px;
-            font-size: 17px;
-            font-weight: bold;
         }
     </style>
 </head>
@@ -132,15 +124,15 @@
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
                         <!-- User Profile-->
-                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link active"
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link "
                                 href="/admin/vehicle" aria-expanded="false"><i class="fas fa-clock fa-fw"
                                     aria-hidden="true"></i><span class="hide-menu">Vehicles</span></a>
-                                </li>
+                        </li>
 
-                                <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link active" href="/admin/brand"
-                                        aria-expanded="false"><i class="fas fa-clipboard-list" aria-hidden="true"></i><span
-                                            class="hide-menu">Brand</span></a>
-                                </li>
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link active"
+                                href="/admin/brand" aria-expanded="false"><i class="fas fa-clipboard-list"
+                                    aria-hidden="true"></i><span class="hide-menu">Brand</span></a>
+                        </li>
                     </ul>
 
                 </nav>
@@ -180,34 +172,100 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="white-box">
-                            <a href="/admin/vehicle" class="btn btn-primary text-white">Back</a>
-                            <br><br><br>
-                            <h1>Create Brand</h1>
-                            <br>
-                            <form id="brand-form" action="/admin/brand" method="POST" enctype="multipart/form-data">
 
-                                <div class="form-group">
-                                    <label style="color:black">Brand Name</label>
-                                    <input type="text" autocomplete="off" id="companyname"
-                                        style="border:1px solid black;color:black" class="form-control" name="companyname"
-                                        placeholder="Please Brand Name">
-                                </div>
-                              
-                                
-                                <div class="form-group">
-                                    <label style="color:black">Upload Brand Image</label>
-                                    <input type="file" autocomplete="off" id="logo"
-                                        style="border:1px solid black;color:black" class="form-control" name="logo">
-                                </div>
-
-                                <input type="submit" value="save" class="btn btn-info">
-                            </form>
+                            <div class="table-responsive">
 
 
+                                <a href="/admin/create/brand" class="btn btn-danger text-white">CREATE BRAND</a>
+                                <br><br><br>
+                                <input type="text" class="form-control" id="myInput" onkeyup="myFunction()"
+                                    placeholder="Search for Brand.." title="Type in a name">
+                                <br><br><br>
 
+                                {{if .HasMessage}}
+                                <div class="alert alert-success text-center" style="font-weight:bold;" role="alert">{{.Message}}</div>
+                                <br>
+                                {{end}}
+
+
+                                <table class="table table-hover" id="myTable">
+                                    <thead>
+                                        <tr>
+                                            <th class="border-top-0">#</th>
+                                            <th class="border-top-0">Name</th>
+                                            <th class="border-top-0">Image</th>
+                                            <th class="border-top-0">View</th>
+                                            <th class="border-top-0">Edit</th>
+                                            <th class="border-top-0">Delete</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                            {{range .Brands}} 
+                                                <tr>
+                                                    <td>{{.ID}}</td>
+                                                    <td>{{.Name}}</td>
+                                                    <td><img src="data:image/jpeg;base64,{{.Logo}}" height="100px" width=100px" /></td>
+                                                    <td><a href="/admin/vehicle/view/{{.ID}}" class="btn btn-info">View</a></td>
+                                                    <td><a href="/admin/vehicle/{{.ID}}" class="btn btn-primary">Edit</a></td>
+                                                    <td><button type="button" id="{{ .ID }}" class="deletevehicle btn btn-danger"><i style="font-size:24px"
+                                                                class="fa">&#xf014;</i><strong> Delete</strong></button></td>
+                                                </tr>
+                                            {{end}}
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
+
+                <script>
+                    function myFunction() {
+                        var input, filter, table, tr, td, i, txtValue;
+                        input = document.getElementById("myInput");
+                        filter = input.value.toUpperCase();
+                        table = document.getElementById("myTable");
+                        tr = table.getElementsByTagName("tr");
+                        for (i = 0; i < tr.length; i++) {
+                            td = tr[i].getElementsByTagName("td")[1];
+                            if (td) {
+                                txtValue = td.textContent || td.innerText;
+                                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                                    tr[i].style.display = "";
+                                } else {
+                                    tr[i].style.display = "none";
+                                }
+                            }
+                        }
+                    }
+                </script>
+
+
+
+                <script type="text/javascript">
+                    $(document).ready(function () {
+                        $(".deletevehicle").each(function () {
+                            $(this).on("click", function () {
+                                var el = this;
+                                vehicleid = $(this).attr("id");
+                                if (confirm("Are you sure you want to delete the Vehicle with ID " + vehicleid + " ? ")) {
+
+                                    fetch('/admin/vehicle/' + vehicleid, {
+                                        method: 'DELETE',
+                                    })
+                                        .then(res => {
+                                            $(el).closest('tr').css('background', 'tomato');
+                                            $(el).closest('tr').fadeOut(500, function () {
+                                                $(this).remove();
+                                                window.location = "/admin/vehicle"
+                                            });
+                                        })
+                                }
+
+                            });
+                        });
+
+                    });
+                </script>
                 <!-- ============================================================== -->
                 <!-- End PAge Content -->
                 <!-- ============================================================== -->
@@ -234,31 +292,13 @@
         <!-- End Page wrapper  -->
         <!-- ============================================================== -->
     </div>
-    <script>
-        $(document).ready(function () {
-
-            $("#brand-form").validate({
-                rules: {
-                    companyname: "required",
-                    logo: "required",
-                },
-
-                messages: {
-                    companyname: "*PLEASE ENTER BRAND NAME",
-                    logo: "*PLEASE ENTER IMAGE",
-
-                }
-            });
-
-        });
-    </script>
     <!-- ============================================================== -->
     <!-- End Wrapper -->
     <!-- ============================================================== -->
     <!-- ============================================================== -->
     <!-- All Jquery -->
     <!-- ============================================================== -->
-
+    <script src="/static/plugins/bower_components/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap tether Core JavaScript -->
     <script src="/static/plugins/bower_components/popper.js/dist/umd/popper.min.js"></script>
     <script src="/static/bootstrap/dist/js/bootstrap.min.js"></script>
