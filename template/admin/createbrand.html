@@ -192,7 +192,8 @@
                                         style="border:1px solid black;color:black" class="form-control" name="companyname"
                                         placeholder="Please Brand Name">
                                 </div>
-                              
+                                <img id="displayimage" src="#" alt="brand image" height="300px" width="300px" />
+                                <br>
                                 
                                 <div class="form-group">
                                     <label style="color:black">Upload Brand Image</label>
@@ -235,6 +236,23 @@
         <!-- ============================================================== -->
     </div>
     <script>
+
+         function readURL(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        $('#displayimage').attr('src', e.target.result);
+                    }
+
+                    reader.readAsDataURL(input.files[0]); // convert to base64 string
+                }
+            }
+
+            $("#logo").change(function () {
+                readURL(this);
+            });
+
         $(document).ready(function () {
 
             $("#brand-form").validate({

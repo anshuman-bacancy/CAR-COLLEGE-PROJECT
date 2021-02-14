@@ -132,7 +132,7 @@
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
                         <!-- User Profile-->
-                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link active"
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link "
                                 href="/admin/vehicle" aria-expanded="false"><i class="fas fa-clock fa-fw"
                                     aria-hidden="true"></i><span class="hide-menu">Vehicles</span></a>
                         </li>
@@ -190,7 +190,9 @@
                                 {{range .Vehicles}}
                             
                                 <div class="col-md-4">
-                                    <img src="data:image/jpeg;base64,{{.Image}}" height="300px" width=400px" />
+                                    <a href="/admin/vehicle/view/{{.ID}}"> <img src="data:image/jpeg;base64,{{.Image}}" height="300px" width=400px" /></a>
+                                  <h4 style="text-align: center;">{{.ModelName}}</h4> 
+                                    <br><br><br>
                                 </div>
                             
                             
