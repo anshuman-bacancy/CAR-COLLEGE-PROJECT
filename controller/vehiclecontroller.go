@@ -126,7 +126,7 @@ func AuthenticationAdmin(handler http.HandlerFunc) http.HandlerFunc {
 		_, ok := session.Values["username"]
 		if !ok {
 			chekerror = true
-			http.Redirect(w, r, "/admin", http.StatusSeeOther)
+			http.Redirect(w, r, "/", http.StatusSeeOther)
 			return
 		}
 		handler.ServeHTTP(w, r)
