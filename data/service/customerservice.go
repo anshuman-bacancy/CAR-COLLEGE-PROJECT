@@ -2,6 +2,7 @@ package service
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"project/common"
@@ -83,6 +84,7 @@ func GetOneCustomerBYemail(email interface{}) model.Customer {
 
 //CustomerUpdate is...
 func CustomerUpdate(r *http.Request) ([]byte, error) {
+	fmt.Println("called update")
 	connection := common.GetDatabase()
 	defer common.Closedatabase(connection)
 	id := mux.Vars(r)["id"]

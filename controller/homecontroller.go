@@ -4,15 +4,20 @@ import (
 	"fmt"
 	"go/build"
 	"net/http"
+	"net/smtp"
 	"project/data/service"
+	"strconv"
 	"text/template"
 
+	"github.com/gorilla/mux"
 	"github.com/gorilla/sessions"
 )
 
 var registeremail bool
 var customernotexits bool
 var storecustomer = sessions.NewCookieStore([]byte("t0p-s3cr3tcus"))
+var emailfound bool
+var emailnotextits bool
 
 //HomePage is....
 func HomePage(w http.ResponseWriter, r *http.Request) {
@@ -134,4 +139,118 @@ func CustomerLogout(w http.ResponseWriter, r *http.Request) {
 	//fmt.Fprintf(w, "username is cleared")
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 	//return
+}
+
+//CustomerForgotPassword is..
+func CustomerForgotPassword(w http.ResponseWriter, r *http.Request) {
+	var message string
+	var hasmessge bool
+	if emailfound {
+		hasmessge = true
+		message = "Check Your Email"
+		emailfound = false
+	}
+
+	if emailnotextits {
+		hasmessge = true
+		message = "Email is does not Exits"
+		emailnotextits = false
+	}
+
+	path := build.Default.GOPATH + "/src/project/template/home/*"
+	tpl := template.Must(template.New("").Funcs(fm).ParseGlob(path))
+	tpl.ExecuteTemplate(w, "forgotpassword.html", struct {
+		HasMessage bool
+		Message    string
+	}{hasmessge, message})
+}
+
+//CustomerValidateEmail is...
+func CustomerValidateEmail(w http.ResponseWriter, r *http.Request) {
+	emailfound = false
+	email := r.FormValue("email")
+	customers := service.GetAllCustomer(r)
+	for _, customer := range customers {
+		if customer.Email == email {
+			emailfound = true
+			break
+		}
+	}
+	if emailfound {
+		session, _ := storecustomer.Get(r, "customerusername")
+		session.Values["emailid"] = email
+		session.Save(r, w)
+		sendemail(email)
+		http.Redirect(w, r, "/customer/forgotpassword", http.StatusSeeOther)
+		return
+	}
+	emailnotextits = true
+	http.Redirect(w, r, "/customer/forgotpassword", http.StatusSeeOther)
+}
+
+func sendemail(email string) {
+	// Sender data.
+
+	from := "autogradingsystem99999@gmail.com"
+	password := "nedlsjaxafqmlnms"
+	to := []string{
+		email,
+	}
+	// Receiver email address.
+	Receivermail := email
+
+	customer := service.GetOneCustomerBYemail(email)
+	customerid := strconv.Itoa(int(customer.ID))
+	subjet := "FORGOT YOUR PASSSWORD EMAIL"
+	body := "http://localhost:8083/customer/setpassword/" + customerid
+	// smtp server configuration.
+	smtpHost := "smtp.gmail.com"
+	smtpPort := "587"
+
+	// Message.
+	message := []byte("To: " + Receivermail + "\r\n" +
+		"Subject: " + subjet + "!\r\n" +
+		"\r\n" + "Set your forgot password from below link\r\n" +
+		body + "\r\n")
+
+	// Authentication.
+	auth := smtp.PlainAuth("", from, password, smtpHost)
+
+	// Sending email.
+	err := smtp.SendMail(smtpHost+":"+smtpPort, auth, from, to, message)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	fmt.Println("Email Sent Successfully!")
+}
+
+//CustomerSetForgotPasswordPage is...
+func CustomerSetForgotPasswordPage(w http.ResponseWriter, r *http.Request) {
+	session, _ := storecustomer.Get(r, "customerusername")
+	id := mux.Vars(r)["id"]
+	email, ok := session.Values["emailid"]
+	if !ok {
+		http.Redirect(w, r, "/", http.StatusSeeOther)
+		return
+	}
+	customer := service.GetOneCustomerBYemail(email)
+	if email != customer.Email {
+		http.Redirect(w, r, "/", http.StatusSeeOther)
+		return
+	}
+
+	path := build.Default.GOPATH + "/src/project/template/home/*"
+	tpl := template.Must(template.New("").Funcs(fm).ParseGlob(path))
+	tpl.ExecuteTemplate(w, "setforgotpassword.html", id)
+}
+
+//CustomerSuccess is...
+func CustomerSuccess(w http.ResponseWriter, r *http.Request) {
+	session, _ := storecustomer.Get(r, "customerusername")
+	delete(session.Values, "emailid")
+	session.Save(r, w)
+	path := build.Default.GOPATH + "/src/project/template/home/*"
+	tpl := template.Must(template.New("").Funcs(fm).ParseGlob(path))
+	tpl.ExecuteTemplate(w, "success.html", nil)
 }

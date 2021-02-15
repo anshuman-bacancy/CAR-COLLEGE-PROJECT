@@ -34,6 +34,9 @@ func InitializeRoutesfrontendCustomer() {
 	r.HandleFunc("/customer/brand/view/{id}", controller.AuthenticationCustomer(controller.GetallVehicleWithBrandforview)).Methods("GET")
 	r.HandleFunc("/customer/vehicle/view/{id}", controller.AuthenticationCustomer(controller.CustomerGetoneVehicleforview)).Methods("GET")
 	r.HandleFunc("/customer/account", controller.AuthenticationCustomer(controller.CustomerAccountforview)).Methods("GET")
+	r.HandleFunc("/customer/forgotpassword", controller.CustomerForgotPassword).Methods("GET")
+	r.HandleFunc("/customer/setpassword/{id}", controller.CustomerSetForgotPasswordPage).Methods("GET")
+	r.HandleFunc("/success", controller.CustomerSuccess).Methods("GET")
 }
 
 //InitializeRoutesbackendCustomer is...
@@ -41,7 +44,7 @@ func InitializeRoutesbackendCustomer() {
 	//POST REQUEST
 	r.HandleFunc("/customer/register", controller.CustomerRegisterPOST).Methods("POST")
 	r.HandleFunc("/customer/login", controller.CustomerLoginPost).Methods("POST")
-
+	r.HandleFunc("/customer/validateemail", controller.CustomerValidateEmail).Methods("POST")
 	//PUT REQUEST
 	r.HandleFunc("/customer/{id}", controller.CustomerUpdate).Methods("PUT")
 }
