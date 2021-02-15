@@ -2,6 +2,7 @@
 <html dir="ltr" lang="en">
 
 <head>
+   
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <!-- Tell the browser to be responsive to screen width -->
@@ -18,6 +19,7 @@
     <!-- Custom CSS -->
     <link href="/static/css/style.min.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -28,6 +30,13 @@
         td {
             color: black;
         }
+
+        .error{
+                    color:red;
+                    margin-top:5px;
+                    font-size:17px;
+                    font-weight:bold;
+                }
     </style>
 </head>
 
@@ -60,14 +69,14 @@
                         <b class="logo-icon"> -->
                             <!-- Dark Logo icon -->
                             <img src="/static/plugins/images/logo-icon.png" alt="homepage" />
-                         </b>
-                            <div style="color: black;">CARBAZAR</div>
+                        </b>
+                        <div style="color: black;">CARBAZAR</div>
                         <!--End Logo icon -->
                         <!-- Logo text -->
                         <!-- <span class="logo-text"> -->
-                            <!-- dark Logo text -->
-                            <!-- <img src="/static/plugins/images/logo-text.png" alt="homepage" /> -->
-                            
+                        <!-- dark Logo text -->
+                        <!-- <img src="/static/plugins/images/logo-text.png" alt="homepage" /> -->
+
                         <!-- </span> -->
                     </a>
                     <!-- ============================================================== -->
@@ -126,14 +135,13 @@
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
                         <!-- User Profile-->
-                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link active"
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link "
                                 href="/customer/index" aria-expanded="false"><i class="fas fa-clock fa-fw"
                                     aria-hidden="true"></i><span class="hide-menu">Vehicles</span></a></li>
 
-                            <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link " 
-                                href="/customer/account"
-                                    aria-expanded="false"><i class="fa fa-user" aria-hidden="true"></i><span
-                                        class="hide-menu">Account</span></a></li>
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link active"
+                                href="/customer/account" aria-expanded="false"><i class="fa fa-user"
+                                    aria-hidden="true"></i><span class="hide-menu">Account</span></a></li>
 
                     </ul>
 
@@ -155,7 +163,7 @@
             <div class="page-breadcrumb bg-white">
                 <div class="row align-items-center">
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                        <h4 class="page-title text-uppercase font-medium font-14">BRAND</h4>
+                        <h4 class="page-title text-uppercase font-medium font-14">ACCOUNT</h4>
                     </div>
 
                 </div>
@@ -174,24 +182,93 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="white-box">
-                            <div class="row">
-                            {{range .}}
-                                
-                                    <div class="col-md-4">
-                                        <center><a href="/customer/brand/view/{{.ID}}"><img src="data:image/jpeg;base64,{{.Logo}}" height="200px" width=200px" /></a></center>
-                                        <br>
-                                        <h4 style="text-align: center;">{{.Name}}</h4>
-                                        <br><br><br>
-                                    </div>
-                             
-                            {{end}}
-                            </div>
+                                <a href="/customer/index" class="btn btn-primary text-white">Back</a>
+                                <br><br><br>
+                                <h1>Account Details</h1>
+                                <br>
+                                {{if .HasMessage}}
+                                <div class="alert alert-success text-center" style="font-weight:bold;" role="alert">{{.Message}}</div>
+                                <br>
+                                {{end}}
+
+                            <form  id="account-form" method="POST">
+                                <input type="hidden" id="id" name="id" value="{{.Customer.ID}}">
+                                <div class="form-group">
+                                    <label>Name</label>
+                                    <input type="text" name="name" id="name" value="{{.Customer.Name}}" class="form-control" placeholder="Enter Name" autocomplete="off" />
+                                </div>
+                            
+                            
+                                <div class="form-group">
+                                    <label>Password</label>
+                                    <input type="password" name="password" id="password" value="{{.Customer.Password}}" class="form-control" placeholder="Enter password"
+                                        autocomplete="off" />
+                                </div>
+                            
+                            
+                                <div class="form-group">
+                                    <label>Mobile Number</label>
+                                    <input type="text" name="mobilenumber" id="mobilenumber" value="{{.Customer.Mobile}}" class="form-control" placeholder="Enter Mobile Number"
+                                        autocomplete="off" />
+                                </div>
+                            
+                                <div class="form-group">
+                                    <label>City</label>
+                                    <input type="text" name="city" id="city" class="form-control" value="{{.Customer.City}}" placeholder="Enter City" autocomplete="off" />
+                                </div>
+                            
+                                <button type="submit" class="btn btn-primary">Save</button>
+                            </form>
+                            <br><br><br>
                         </div>
                     </div>
                 </div>
 
+                <script>
+                    $(document).ready(function () {
 
-               
+
+                        $("#account-form").validate({
+                            rules: {
+                                name: "required",
+                                password: "required",
+                                mobilenumber: {
+                                    required: true,
+                                    minlength: 10,
+                                    maxlength: 10,
+
+                                },
+                                city: "required",
+                            },
+
+                            messages: {
+                                name: "*Please Enter Name",
+                                password: "*Please Enter Password",
+                                city: "*Please Enter City",
+                            },
+                            submitHandler: function (form) {
+                                var customerid = $("#id").val();
+                                fetch('/customer/' + customerid, {
+                                    method: 'PUT',
+                                    body: JSON.stringify({
+                                        "name": $("#name").val(),
+                                        "password": $("#password").val(),
+                                        "mobile":$("#mobilenumber").val(),
+                                        "city": $("#city").val(),
+                                    }),
+                                    headers: {
+                                        'Content-type': 'application/json; charset=UTF-8'
+                                    }
+                                }).then(function (response) {
+                                    window.location = "/customer/account"
+                                });
+                                
+
+                            }
+                        });
+                    });
+                </script>
+
                 <!-- ============================================================== -->
                 <!-- End PAge Content -->
                 <!-- ============================================================== -->
@@ -224,7 +301,7 @@
     <!-- ============================================================== -->
     <!-- All Jquery -->
     <!-- ============================================================== -->
-    <script src="/static/plugins/bower_components/jquery/dist/jquery.min.js"></script>
+
     <!-- Bootstrap tether Core JavaScript -->
     <script src="/static/plugins/bower_components/popper.js/dist/umd/popper.min.js"></script>
     <script src="/static/bootstrap/dist/js/bootstrap.min.js"></script>

@@ -19,6 +19,7 @@ var updatevehicle bool
 var brandsave bool
 var deletebrand bool
 var updatebrand bool
+var deletecustomer bool
 var fm = template.FuncMap{
 	"getbrand": getbrand,
 }
@@ -282,4 +283,41 @@ func GetoneBrandforview(w http.ResponseWriter, r *http.Request) {
 		Brand    model.Company
 		Vehicles []model.Vehicle
 	}{brand, vehicles})
+}
+
+//GetAllCustomer is....
+func GetAllCustomer(w http.ResponseWriter, r *http.Request) {
+	var message string
+	var hasmessge bool
+
+	if deletecustomer {
+		hasmessge = true
+		message = "Customer deleted successfully"
+		deletecustomer = false
+	}
+
+	customer := service.GetAllCustomer(r)
+	path := build.Default.GOPATH + "/src/project/template/admin/*"
+	tpl := template.Must(template.New("").Funcs(fm).ParseGlob(path))
+	tpl.ExecuteTemplate(w, "customerlist.html", struct {
+		HasMessage bool
+		Message    string
+		Customers  []model.Customer
+	}{hasmessge, message, customer})
+}
+
+//DeleteCustomer is...
+func DeleteCustomer(w http.ResponseWriter, r *http.Request) {
+	deletecustomer = true
+	service.DeleteOneCustomer(r)
+}
+
+//GetoneCustomerforview is...
+func GetoneCustomerforview(w http.ResponseWriter, r *http.Request) {
+	customer := service.GetOneCustomer(r)
+	path := build.Default.GOPATH + "/src/project/template/admin/*"
+	tpl := template.Must(template.New("").Funcs(fm).ParseGlob(path))
+	tpl.ExecuteTemplate(w, "viewcustomer.html", struct {
+		Customer model.Customer
+	}{customer})
 }

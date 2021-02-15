@@ -17,7 +17,7 @@ var storecustomer = sessions.NewCookieStore([]byte("t0p-s3cr3tcus"))
 //HomePage is....
 func HomePage(w http.ResponseWriter, r *http.Request) {
 	path := build.Default.GOPATH + "/src/project/template/home/*"
-	tpl := template.Must(template.ParseGlob(path))
+	tpl := template.Must(template.New("").Funcs(fm).ParseGlob(path))
 	tpl.ExecuteTemplate(w, "index.html", nil)
 }
 
@@ -31,7 +31,7 @@ func CustomerRegister(w http.ResponseWriter, r *http.Request) {
 		registeremail = false
 	}
 	path := build.Default.GOPATH + "/src/project/template/home/*"
-	tpl := template.Must(template.ParseGlob(path))
+	tpl := template.Must(template.New("").Funcs(fm).ParseGlob(path))
 	tpl.ExecuteTemplate(w, "Register.html", struct {
 		HasMessage bool
 		Message    string
@@ -64,7 +64,7 @@ func CustomerLogin(w http.ResponseWriter, r *http.Request) {
 		customernotexits = false
 	}
 	path := build.Default.GOPATH + "/src/project/template/home/*"
-	tpl := template.Must(template.ParseGlob(path))
+	tpl := template.Must(template.New("").Funcs(fm).ParseGlob(path))
 	tpl.ExecuteTemplate(w, "login.html", struct {
 		HasMessage bool
 		Message    string
@@ -105,9 +105,9 @@ func CustomerLoginPost(w http.ResponseWriter, r *http.Request) {
 //CustomerIndexPage is...
 func CustomerIndexPage(w http.ResponseWriter, r *http.Request) {
 	path := build.Default.GOPATH + "/src/project/template/customer/*"
-	tpl := template.Must(template.ParseGlob(path))
-	vehicles := service.GetAllVehicle()
-	tpl.ExecuteTemplate(w, "index.html", vehicles)
+	tpl := template.Must(template.New("").Funcs(fm).ParseGlob(path))
+	brand := service.GetAllBrand(r)
+	tpl.ExecuteTemplate(w, "index.html", brand)
 }
 
 //AuthenticationCustomer is..

@@ -1,9 +1,13 @@
 package service
 
 import (
+	"encoding/json"
+	"io/ioutil"
 	"net/http"
 	"project/common"
 	"project/data/model"
+
+	"github.com/gorilla/mux"
 )
 
 //SaveCustomer is...
@@ -47,4 +51,55 @@ func GetAllCustomer(r *http.Request) []model.Customer {
 	var customers []model.Customer
 	connection.Find(&customers)
 	return customers
+}
+
+//DeleteOneCustomer is..
+func DeleteOneCustomer(r *http.Request) {
+	id := mux.Vars(r)["id"]
+	var customer model.Customer
+	connection := common.GetDatabase()
+	defer common.Closedatabase(connection)
+	connection.Delete(&customer, id)
+}
+
+//GetOneCustomer is...
+func GetOneCustomer(r *http.Request) model.Customer {
+	id := mux.Vars(r)["id"]
+	connection := common.GetDatabase()
+	defer common.Closedatabase(connection)
+	var customer model.Customer
+	connection.First(&customer, id)
+	return customer
+}
+
+//GetOneCustomerBYemail is...
+func GetOneCustomerBYemail(email interface{}) model.Customer {
+	connection := common.GetDatabase()
+	defer common.Closedatabase(connection)
+	var customer model.Customer
+	connection.Where("email = 	?", email).First(&customer)
+	return customer
+}
+
+//CustomerUpdate is...
+func CustomerUpdate(r *http.Request) ([]byte, error) {
+	connection := common.GetDatabase()
+	defer common.Closedatabase(connection)
+	id := mux.Vars(r)["id"]
+	var customer model.Customer
+	connection.First(&customer, id)
+	bodydata, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		return nil, err
+	}
+	err = json.Unmarshal(bodydata, &customer)
+	if err != nil {
+		return nil, err
+	}
+	connection.Save(&customer)
+	bytedata, err := json.MarshalIndent(customer, "", "  ")
+	if err != nil {
+		return nil, err
+	}
+	return bytedata, nil
 }

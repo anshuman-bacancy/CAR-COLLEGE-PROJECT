@@ -186,3 +186,13 @@ func GetParticlullarBrandVehicle(id uint) []model.Vehicle {
 	connection.Where("company_id = ?", id).Find(&vehicles)
 	return vehicles
 }
+
+//GetParticlullarBrandVehiclewithR is...
+func GetParticlullarBrandVehiclewithR(r *http.Request) []model.Vehicle {
+	id := mux.Vars(r)["id"]
+	connection := common.GetDatabase()
+	defer common.Closedatabase(connection)
+	var vehicles []model.Vehicle
+	connection.Where("company_id = ?", id).Find(&vehicles)
+	return vehicles
+}

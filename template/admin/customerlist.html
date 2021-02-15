@@ -11,7 +11,7 @@
     <meta name="description"
         content="Ample Admin Lite is powerful and clean admin dashboard template, inpired from Bootstrap Framework">
     <meta name="robots" content="noindex,nofollow">
-    <title>Customer</title>
+    <title>ADMIN</title>
     <link rel="canonical" href="https://www.wrappixel.com/templates/ample-admin-lite/" />
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="/static/plugins/images/favicon.png">
@@ -55,20 +55,18 @@
                     <!-- ============================================================== -->
                     <!-- Logo -->
                     <!-- ============================================================== -->
-                    <a class="navbar-brand" href="/customer/index">
+                    <a class="navbar-brand" href="/admin/vehicle">
                         <!-- Logo icon -->
-                        <b class="logo-icon"> -->
+                        <b class="logo-icon">
                             <!-- Dark Logo icon -->
                             <img src="/static/plugins/images/logo-icon.png" alt="homepage" />
-                         </b>
-                            <div style="color: black;">CARBAZAR</div>
+                        </b>
                         <!--End Logo icon -->
                         <!-- Logo text -->
-                        <!-- <span class="logo-text"> -->
+                        <span class="logo-text">
                             <!-- dark Logo text -->
-                            <!-- <img src="/static/plugins/images/logo-text.png" alt="homepage" /> -->
-                            
-                        <!-- </span> -->
+                            <img src="/static/plugins/images/logo-text.png" alt="homepage" />
+                        </span>
                     </a>
                     <!-- ============================================================== -->
                     <!-- End Logo -->
@@ -102,7 +100,7 @@
                         <!-- User profile and search -->
                         <!-- ============================================================== -->
                         <li>
-                            <a class="profile-pic" href="/customer/Logout">
+                            <a class="profile-pic" href="/admin/logout">
                                 <img src="/static/plugins/images/users/varun.jpg" alt="user-img" width="36"
                                     class="img-circle"><span class="text-white font-medium">Logout</span></a>
                         </li>
@@ -126,15 +124,20 @@
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
                         <!-- User Profile-->
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link "
+                                href="/admin/vehicle" aria-expanded="false"><i class="fas fa-clock fa-fw"
+                                    aria-hidden="true"></i><span class="hide-menu">Vehicles</span></a>
+                        </li>
+
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link "
+                                href="/admin/brand" aria-expanded="false"><i class="fas fa-clipboard-list"
+                                    aria-hidden="true"></i><span class="hide-menu">Brand</span></a>
+                        </li>
+
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link active"
-                                href="/customer/index" aria-expanded="false"><i class="fas fa-clock fa-fw"
-                                    aria-hidden="true"></i><span class="hide-menu">Vehicles</span></a></li>
-
-                            <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link " 
-                                href="/customer/account"
-                                    aria-expanded="false"><i class="fa fa-user" aria-hidden="true"></i><span
-                                        class="hide-menu">Account</span></a></li>
-
+                                href="/admin/customer" aria-expanded="false"><i class=" far fa-list-alt"
+                                    aria-hidden="true"></i><span class="hide-menu">Customer</span></a>
+                        </li>
                     </ul>
 
                 </nav>
@@ -155,7 +158,7 @@
             <div class="page-breadcrumb bg-white">
                 <div class="row align-items-center">
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                        <h4 class="page-title text-uppercase font-medium font-14">BRAND</h4>
+                        <h4 class="page-title text-uppercase font-medium font-14">CUSTOMER</h4>
                     </div>
 
                 </div>
@@ -174,24 +177,96 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="white-box">
-                            <div class="row">
-                            {{range .}}
-                                
-                                    <div class="col-md-4">
-                                        <center><a href="/customer/brand/view/{{.ID}}"><img src="data:image/jpeg;base64,{{.Logo}}" height="200px" width=200px" /></a></center>
-                                        <br>
-                                        <h4 style="text-align: center;">{{.Name}}</h4>
-                                        <br><br><br>
-                                    </div>
-                             
-                            {{end}}
+
+                            <div class="table-responsive">
+
+
+            
+                                <br><br>
+                                <input type="text" class="form-control" id="myInput" onkeyup="myFunction()"
+                                    placeholder="Search for Customer.." title="Type in a name">
+                                <br><br><br>
+                                {{if .HasMessage}}
+                                <div class="alert alert-success text-center" style="font-weight:bold;" role="alert">{{.Message}}</div>
+                                <br>
+                                {{end}}
+                                <table class="table table-hover" id="myTable">
+                                    <thead>
+                                        <tr>
+                                            <th class="border-top-0">#</th>
+                                            <th class="border-top-0">Name</th>
+                                            <th class="border-top-0">Email</th>
+                                            <th class="border-top-0">View</th>
+                                            <th class="border-top-0">Delete</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {{range .Customers}}
+                                        <tr>
+                                            <td>{{.ID}}</td>
+                                            <td>{{.Name}}</td>
+                                            <td>{{.Email}}</td>
+                                            <td><a href="/admin/customer/view/{{.ID}}" class="btn btn-info">View</a></td>
+                                            <td><button type="button" id="{{ .ID }}"
+                                                 class="deletecustomer btn btn-danger"><i style="font-size:24px"
+                                                        class="fa">&#xf014;</i><strong>Delete</strong></button></td>
+                                        </tr>
+                                        {{end}}
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
                 </div>
 
+                <script>
+                    function myFunction() {
+                        var input, filter, table, tr, td, i, txtValue;
+                        input = document.getElementById("myInput");
+                        filter = input.value.toUpperCase();
+                        table = document.getElementById("myTable");
+                        tr = table.getElementsByTagName("tr");
+                        for (i = 0; i < tr.length; i++) {
+                            td = tr[i].getElementsByTagName("td")[1];
+                            if (td) {
+                                txtValue = td.textContent || td.innerText;
+                                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                                    tr[i].style.display = "";
+                                } else {
+                                    tr[i].style.display = "none";
+                                }
+                            }
+                        }
+                    }
+                </script>
 
-               
+
+
+                <script type="text/javascript">
+                    $(document).ready(function () {
+                        $(".deletecustomer").each(function () {
+                            $(this).on("click", function () {
+                                var el = this;
+                                customerid = $(this).attr("id");
+                                if (confirm("Are you sure you want to delete the Customer with ID " + customerid + " ? ")) {
+
+                                    fetch('/admin/customer/' + customerid, {
+                                        method: 'DELETE',
+                                    })
+                                        .then(res => {
+                                            $(el).closest('tr').css('background', 'tomato');
+                                            $(el).closest('tr').fadeOut(500, function () {
+                                                $(this).remove();
+                                                window.location = "/admin/customer"
+                                            });
+                                    })
+                                }
+
+                            });
+                        });
+
+                    });
+                </script>
                 <!-- ============================================================== -->
                 <!-- End PAge Content -->
                 <!-- ============================================================== -->
