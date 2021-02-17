@@ -13,8 +13,8 @@ var r *mux.Router
 
 //StartServer is started at 8082
 func StartServer() {
-	fmt.Println("Server is started at http://localhost:8083")
-	http.ListenAndServe(":8083", r)
+	fmt.Println("Server is started at http://localhost:8084")
+	http.ListenAndServe(":8084", r)
 }
 
 //CreateRouter is...
@@ -64,7 +64,7 @@ func InitializeRoutesfrontendAdmin() {
 	r.HandleFunc("/admin", controller.Login).Methods("GET")
 	r.HandleFunc("/admin/logout", controller.Logout).Methods("GET")
 	r.HandleFunc("/error", controller.AuthenticationAdmin(controller.ServerError)).Methods("GET")
-
+	r.HandleFunc("/admin/register", controller.AuthenticationAdmin(controller.AdminRegister)).Methods("GET")
 	//GET ALL DATA
 	r.HandleFunc("/admin/vehicle", controller.AuthenticationAdmin(controller.AdminIndexpageProcess)).Methods("GET")
 	r.HandleFunc("/admin/brand", controller.AuthenticationAdmin(controller.GetAllBrand)).Methods("GET")
@@ -88,6 +88,7 @@ func InitializeRoutesfrontendAdmin() {
 func InitializeRoutesbackendAdmin() {
 	//POST METHODS
 	r.HandleFunc("/admin/login", controller.LoginPost).Methods("POST")
+	r.HandleFunc("/admin/register", controller.AdminRegisterPOST).Methods("POST")
 	r.HandleFunc("/admin/brand", controller.AuthenticationAdmin(controller.SaveBrand)).Methods("POST")
 	r.HandleFunc("/admin/vehicle", controller.AuthenticationAdmin(controller.SaveVehicle)).Methods("POST")
 

@@ -143,6 +143,11 @@
                          href="/admin/orders"
                             aria-expanded="false"><i class="fa fa-car" aria-hidden="true"></i><span class="hide-menu">Orders</span></a>
                     </li>
+
+                    <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link " href="/admin/register"
+                            aria-expanded="false"><i class="fa fa-registered" aria-hidden="true"></i><span
+                                class="hide-menu">Registration</span></a>
+                    </li>
                     </ul>
 
                 </nav>
@@ -203,6 +208,7 @@
                                                 <th class="border-top-0">Vehicle Model Name</th>
                                                 <th class="border-top-0">Brand Image</th>
                                                 <th class="border-top-0">Vehicle Image</th>
+                                                <th class="border-top-0">OrderDate</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -220,6 +226,7 @@
                                                 <td><a href="/admin/vehicle/view/{{.VehicleID}}"><img
                                                             src="data:image/jpeg;base64,{{getVehicleImage .VehicleID}}" height="100px"
                                                             width=100px" /></a></td>
+                                                <td>{{.CreatedAt}}</td>
                                             </tr>
                                             {{end}}
                                         </tbody>

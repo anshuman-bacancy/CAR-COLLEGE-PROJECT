@@ -232,3 +232,43 @@ func GetVehicleBrandID(vehicleid uint) uint {
 	connection.First(&vehicle, vehicleid)
 	return vehicle.CompanyID
 }
+
+//SaveAdmin is..
+func SaveAdmin(r *http.Request) (bool, error) {
+	connection := common.GetDatabase()
+	defer common.Closedatabase(connection)
+	sqldb := connection.DB()
+	rows, err := sqldb.Query("SELECT email FROM sales_people")
+	defer rows.Close()
+	if err != nil {
+		return false, err
+	}
+	emails := make(map[string]bool)
+	for rows.Next() {
+		var email string
+		rows.Scan(&email)
+		emails[email] = true
+	}
+
+	if emails[r.FormValue("email")] {
+		return true, nil
+	}
+	salesPerson := model.SalesPerson{
+		Name:     r.FormValue("name"),
+		Email:    r.FormValue("email"),
+		Password: r.FormValue("password"),
+		Mobile:   r.FormValue("mobilenumber"),
+		City:     r.FormValue("city"),
+	}
+	connection.Create(&salesPerson)
+	return false, nil
+}
+
+//GetAllAdmin is..
+func GetAllAdmin(r *http.Request) []model.SalesPerson {
+	connection := common.GetDatabase()
+	defer common.Closedatabase(connection)
+	var salesperson []model.SalesPerson
+	connection.Find(&salesperson)
+	return salesperson
+}

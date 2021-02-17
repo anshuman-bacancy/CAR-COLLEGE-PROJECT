@@ -7,10 +7,11 @@ import (
 //SalesPerson is...
 type SalesPerson struct {
 	gorm.Model
-	Name        string `json:"name"`
-	City        string `json:"city"`
-	Email       string `json:"email"`
-	Phonenumber string `json:"phonenumber"`
+	Name     string `json:"name"`
+	Email    string `gorm:"unique" json:"email"`
+	Password string `json:"password"`
+	Mobile   string `json:"mobile"`
+	City     string `json:"city"`
 }
 
 //Company is...

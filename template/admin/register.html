@@ -132,28 +132,29 @@
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
                         <!-- User Profile-->
-                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link "
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link active"
                                 href="/admin/vehicle" aria-expanded="false"><i class="fas fa-clock fa-fw"
                                     aria-hidden="true"></i><span class="hide-menu">Vehicles</span></a>
                         </li>
 
-                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link active"
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link "
                                 href="/admin/brand" aria-expanded="false"><i class="fas fa-clipboard-list"
                                     aria-hidden="true"></i><span class="hide-menu">Brand</span></a>
                         </li>
 
-                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link " href="/admin/customer"
-                                aria-expanded="false"><i class=" far fa-list-alt" aria-hidden="true"></i><span
-                                    class="hide-menu">Customer</span></a>
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link "
+                                href="/admin/customer" aria-expanded="false"><i class=" far fa-list-alt"
+                                    aria-hidden="true"></i><span class="hide-menu">Customer</span></a>
                         </li>
 
-                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link " href="/admin/orders"
-                                aria-expanded="false"><i class="fa fa-car" aria-hidden="true"></i><span class="hide-menu">Orders</span></a>
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link "
+                                href="/admin/orders" aria-expanded="false"><i class="fa fa-car"
+                                    aria-hidden="true"></i><span class="hide-menu">Orders</span></a>
                         </li>
 
-                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link " href="/admin/register"
-                                aria-expanded="false"><i class="fa fa-registered" aria-hidden="true"></i><span
-                                    class="hide-menu">Registration</span></a>
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link "
+                                href="/admin/register" aria-expanded="false"><i class="fa fa-registered"
+                                    aria-hidden="true"></i><span class="hide-menu">Registration</span></a>
                         </li>
                     </ul>
 
@@ -175,7 +176,7 @@
             <div class="page-breadcrumb bg-white">
                 <div class="row align-items-center">
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                        <h4 class="page-title text-uppercase font-medium font-14">BRAND</h4>
+                        <h4 class="page-title text-uppercase font-medium font-14">Registration</h4>
                     </div>
 
                 </div>
@@ -194,31 +195,53 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="white-box">
-                            <a href="/admin/brand" class="btn btn-primary text-white">Back</a>
-                            <br><br><br>
-                            <h1>VIEW {{ .Brand.Name}}</h1>
-            
-                            <img src="data:image/jpeg;base64,{{.Brand.Logo}}" height="300px" width="300px" />
-                         
-                            <input type="text" id="mySearch" onkeyup="myFunction()" class="form-control" placeholder="Search vehicle.."
-                                title="Type in a category">
+                        
+                            {{if .HasMessage}}
+                            <div class="alert alert-danger text-center" style="font-weight:bold;" role="alert">{{.Message}}</div>
                             <br>
-                            <div class="row" id="list">
-                                {{range .Vehicles}}
+                            {{end}}
+
+                            {{if .Hasmessgesuccess}}
+                            <div class="alert alert-success text-center" style="font-weight:bold;" role="alert">{{.Message}}</div>
+                            <br>
+                            {{end}}
                             
-                                <div class="col-md-4">
-                                    <a href="/admin/vehicle/view/{{.ID}}"> <img src="data:image/jpeg;base64,{{.Image}}" height="300px" width=400px" /></a>
-                                  <h4 style="text-align: center;">{{.ModelName}}</h4> 
-                                    <br><br><br>
+                            <form action="/admin/register" id="register-form" method="POST">
+                                <div class="form-group">
+                                    <label>Name</label>
+                                    <input type="text" name="name" id="name" class="form-control" placeholder="Enter Name" autocomplete="off" />
+                                </div>
+                            
+                                <div class="form-group">
+                                    <label>Email</label>
+                                    <input type="email" name="email" id="email" class="form-control" placeholder="Enter Email" autocomplete="off" />
                                 </div>
                             
                             
-                                {{end}}
-                            </div>
+                                <div class="form-group">
+                                    <label>Password</label>
+                                    <input type="password" name="password" id="password" class="form-control" placeholder="Enter password"
+                                        autocomplete="off" />
+                                </div>
+                            
+                            
+                                <div class="form-group">
+                                    <label>Mobile Number</label>
+                                    <input type="text" name="mobilenumber" id="mobilenumber" class="form-control" placeholder="Enter Mobile Number"
+                                        autocomplete="off" />
+                                </div>
+                            
+                                <div class="form-group">
+                                    <label>City</label>
+                                    <input type="text" name="city" id="city" class="form-control" placeholder="Enter City" autocomplete="off" />
+                                </div>
+                            
+                                <button type="submit" class="btn btn-primary btn-block">Save</button>
+                            </form>
+
                         </div>
                     </div>
                 </div>
-
                 <!-- ============================================================== -->
                 <!-- End PAge Content -->
                 <!-- ============================================================== -->
@@ -246,21 +269,31 @@
         <!-- ============================================================== -->
     </div>
     <script>
-        function myFunction() {
-            var input, filter, ul, li, a, i;
-            input = document.getElementById("mySearch");
-            filter = input.value.toUpperCase();
-            ul = document.getElementById("list");
-            li = ul.getElementsByTagName("div");
-            for (i = 0; i < li.length; i++) {
-                a = li[i].getElementsByTagName("h4")[0];
-                if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
-                    li[i].style.display = "";
-                } else {
-                    li[i].style.display = "none";
+        $(document).ready(function () {
+
+
+            $("#register-form").validate({
+                rules: {
+                    name: "required",
+                    password: "required",
+                    email: "required",
+                    mobilenumber: {
+                        required: true,
+                        minlength: 10,
+                        maxlength: 10,
+
+                    },
+                    city: "required",
+                },
+
+                messages: {
+                    name: "*Please Enter Name",
+                    password: "*Please Enter Password",
+                    email: "*Please Enter Email",
+                    city: "*Please Enter City",
                 }
-            }
-        }
+            });
+        });
     </script>
     <!-- ============================================================== -->
     <!-- End Wrapper -->

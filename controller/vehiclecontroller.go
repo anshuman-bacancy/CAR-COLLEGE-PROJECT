@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"fmt"
 	"go/build"
 	"log"
 	"net/http"
@@ -11,8 +12,10 @@ import (
 	"github.com/gorilla/sessions"
 )
 
+var adminregister bool
+var adminregisteremailerror bool
 var chekerror bool
-var store = sessions.NewCookieStore([]byte("t0p-s3cr3t"))
+var store = sessions.NewCookieStore([]byte("t0p-s3cr3ta"))
 var vehiclesave bool
 var deletevehicle bool
 var updatevehicle bool
@@ -117,19 +120,46 @@ func Login(w http.ResponseWriter, r *http.Request) {
 //LoginPost is...
 func LoginPost(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
-	user := r.PostForm.Get("username")
-	pass := r.PostForm.Get("password")
-	if user == "jaimin@gmail.com" && pass == "1312" {
-		session, _ := store.Get(r, "username")
-		session.Values["username"] = user
-		session.Save(r, w)
-		//fmt.Fprintf(w, "username is save")
-		http.Redirect(w, r, "/admin/vehicle", http.StatusSeeOther)
+	adminemail := r.PostForm.Get("username")
+	adminpassword := r.PostForm.Get("password")
+	// fmt.Println(adminemail, adminpassword)
+	admins := service.GetAllAdmin(r)
+	if len(admins) == 0 {
+		http.Redirect(w, r, "/", http.StatusSeeOther)
 		return
 	}
-	chekerror = true
+
+	var accessadmin bool
+	for _, admin := range admins {
+		if admin.Email == adminemail && admin.Password == adminpassword {
+			accessadmin = true
+			session, _ := store.Get(r, "username")
+			session.Values["username"] = admin.Email
+			session.Save(r, w)
+			break
+		}
+	}
+
+	if !accessadmin {
+		fmt.Println("inside if")
+		chekerror = true
+		http.Redirect(w, r, "/admin", http.StatusSeeOther)
+		return
+	}
+
+	// fmt.Println(admins)
+	// if adminemail == "jaimin@gmail.com" && adminpassword == "1312" {
+	// 	session, _ := store.Get(r, "username")
+	// 	session.Values["username"] = adminemail
+	// 	session.Save(r, w)
+	// 	//fmt.Fprintf(w, "username is save")
+	// 	http.Redirect(w, r, "/admin/vehicle", http.StatusSeeOther)
+	// 	return
+	// }
+	//chekerror = true
+
 	//fmt.Fprintf(w, "username or password is wrong")
-	http.Redirect(w, r, "/admin", http.StatusSeeOther)
+	http.Redirect(w, r, "/admin/vehicle", http.StatusSeeOther)
 }
 
 //Logout is....
@@ -353,4 +383,48 @@ func GetAllCustomerOrders(w http.ResponseWriter, r *http.Request) {
 	tpl.ExecuteTemplate(w, "order.html", struct {
 		Orders []model.Order
 	}{orders})
+}
+
+//AdminRegister is..
+func AdminRegister(w http.ResponseWriter, r *http.Request) {
+	var message string
+	var hasmessge bool
+	var hasmessgesuccess bool
+	if adminregisteremailerror {
+		hasmessge = true
+		message = "Email is already taken"
+		adminregisteremailerror = false
+	}
+
+	if adminregister {
+		hasmessgesuccess = true
+		message = "Admin Registration successfully"
+		adminregister = false
+	}
+
+	path := build.Default.GOPATH + "/src/project/template/admin/*"
+	tpl := template.Must(template.New("").Funcs(fm).ParseGlob(path))
+	tpl.ExecuteTemplate(w, "register.html", struct {
+		HasMessage       bool
+		Message          string
+		Hasmessgesuccess bool
+	}{hasmessge, message, hasmessgesuccess})
+}
+
+//AdminRegisterPOST is...
+func AdminRegisterPOST(w http.ResponseWriter, r *http.Request) {
+	emailcheck, err := service.SaveAdmin(r)
+	if err != nil {
+		http.Redirect(w, r, "/error", http.StatusSeeOther)
+		return
+	}
+
+	if emailcheck {
+		adminregisteremailerror = true
+		http.Redirect(w, r, "/admin/register", http.StatusSeeOther)
+		return
+	}
+	//fmt.Fprintf(w, "Register data")
+	adminregister = true
+	http.Redirect(w, r, "/admin/register", http.StatusSeeOther)
 }
