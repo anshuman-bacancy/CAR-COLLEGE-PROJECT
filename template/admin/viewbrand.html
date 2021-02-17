@@ -146,6 +146,10 @@
                                 aria-expanded="false"><i class=" far fa-list-alt" aria-hidden="true"></i><span
                                     class="hide-menu">Customer</span></a>
                         </li>
+
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link " href="/admin/orders"
+                                aria-expanded="false"><i class="fa fa-car" aria-hidden="true"></i><span class="hide-menu">Orders</span></a>
+                        </li>
                     </ul>
 
                 </nav>
@@ -190,8 +194,11 @@
                             <h1>VIEW {{ .Brand.Name}}</h1>
             
                             <img src="data:image/jpeg;base64,{{.Brand.Logo}}" height="300px" width="300px" />
+                         
+                            <input type="text" id="mySearch" onkeyup="myFunction()" class="form-control" placeholder="Search vehicle.."
+                                title="Type in a category">
                             <br>
-                            <div class="row">
+                            <div class="row" id="list">
                                 {{range .Vehicles}}
                             
                                 <div class="col-md-4">
@@ -206,6 +213,7 @@
                         </div>
                     </div>
                 </div>
+
                 <!-- ============================================================== -->
                 <!-- End PAge Content -->
                 <!-- ============================================================== -->
@@ -232,7 +240,23 @@
         <!-- End Page wrapper  -->
         <!-- ============================================================== -->
     </div>
-   
+    <script>
+        function myFunction() {
+            var input, filter, ul, li, a, i;
+            input = document.getElementById("mySearch");
+            filter = input.value.toUpperCase();
+            ul = document.getElementById("list");
+            li = ul.getElementsByTagName("div");
+            for (i = 0; i < li.length; i++) {
+                a = li[i].getElementsByTagName("h4")[0];
+                if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                    li[i].style.display = "";
+                } else {
+                    li[i].style.display = "none";
+                }
+            }
+        }
+    </script>
     <!-- ============================================================== -->
     <!-- End Wrapper -->
     <!-- ============================================================== -->

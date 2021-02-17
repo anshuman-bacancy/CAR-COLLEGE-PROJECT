@@ -46,7 +46,9 @@ func Initialmigration() {
 	connection.AutoMigrate(&model.Vehicle{})
 	connection.Model(&model.Vehicle{}).AddForeignKey("company_id", "companies(id)", "CASCADE", "CASCADE")
 	connection.AutoMigrate(&model.Customer{})
-
+	connection.AutoMigrate(&model.Order{})
+	connection.Model(&model.Order{}).AddForeignKey("vehicle_id", "vehicles(id)", "CASCADE", "CASCADE")
+	connection.Model(&model.Order{}).AddForeignKey("customer_id", "customers(id)", "CASCADE", "CASCADE")
 	defer Closedatabase(connection)
 	fmt.Println("migration done")
 }

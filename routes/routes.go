@@ -29,6 +29,7 @@ func InitializeRoutesfrontendCustomer() {
 	r.HandleFunc("/customer/Logout", controller.CustomerLogout).Methods("GET")
 	//GET ALL DATA
 	r.HandleFunc("/customer/index", controller.AuthenticationCustomer(controller.CustomerIndexPage)).Methods("GET")
+	r.HandleFunc("/customer/orders", controller.AuthenticationCustomer(controller.CustomerGetallOrder)).Methods("GET")
 
 	//GET VIEW PAGE
 	r.HandleFunc("/customer/brand/view/{id}", controller.AuthenticationCustomer(controller.GetallVehicleWithBrandforview)).Methods("GET")
@@ -37,6 +38,7 @@ func InitializeRoutesfrontendCustomer() {
 	r.HandleFunc("/customer/forgotpassword", controller.CustomerForgotPassword).Methods("GET")
 	r.HandleFunc("/customer/setpassword/{id}", controller.CustomerSetForgotPasswordPage).Methods("GET")
 	r.HandleFunc("/success", controller.CustomerSuccess).Methods("GET")
+
 }
 
 //InitializeRoutesbackendCustomer is...
@@ -45,6 +47,7 @@ func InitializeRoutesbackendCustomer() {
 	r.HandleFunc("/customer/register", controller.CustomerRegisterPOST).Methods("POST")
 	r.HandleFunc("/customer/login", controller.CustomerLoginPost).Methods("POST")
 	r.HandleFunc("/customer/validateemail", controller.CustomerValidateEmail).Methods("POST")
+	r.HandleFunc("/customer/book/vehicle", controller.AuthenticationCustomer(controller.CustomerBookVehicle)).Methods("POST")
 	//PUT REQUEST
 	r.HandleFunc("/customer/{id}", controller.CustomerUpdate).Methods("PUT")
 }
@@ -66,6 +69,7 @@ func InitializeRoutesfrontendAdmin() {
 	r.HandleFunc("/admin/vehicle", controller.AuthenticationAdmin(controller.AdminIndexpageProcess)).Methods("GET")
 	r.HandleFunc("/admin/brand", controller.AuthenticationAdmin(controller.GetAllBrand)).Methods("GET")
 	r.HandleFunc("/admin/customer", controller.AuthenticationAdmin(controller.GetAllCustomer)).Methods("GET")
+	r.HandleFunc("/admin/orders", controller.AuthenticationAdmin(controller.GetAllCustomerOrders)).Methods("GET")
 
 	//GET CREATE PAGE
 	r.HandleFunc("/admin/create/vehicle", controller.AuthenticationAdmin(controller.CreateVehicleform)).Methods("GET")

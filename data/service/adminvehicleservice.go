@@ -155,6 +155,15 @@ func GetOneBrandNameByID(id uint) string {
 	return company.Name
 }
 
+//GetOneBrandImageByID is...
+func GetOneBrandImageByID(id uint) string {
+	connection := common.GetDatabase()
+	defer common.Closedatabase(connection)
+	var company model.Company
+	connection.First(&company, id)
+	return company.Logo
+}
+
 //UpdateBrand is....
 func UpdateBrand(r *http.Request) ([]byte, error) {
 	connection := common.GetDatabase()
@@ -195,4 +204,31 @@ func GetParticlullarBrandVehiclewithR(r *http.Request) []model.Vehicle {
 	var vehicles []model.Vehicle
 	connection.Where("company_id = ?", id).Find(&vehicles)
 	return vehicles
+}
+
+//GetOneVehicleNameByID is..
+func GetOneVehicleNameByID(vehicleid uint) string {
+	connection := common.GetDatabase()
+	defer common.Closedatabase(connection)
+	var vehicle model.Vehicle
+	connection.First(&vehicle, vehicleid)
+	return vehicle.ModelName
+}
+
+//GetOneVehicleImageByID is..
+func GetOneVehicleImageByID(vehicleid uint) string {
+	connection := common.GetDatabase()
+	defer common.Closedatabase(connection)
+	var vehicle model.Vehicle
+	connection.First(&vehicle, vehicleid)
+	return vehicle.Image
+}
+
+//GetVehicleBrandID is..
+func GetVehicleBrandID(vehicleid uint) uint {
+	connection := common.GetDatabase()
+	defer common.Closedatabase(connection)
+	var vehicle model.Vehicle
+	connection.First(&vehicle, vehicleid)
+	return vehicle.CompanyID
 }

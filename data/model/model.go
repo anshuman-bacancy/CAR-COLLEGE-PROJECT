@@ -44,3 +44,10 @@ type Customer struct {
 	Mobile   string `json:"mobile"`
 	City     string `json:"city"`
 }
+
+//Order is...
+type Order struct {
+	gorm.Model
+	VehicleID  uint `json:"vehicleid,string"`
+	CustomerID uint `json:"Customerid,string"`
+}

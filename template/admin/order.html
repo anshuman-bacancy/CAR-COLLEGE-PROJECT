@@ -129,21 +129,20 @@
                                     aria-hidden="true"></i><span class="hide-menu">Vehicles</span></a>
                         </li>
 
-                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link active"
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link "
                                 href="/admin/brand" aria-expanded="false"><i class="fas fa-clipboard-list"
                                     aria-hidden="true"></i><span class="hide-menu">Brand</span></a>
                         </li>
 
-                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link " 
-                            href="/admin/customer"
-                                aria-expanded="false"><i class=" far fa-list-alt" aria-hidden="true"></i><span
-                                    class="hide-menu">Customer</span></a>
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link "
+                                href="/admin/customer" aria-expanded="false"><i class=" far fa-list-alt"
+                                    aria-hidden="true"></i><span class="hide-menu">Customer</span></a>
                         </li>
 
-                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link " 
-                            href="/admin/orders"
-                                aria-expanded="false"><i class="fa fa-car" aria-hidden="true"></i><span class="hide-menu">Orders</span></a>
-                        </li>
+                    <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link active"
+                         href="/admin/orders"
+                            aria-expanded="false"><i class="fa fa-car" aria-hidden="true"></i><span class="hide-menu">Orders</span></a>
+                    </li>
                     </ul>
 
                 </nav>
@@ -164,7 +163,7 @@
             <div class="page-breadcrumb bg-white">
                 <div class="row align-items-center">
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                        <h4 class="page-title text-uppercase font-medium font-14">BRAND</h4>
+                        <h4 class="page-title text-uppercase font-medium font-14">ORDERS</h4>
                     </div>
 
                 </div>
@@ -183,48 +182,49 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="white-box">
-
-                            <div class="table-responsive">
-
-
-                                <a href="/admin/create/brand" class="btn btn-danger text-white">CREATE BRAND</a>
-                                <br><br><br>
-                                <input type="text" class="form-control" id="myInput" onkeyup="myFunction()"
-                                    placeholder="Search for Brand.." title="Type in a name">
-                                <br><br><br>
-
-                                {{if .HasMessage}}
-                                <div class="alert alert-success text-center" style="font-weight:bold;" role="alert">{{.Message}}</div>
-                                <br>
-                                {{end}}
-
-
-                                <table class="table table-hover" id="myTable">
-                                    <thead>
-                                        <tr>
-                                            <th class="border-top-0">#</th>
-                                            <th class="border-top-0">Name</th>
-                                            <th class="border-top-0">Image</th>
-                                            <th class="border-top-0">View</th>
-                                            <th class="border-top-0">Edit</th>
-                                            <th class="border-top-0">Delete</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                            {{range .Brands}} 
-                                                <tr>
-                                                    <td>{{.ID}}</td>
-                                                    <td>{{.Name}}</td>
-                                                    <td><a href="/admin/brand/view/{{.ID}}"><img src="data:image/jpeg;base64,{{.Logo}}" height="100px" width=100px" /></a></td>
-                                                    <td><a href="/admin/brand/view/{{.ID}}" class="btn btn-info">View</a></td>
-                                                    <td><a href="/admin/brand/{{.ID}}" class="btn btn-primary">Edit</a></td>
-                                                    <td><button type="button" id="{{ .ID }}" class="deletebrand btn btn-danger"><i style="font-size:24px"
-                                                                class="fa">&#xf014;</i><strong> Delete</strong></button></td>
-                                                </tr>
+                                <div class="table-responsive">
+                                
+                                    <input type="text" class="form-control" id="myInput" onkeyup="myFunction()" placeholder="Search using vehicle name.."
+                                        title="Type in a name">
+                                        <br>
+                                     <input type="text" class="form-control" id="myInput2" onkeyup="myFunction2()" placeholder="Search using customer name.."
+                                            title="Type in a name">
+                                    <br><br><br>
+  
+                              
+                                    <table class="table table-hover" id="myTable">
+                                        <thead>
+                                            <tr>
+                                                <th class="border-top-0">Order ID</th>
+                                                <th class="border-top-0">Vehicle ID</th>
+                                                <th class="border-top-0">Customer ID</th>
+                                                <th class="border-top-0">Customer Name</th>
+                                                <th class="border-top-0">View Customer</th>
+                                                <th class="border-top-0">Vehicle Model Name</th>
+                                                <th class="border-top-0">Brand Image</th>
+                                                <th class="border-top-0">Vehicle Image</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {{range .Orders}}
+                                            <tr>
+                                                <td>{{.ID}}</td>
+                                                <td>{{.VehicleID}}</td>
+                                                <td>{{.CustomerID}}</td>
+                                                <td>{{getCustomerNameById .CustomerID}}</td>
+                                                <td><a href="/admin/customer/view/{{.CustomerID}}" class="btn btn-info">VIEW CUSTOMER</a></td>
+                                                <td>{{getVehicleName .VehicleID}} {{getVehicleBrandName .VehicleID}}</td>
+                                                <td><a href=/admin/vehicle/view/{{.VehicleID}}"><img
+                                                            src="data:image/jpeg;base64,{{getVehicleBrandImage .VehicleID}}" height="100px"
+                                                            width=100px" /></a></td>
+                                                <td><a href="/admin/vehicle/view/{{.VehicleID}}"><img
+                                                            src="data:image/jpeg;base64,{{getVehicleImage .VehicleID}}" height="100px"
+                                                            width=100px" /></a></td>
+                                            </tr>
                                             {{end}}
-                                    </tbody>
-                                </table>
-                            </div>
+                                        </tbody>
+                                    </table>
+                                </div>
                         </div>
                     </div>
                 </div>
@@ -237,7 +237,7 @@
                         table = document.getElementById("myTable");
                         tr = table.getElementsByTagName("tr");
                         for (i = 0; i < tr.length; i++) {
-                            td = tr[i].getElementsByTagName("td")[1];
+                            td = tr[i].getElementsByTagName("td")[5];
                             if (td) {
                                 txtValue = td.textContent || td.innerText;
                                 if (txtValue.toUpperCase().indexOf(filter) > -1) {
@@ -248,26 +248,45 @@
                             }
                         }
                     }
+
+                     function myFunction2() {
+                            var input, filter, table, tr, td, i, txtValue;
+                            input = document.getElementById("myInput2");
+                            filter = input.value.toUpperCase();
+                            table = document.getElementById("myTable");
+                            tr = table.getElementsByTagName("tr");
+                            for (i = 0; i < tr.length; i++) {
+                                td = tr[i].getElementsByTagName("td")[3];
+                                if (td) {
+                                    txtValue = td.textContent || td.innerText;
+                                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                                        tr[i].style.display = "";
+                                    } else {
+                                        tr[i].style.display = "none";
+                                    }
+                                }
+                            }
+                        }
                 </script>
 
 
 
                 <script type="text/javascript">
                     $(document).ready(function () {
-                        $(".deletebrand").each(function () {
+                        $(".deletevehicle").each(function () {
                             $(this).on("click", function () {
                                 var el = this;
-                                brandid = $(this).attr("id");
-                                if (confirm("Are you sure you want to delete the Brand with ID " + brandid + " ? ")) {
+                                vehicleid = $(this).attr("id");
+                                if (confirm("Are you sure you want to delete the Vehicle with ID " + vehicleid + " ? ")) {
 
-                                    fetch('/admin/brand/' + brandid, {
+                                    fetch('/admin/vehicle/' + vehicleid, {
                                         method: 'DELETE',
                                     })
                                         .then(res => {
                                             $(el).closest('tr').css('background', 'tomato');
                                             $(el).closest('tr').fadeOut(500, function () {
                                                 $(this).remove();
-                                                window.location = "/admin/brand"
+                                                window.location = "/admin/vehicle"
                                             });
                                         })
                                 }

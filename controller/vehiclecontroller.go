@@ -21,11 +21,42 @@ var deletebrand bool
 var updatebrand bool
 var deletecustomer bool
 var fm = template.FuncMap{
-	"getbrand": getbrand,
+	"getbrand":             getbrand,
+	"getVehicleName":       getVehicleName,
+	"getVehicleImage":      getVehicleImage,
+	"getVehicleBrandName":  getVehicleBrandName,
+	"getVehicleBrandImage": getVehicleBrandImage,
+	"getCustomerNameById":  getCustomerNameByID,
 }
 
-func getbrand(id uint) string {
-	return service.GetOneBrandNameByID(id)
+func getCustomerNameByID(customerid uint) string {
+	return service.GetCustomerNameByID(customerid)
+}
+
+func getbrand(brandid uint) string {
+	return service.GetOneBrandNameByID(brandid)
+}
+
+func getbrandImage(brandid uint) string {
+	return service.GetOneBrandImageByID(brandid)
+}
+
+func getVehicleName(vehicle uint) string {
+	return service.GetOneVehicleNameByID(vehicle)
+}
+
+func getVehicleImage(vehicle uint) string {
+	return service.GetOneVehicleImageByID(vehicle)
+}
+
+func getVehicleBrandName(vehicle uint) string {
+	brandid := service.GetVehicleBrandID(vehicle)
+	return getbrand(brandid)
+}
+
+func getVehicleBrandImage(vehicle uint) string {
+	brandid := service.GetVehicleBrandID(vehicle)
+	return getbrandImage(brandid)
 }
 
 //AdminIndexpageProcess is..
@@ -107,9 +138,7 @@ func Logout(w http.ResponseWriter, r *http.Request) {
 	session.Options.MaxAge = -1
 	delete(session.Values, "username")
 	session.Save(r, w)
-	//fmt.Fprintf(w, "username is cleared")
 	http.Redirect(w, r, "/", http.StatusSeeOther)
-	//return
 }
 
 //CreateVehicleform is....
@@ -188,7 +217,6 @@ func UpdateVehicle(w http.ResponseWriter, r *http.Request) {
 	updatevehicle = true
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(data)
-	//http.Redirect(w, r, "/admin/vehicle", http.StatusSeeOther)
 }
 
 //CreateBrandform is..
@@ -272,11 +300,6 @@ func UpdateBrand(w http.ResponseWriter, r *http.Request) {
 func GetoneBrandforview(w http.ResponseWriter, r *http.Request) {
 	brand := service.GetOneBrand(r)
 	vehicles := service.GetParticlullarBrandVehicle(brand.ID)
-	// if err != nil {
-	// 	fmt.Println(err)
-	// 	http.Redirect(w, r, "/error", http.StatusSeeOther)
-	// 	return
-	// }
 	path := build.Default.GOPATH + "/src/project/template/admin/*"
 	tpl := template.Must(template.New("").Funcs(fm).ParseGlob(path))
 	tpl.ExecuteTemplate(w, "viewbrand.html", struct {
@@ -320,4 +343,14 @@ func GetoneCustomerforview(w http.ResponseWriter, r *http.Request) {
 	tpl.ExecuteTemplate(w, "viewcustomer.html", struct {
 		Customer model.Customer
 	}{customer})
+}
+
+//GetAllCustomerOrders is..
+func GetAllCustomerOrders(w http.ResponseWriter, r *http.Request) {
+	orders := service.GetAllOrders(r)
+	path := build.Default.GOPATH + "/src/project/template/admin/*"
+	tpl := template.Must(template.New("").Funcs(fm).ParseGlob(path))
+	tpl.ExecuteTemplate(w, "order.html", struct {
+		Orders []model.Order
+	}{orders})
 }

@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"project/common"
 	"project/data/model"
+	"strconv"
 
 	"github.com/gorilla/mux"
 )
@@ -16,9 +17,6 @@ func SaveCustomer(r *http.Request) (bool, error) {
 	connection := common.GetDatabase()
 	defer common.Closedatabase(connection)
 	sqldb := connection.DB()
-	// if err != nil {
-	// 	return false, err
-	// }
 	rows, err := sqldb.Query("SELECT email FROM customers")
 	defer rows.Close()
 	if err != nil {
@@ -104,4 +102,48 @@ func CustomerUpdate(r *http.Request) ([]byte, error) {
 		return nil, err
 	}
 	return bytedata, nil
+}
+
+//CustomerBookVehicle is....
+func CustomerBookVehicle(r *http.Request, customer model.Customer) error {
+	vehicleid, err := strconv.Atoi(r.FormValue("vehicleid"))
+	if err != nil {
+		return err
+	}
+	customerid := customer.ID
+	connection := common.GetDatabase()
+	defer common.Closedatabase(connection)
+	order := model.Order{
+		VehicleID:  uint(vehicleid),
+		CustomerID: customerid,
+	}
+	connection.Create(&order)
+	return nil
+}
+
+//GetParticlullarCustomerOrder is..
+func GetParticlullarCustomerOrder(r *http.Request, customer model.Customer) []model.Order {
+	connection := common.GetDatabase()
+	defer common.Closedatabase(connection)
+	var orders []model.Order
+	connection.Where("customer_id = ?", customer.ID).Find(&orders)
+	return orders
+}
+
+//GetAllOrders is...
+func GetAllOrders(r *http.Request) []model.Order {
+	connection := common.GetDatabase()
+	defer common.Closedatabase(connection)
+	var orders []model.Order
+	connection.Find(&orders)
+	return orders
+}
+
+//GetCustomerNameByID is..
+func GetCustomerNameByID(id uint) string {
+	connection := common.GetDatabase()
+	defer common.Closedatabase(connection)
+	var customer model.Customer
+	connection.First(&customer, id)
+	return customer.Name
 }
