@@ -63,7 +63,7 @@ func InitializeRoutesfrontendAdmin() {
 	r.HandleFunc("/", controller.HomePage).Methods("GET")
 	r.HandleFunc("/admin", controller.Login).Methods("GET")
 	r.HandleFunc("/admin/logout", controller.Logout).Methods("GET")
-	r.HandleFunc("/error", controller.AuthenticationAdmin(controller.ServerError)).Methods("GET")
+	r.HandleFunc("/error", controller.ServerError).Methods("GET")
 	r.HandleFunc("/admin/register", controller.AuthenticationAdmin(controller.AdminRegister)).Methods("GET")
 	//GET ALL DATA
 	r.HandleFunc("/admin/vehicle", controller.AuthenticationAdmin(controller.AdminIndexpageProcess)).Methods("GET")
@@ -82,6 +82,7 @@ func InitializeRoutesfrontendAdmin() {
 	r.HandleFunc("/admin/vehicle/view/{id}", controller.AuthenticationAdmin(controller.GetoneVehicleforview)).Methods("GET")
 	r.HandleFunc("/admin/brand/view/{id}", controller.AuthenticationAdmin(controller.GetoneBrandforview)).Methods("GET")
 	r.HandleFunc("/admin/customer/view/{id}", controller.AuthenticationAdmin(controller.GetoneCustomerforview)).Methods("GET")
+	r.HandleFunc("/admin/account", controller.AuthenticationAdmin(controller.GetAdminAccountPage)).Methods("GET")
 }
 
 //InitializeRoutesbackendAdmin is...
@@ -95,7 +96,7 @@ func InitializeRoutesbackendAdmin() {
 	//PUT METHODS
 	r.HandleFunc("/admin/vehicle/{id}", controller.AuthenticationAdmin(controller.UpdateVehicle)).Methods("PUT")
 	r.HandleFunc("/admin/brand/{id}", controller.AuthenticationAdmin(controller.UpdateBrand)).Methods("PUT")
-
+	r.HandleFunc("/admin/{id}", controller.AuthenticationAdmin(controller.UpdateAdmin)).Methods("PUT")
 	//DELETE METHODS
 	r.HandleFunc("/admin/vehicle/{id}", controller.AuthenticationAdmin(controller.DeleteVehicle)).Methods("DELETE")
 	r.HandleFunc("/admin/brand/{id}", controller.AuthenticationAdmin(controller.DeleteBrand)).Methods("DELETE")

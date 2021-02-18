@@ -12,6 +12,7 @@ import (
 	"github.com/gorilla/sessions"
 )
 
+var updateadmin bool
 var adminregister bool
 var adminregisteremailerror bool
 var chekerror bool
@@ -427,4 +428,37 @@ func AdminRegisterPOST(w http.ResponseWriter, r *http.Request) {
 	//fmt.Fprintf(w, "Register data")
 	adminregister = true
 	http.Redirect(w, r, "/admin/register", http.StatusSeeOther)
+}
+
+//GetAdminAccountPage is..
+func GetAdminAccountPage(w http.ResponseWriter, r *http.Request) {
+	session, _ := store.Get(r, "username")
+	email, _ := session.Values["username"]
+	admin := service.GetOneAdminBYemail(email)
+	var message string
+	var hasmessge bool
+	if updateadmin {
+		hasmessge = true
+		message = "Profile Updated successfully"
+		updateadmin = false
+	}
+	path := build.Default.GOPATH + "/src/project/template/admin/*"
+	tpl := template.Must(template.New("").Funcs(fm).ParseGlob(path))
+	tpl.ExecuteTemplate(w, "account.html", struct {
+		HasMessage bool
+		Message    string
+		Admin      model.SalesPerson
+	}{hasmessge, message, admin})
+}
+
+//UpdateAdmin is..
+func UpdateAdmin(w http.ResponseWriter, r *http.Request) {
+	customer, err := service.AdminUpdate(r)
+	if err != nil {
+		log.Fatalln(err)
+		return
+	}
+	updateadmin = true
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(customer)
 }

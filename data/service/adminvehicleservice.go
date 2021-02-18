@@ -272,3 +272,35 @@ func GetAllAdmin(r *http.Request) []model.SalesPerson {
 	connection.Find(&salesperson)
 	return salesperson
 }
+
+//GetOneAdminBYemail is...
+func GetOneAdminBYemail(email interface{}) model.SalesPerson {
+	connection := common.GetDatabase()
+	defer common.Closedatabase(connection)
+	var admin model.SalesPerson
+	connection.Where("email = 	?", email).First(&admin)
+	return admin
+}
+
+//AdminUpdate is...
+func AdminUpdate(r *http.Request) ([]byte, error) {
+	connection := common.GetDatabase()
+	defer common.Closedatabase(connection)
+	id := mux.Vars(r)["id"]
+	var admin model.SalesPerson
+	connection.First(&admin, id)
+	bodydata, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		return nil, err
+	}
+	err = json.Unmarshal(bodydata, &admin)
+	if err != nil {
+		return nil, err
+	}
+	connection.Save(&admin)
+	bytedata, err := json.MarshalIndent(admin, "", "  ")
+	if err != nil {
+		return nil, err
+	}
+	return bytedata, nil
+}
