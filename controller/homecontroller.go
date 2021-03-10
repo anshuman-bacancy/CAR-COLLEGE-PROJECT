@@ -201,7 +201,7 @@ func sendemail(email string) {
 	customer := service.GetOneCustomerBYemail(email)
 	customerid := strconv.Itoa(int(customer.ID))
 	subjet := "FORGOT YOUR PASSSWORD EMAIL"
-	body := "http://localhost:8083/customer/setpassword/" + customerid
+	body := "http://localhost:8084/customer/setpassword/" + customerid
 	// smtp server configuration.
 	smtpHost := "smtp.gmail.com"
 	smtpPort := "587"

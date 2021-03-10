@@ -51,4 +51,11 @@ func Initialmigration() {
 	connection.Model(&model.Order{}).AddForeignKey("customer_id", "customers(id)", "CASCADE", "CASCADE")
 	defer Closedatabase(connection)
 	fmt.Println("migration done")
+
+	// connection.Create(&model.SalesPerson{
+	// 	Name:     "jaimin",
+	// 	Email:    "jaimin@gmail.com",
+	// 	Password: "1312",
+	// 	City:     "Rajkot",
+	// 	Mobile:   "1234567890"})
 }
