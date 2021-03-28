@@ -11,13 +11,13 @@
     <meta name="description"
         content="Ample Admin Lite is powerful and clean admin dashboard template, inpired from Bootstrap Framework">
     <meta name="robots" content="noindex,nofollow">
-    <title>Customer</title>
+    <title>ADMIN</title>
     <link rel="canonical" href="https://www.wrappixel.com/templates/ample-admin-lite/" />
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="/static/plugins/images/favicon.png">
     <!-- Custom CSS -->
     <link href="/static/css/style.min.css" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -25,7 +25,8 @@
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 <![endif]-->
     <style>
-        td {
+        td ,th {
+            text-transform: uppercase;
             color: black;
         }
     </style>
@@ -55,20 +56,18 @@
                     <!-- ============================================================== -->
                     <!-- Logo -->
                     <!-- ============================================================== -->
-                    <a class="navbar-brand" href="/customer/index">
+                    <a class="navbar-brand" href="/admin">
                         <!-- Logo icon -->
-                        <b class="logo-icon"> -->
+                        <b class="logo-icon">
                             <!-- Dark Logo icon -->
                             <img src="/static/plugins/images/logo-icon.png" alt="homepage" />
                         </b>
-                        <div style="color: black;">CARBAZAR</div>
                         <!--End Logo icon -->
                         <!-- Logo text -->
-                        <!-- <span class="logo-text"> -->
-                        <!-- dark Logo text -->
-                        <!-- <img src="/static/plugins/images/logo-text.png" alt="homepage" /> -->
-
-                        <!-- </span> -->
+                        <span class="logo-text">
+                            <!-- dark Logo text -->
+                            <img src="/static/plugins/images/logo-text.png" alt="homepage" />
+                        </span>
                     </a>
                     <!-- ============================================================== -->
                     <!-- End Logo -->
@@ -88,8 +87,6 @@
                             <a class="nav-toggler nav-link waves-effect waves-light text-white"
                                 href="javascript:void(0)"><i class="ti-menu ti-close"></i></a>
                         </li>
-
-                        
                     </ul>
                     <!-- ============================================================== -->
                     <!-- Right side toggle and nav items -->
@@ -104,7 +101,7 @@
                         <!-- User profile and search -->
                         <!-- ============================================================== -->
                         <li>
-                            <a class="profile-pic" href="/customer/Logout">
+                            <a class="profile-pic" href="/logout">
                                 <img src="/static/plugins/images/users/varun.jpg" alt="user-img" width="36"
                                     class="img-circle"><span class="text-white font-medium">Logout</span></a>
                         </li>
@@ -128,19 +125,33 @@
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
                         <!-- User Profile-->
-                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link active"
-                                href="/customer/index" aria-expanded="false"><i class="fas fa-clock fa-fw"
-                                    aria-hidden="true"></i><span class="hide-menu">Vehicles</span></a></li>
-                           
-                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link "
-                             href="/customer/account"
-                                    aria-expanded="false"><i class="fa fa-user" aria-hidden="true"></i><span class="hide-menu">Account</span></a>
-                            </li>
-                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link "
-                             href="/customer/orders"
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link active" href="/admin/vehicle"
+                                aria-expanded="false"><i class="fas fa-clock fa-fw" aria-hidden="true"></i><span
+                                    class="hide-menu">Vehicles</span></a>
+                        </li>
+                        
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link " href="/admin/brand"
+                                aria-expanded="false"><i class="fas fa-clipboard-list" aria-hidden="true"></i><span
+                                    class="hide-menu">Brand</span></a>
+                        </li>
+
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link " href="/admin/customer"
+                                aria-expanded="false"><i class=" far fa-list-alt" aria-hidden="true"></i><span
+                                    class="hide-menu">Customer</span></a>
+                        </li>
+
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link " href="/admin/orders"
                                 aria-expanded="false"><i class="fa fa-car" aria-hidden="true"></i><span class="hide-menu">Orders</span></a>
                         </li>
 
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link " href="/admin/register"
+                                aria-expanded="false"><i class="fa fa-registered" aria-hidden="true"></i><span
+                                    class="hide-menu">Registration</span></a>
+                        </li>
+
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link " href="/admin/account"
+                                aria-expanded="false"><i class="fa fa-user" aria-hidden="true"></i><span class="hide-menu">Account</span></a>
+                        </li>
                     </ul>
 
                 </nav>
@@ -180,101 +191,94 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="white-box">
-                        <div class="table-responsive">
-                        
-                            <a href="javascript:history.go(-1);" class="btn btn-primary text-white">Back</a>
-                            <br><br><br>
-                            <!-- <h1>Model Name {{.ModelName}} {{getbrand .CompanyID}}</h1> -->
-                            <img src="data:image/jpeg;base64,{{ .Image}}" />
-                            <div class="col-md-6">
-                                <table class="table table-bordered">
-                                    <tr>
-                                        <th>
-                                            Year
-                                        </th>
-                                        <td>
-                                            {{.Year}}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>
-                                            Vin Number
-                                        </th>
-                                        <td>
-                                            {{.Vin}}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>
-                                            BRAND NAME
-                                        </th>
-                                        <td>
-                                            {{getbrand .CompanyID}}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>
-                                            ModelName
-                                        </th>
-                                        <td>
-                                            {{.ModelName}}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>
-                                            TitleNumber
-                                        </th>
-                                        <td>
-                                            {{.TitleNumber}}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>
-                                            Price
-                                        </th>
-                                        <td>
-                                            &#8377;{{.Price}}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>
-                                            FuelType
-                                        </th>
-                                        <td>
-                                            {{.FuelType}}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>
-                                            Mileage
-                                        </th>
-                                        <td>
-                                            {{.Mileage}}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>
-                                            Stock
-                                        </th>
-                                        <td>
-                                            {{.Stock}}
-                                        </td>
-                                    </tr>
-                                </table>
-                                <form action="/customer/book/vehicle" method="POST" onsubmit="return confirm('Do you really want to book this car?');">
-                                    <input type="hidden" name="vehicleid" value="{{.ID}}" />
-                                    <button type="submit" class="btn btn-info">BOOK NOW {{.ModelName}} {{getbrand .CompanyID}}</button>
-                                </form>
-                              
+
+                            <div class="table-responsive">
+
+                                <a href="javascript:history.go(-1);" class="btn btn-primary text-white">Back</a>
+                                <br><br><br>
+                                <h1>Model Name {{.ModelName}} {{getbrand .CompanyID}}</h1>
+                                <img src="data:image/jpeg;base64,{{ .Image}}" />
+                                <div   class="col-md-6">
+                                        <table class="table table-bordered">
+                                            <tr>
+                                                <th>
+                                                    Year
+                                                </th>
+                                                <td>
+                                                    {{.Year}}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>
+                                                    Vin Number
+                                                </th>
+                                                <td>
+                                                    {{.Vin}}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>
+                                                    BRAND NAME
+                                                </th>
+                                                <td>
+                                                {{getbrand .CompanyID}}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>
+                                                    ModelName
+                                                </th>
+                                                <td>
+                                                    {{.ModelName}}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>
+                                                    TitleNumber
+                                                </th>
+                                                <td>
+                                                    {{.TitleNumber}}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>
+                                                    Price
+                                                </th>
+                                                <td>
+                                                    &#8377;{{.Price}}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>
+                                                    FuelType
+                                                </th>
+                                                <td>
+                                                    {{.FuelType}}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>
+                                                    Mileage
+                                                </th>
+                                                <td>
+                                                    {{.Mileage}}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>
+                                                    Stock
+                                                </th>
+                                                <td>
+                                                    {{.Stock}}
+                                                </td>
+                                            </tr>
+                                        </table>
+                                </div>
+                               
                             </div>
-                           
-                        </div>
                         </div>
                     </div>
                 </div>
-
-
-                
                 <!-- ============================================================== -->
                 <!-- End PAge Content -->
                 <!-- ============================================================== -->

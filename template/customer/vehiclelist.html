@@ -183,17 +183,12 @@
                             <input type="text" id="mySearch" onkeyup="myFunction()" class="form-control" placeholder="Search vehicle.." title="Type in a category">
                             <br>
                                 <div class="row" id="list">
-                                   
-                                    {{range .Vehicles}}
-                                
+                                    {{range .}}
                                     <div class="col-md-4">
-                                        <a href="/customer/vehicle/view/{{.ID}}"> <img src="data:image/jpeg;base64,{{.Image}}" height="300px"
-                                                width=400px" /></a>
+                                        <a href="/customer/vehicle/view/{{.ID}}"> <img src="data:image/jpeg;base64,{{.Image}}" height="300px" width="400px" /></a>
                                         <h4 style="text-align: center;">{{.ModelName}}</h4>
                                         <br><br><br>
                                     </div>
-                                
-                                
                                     {{end}}
                                 </div>
                         </div>

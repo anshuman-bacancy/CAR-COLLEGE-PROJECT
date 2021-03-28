@@ -181,13 +181,12 @@
                         <div class="white-box">
                             <div class="row">
                             {{range .}}
-                                
-                                    <div class="col-md-4">
-                                        <center><a href="/customer/brand/view/{{.ID}}"><img src="data:image/jpeg;base64,{{.Logo}}" height="200px" width=200px" /></a></center>
+                                     <div class="col-md-4">
+                                        <center><a href="/customer/brand/view/{{.ID}}"><img src="data:image/jpeg;base64,{{.Logo}}" height="200px" width="200px" /></a></center>
                                         <br>
                                         <h4 style="text-align: center;">{{.Name}}</h4>
                                         <br><br><br>
-                                    </div>
+                                    </div> 
                              
                             {{end}}
                             </div>

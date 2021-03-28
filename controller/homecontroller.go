@@ -12,7 +12,18 @@ import (
 	"github.com/gorilla/sessions"
 )
 
-var custtpl, admintpl, hometpl *template.Template
+var (
+	admintpl *template.Template
+	hometpl  *template.Template
+	custtpl  *template.Template
+)
+
+func init() {
+	admintpl = template.Must(template.New("").Funcs(Fm).ParseGlob(("./template/admin/*")))
+	hometpl = template.Must(template.New("").Funcs(Fm).ParseGlob(("./template/home/*")))
+	custtpl = template.Must(template.New("").Funcs(Fm).ParseGlob(("./template/customer/*")))
+}
+
 var registeremail bool
 var customernotexits bool
 var storecustomer = sessions.NewCookieStore([]byte("t0p-s3cr3tcus"))
@@ -105,6 +116,7 @@ func CustomerLoginPost(w http.ResponseWriter, r *http.Request) {
 //CustomerIndexPage is...
 func CustomerIndexPage(w http.ResponseWriter, r *http.Request) {
 	brand := service.GetAllBrand(r)
+	// fmt.Println(brand)
 	custtpl.ExecuteTemplate(w, "index.html", brand)
 }
 

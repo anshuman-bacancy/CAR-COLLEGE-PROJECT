@@ -23,7 +23,8 @@ var brandsave bool
 var deletebrand bool
 var updatebrand bool
 var deletecustomer bool
-var fm = template.FuncMap{
+
+var Fm = template.FuncMap{
 	"getbrand":             getbrand,
 	"getVehicleName":       getVehicleName,
 	"getVehicleImage":      getVehicleImage,
@@ -31,12 +32,6 @@ var fm = template.FuncMap{
 	"getVehicleBrandImage": getVehicleBrandImage,
 	"getCustomerNameById":  getCustomerNameByID,
 }
-
-// func init() {
-// 	admintpl = template.Must(template.New("").Funcs(fm).ParseGlob(("template/admin/*")))
-// 	hometpl = template.Must(template.New("").Funcs(fm).ParseGlob(("template/home/*")))
-// 	custtpl = template.Must(template.New("").Funcs(fm).ParseGlob(("template/customer/*")))
-// }
 
 func getCustomerNameByID(customerid uint) string {
 	return service.GetCustomerNameByID(customerid)
@@ -274,6 +269,9 @@ func GetAllBrand(w http.ResponseWriter, r *http.Request) {
 	}
 
 	brands := service.GetAllBrand(r)
+
+	fmt.Println(brands)
+
 	admintpl.ExecuteTemplate(w, "brandlist.html", struct {
 		HasMessage bool
 		Message    string

@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"fmt"
 	"html/template"
 	"log"
 	"net/http"
@@ -15,18 +16,15 @@ var (
 
 var tpl *template.Template
 
-func init() {
-	admintpl = template.Must(template.New("").Funcs(fm).ParseGlob(("template/admin/*")))
-	hometpl = template.Must(template.New("").Funcs(fm).ParseGlob(("template/home/*")))
-	custtpl = template.Must(template.New("").Funcs(fm).ParseGlob(("template/customer/*")))
-}
-
 //GetallVehicleWithBrandforview is..
 func GetallVehicleWithBrandforview(w http.ResponseWriter, r *http.Request) {
 	vehicles := service.GetParticlullarBrandVehiclewithR(r)
-	custtpl.ExecuteTemplate(w, "vehiclelist.html", struct {
-		Vehicles []model.Vehicle
-	}{vehicles})
+	fmt.Println(vehicles)
+	// custtpl.ExecuteTemplate(w, "vehiclelist.html", struct {
+	// 	Vehicles []model.Vehicle
+	// }{vehicles})
+
+	custtpl.ExecuteTemplate(w, "vehiclelist.html", vehicles)
 }
 
 //CustomerGetoneVehicleforview is...

@@ -71,9 +71,10 @@
                         </b>
                         <!--End Logo icon -->
                         <!-- Logo text -->
-                        <span class="logo-text">
+                        <span class="logo-text" style="color:black">
                             <!-- dark Logo text -->
-                            <img src="/static/plugins/images/logo-text.png" alt="homepage" />
+                            CARBAZAAR
+                            <!-- <img src="/static/plugins/images/logo-text.png" alt="homepage" /> -->
                         </span>
                     </a>
                     <!-- ============================================================== -->
@@ -210,7 +211,7 @@
                                 {{range .Vehicles}}
                             
                                 <div class="col-md-4">
-                                    <a href="/admin/vehicle/view/{{.ID}}"> <img src="data:image/jpeg;base64,{{.Image}}" height="300px" width=400px" /></a>
+                                    <a href="/admin/vehicle/view/{{.ID}}"> <img src="data:image/jpeg;base64,{{.Image}}" height="300px" width="400px" /></a>
                                   <h4 style="text-align: center;">{{.ModelName}}</h4> 
                                     <br><br><br>
                                 </div>

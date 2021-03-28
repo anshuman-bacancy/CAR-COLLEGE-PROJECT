@@ -11,7 +11,7 @@
     <meta name="description"
         content="Ample Admin Lite is powerful and clean admin dashboard template, inpired from Bootstrap Framework">
     <meta name="robots" content="noindex,nofollow">
-    <title>Customer</title>
+    <title>ADMIN</title>
     <link rel="canonical" href="https://www.wrappixel.com/templates/ample-admin-lite/" />
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="/static/plugins/images/favicon.png">
@@ -55,20 +55,18 @@
                     <!-- ============================================================== -->
                     <!-- Logo -->
                     <!-- ============================================================== -->
-                    <a class="navbar-brand" href="/customer/index">
+                    <a class="navbar-brand" href="/admin/vehicle">
                         <!-- Logo icon -->
-                        <b class="logo-icon"> -->
+                        <b class="logo-icon">
                             <!-- Dark Logo icon -->
                             <img src="/static/plugins/images/logo-icon.png" alt="homepage" />
                         </b>
-                        <div style="color: black;">CARBAZAR</div>
                         <!--End Logo icon -->
                         <!-- Logo text -->
-                        <!-- <span class="logo-text"> -->
-                        <!-- dark Logo text -->
-                        <!-- <img src="/static/plugins/images/logo-text.png" alt="homepage" /> -->
-
-                        <!-- </span> -->
+                        <span class="logo-text">
+                            <!-- dark Logo text -->
+                            <img src="/static/plugins/images/logo-text.png" alt="homepage" />
+                        </span>
                     </a>
                     <!-- ============================================================== -->
                     <!-- End Logo -->
@@ -88,8 +86,6 @@
                             <a class="nav-toggler nav-link waves-effect waves-light text-white"
                                 href="javascript:void(0)"><i class="ti-menu ti-close"></i></a>
                         </li>
-
-                        
                     </ul>
                     <!-- ============================================================== -->
                     <!-- Right side toggle and nav items -->
@@ -104,7 +100,7 @@
                         <!-- User profile and search -->
                         <!-- ============================================================== -->
                         <li>
-                            <a class="profile-pic" href="/customer/Logout">
+                            <a class="profile-pic" href="/admin/logout">
                                 <img src="/static/plugins/images/users/varun.jpg" alt="user-img" width="36"
                                     class="img-circle"><span class="text-white font-medium">Logout</span></a>
                         </li>
@@ -128,19 +124,34 @@
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
                         <!-- User Profile-->
-                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link active"
-                                href="/customer/index" aria-expanded="false"><i class="fas fa-clock fa-fw"
-                                    aria-hidden="true"></i><span class="hide-menu">Vehicles</span></a></li>
-                           
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link "
-                             href="/customer/account"
-                                    aria-expanded="false"><i class="fa fa-user" aria-hidden="true"></i><span class="hide-menu">Account</span></a>
-                            </li>
-                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link "
-                             href="/customer/orders"
-                                aria-expanded="false"><i class="fa fa-car" aria-hidden="true"></i><span class="hide-menu">Orders</span></a>
+                                href="/admin/vehicle" aria-expanded="false"><i class="fas fa-clock fa-fw"
+                                    aria-hidden="true"></i><span class="hide-menu">Vehicles</span></a>
                         </li>
 
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link "
+                                href="/admin/brand" aria-expanded="false"><i class="fas fa-clipboard-list"
+                                    aria-hidden="true"></i><span class="hide-menu">Brand</span></a>
+                        </li>
+
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link "
+                                href="/admin/customer" aria-expanded="false"><i class=" far fa-list-alt"
+                                    aria-hidden="true"></i><span class="hide-menu">Customer</span></a>
+                        </li>
+
+                    <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link active"
+                         href="/admin/orders"
+                            aria-expanded="false"><i class="fa fa-car" aria-hidden="true"></i><span class="hide-menu">Orders</span></a>
+                    </li>
+
+                    <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link " href="/admin/register"
+                            aria-expanded="false"><i class="fa fa-registered" aria-hidden="true"></i><span
+                                class="hide-menu">Registration</span></a>
+                    </li>
+
+                    <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link " href="/admin/account"
+                            aria-expanded="false"><i class="fa fa-user" aria-hidden="true"></i><span class="hide-menu">Account</span></a>
+                    </li>
                     </ul>
 
                 </nav>
@@ -161,7 +172,7 @@
             <div class="page-breadcrumb bg-white">
                 <div class="row align-items-center">
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                        <h4 class="page-title text-uppercase font-medium font-14">Vehicles</h4>
+                        <h4 class="page-title text-uppercase font-medium font-14">ORDERS</h4>
                     </div>
 
                 </div>
@@ -180,101 +191,122 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="white-box">
-                        <div class="table-responsive">
-                        
-                            <a href="javascript:history.go(-1);" class="btn btn-primary text-white">Back</a>
-                            <br><br><br>
-                            <!-- <h1>Model Name {{.ModelName}} {{getbrand .CompanyID}}</h1> -->
-                            <img src="data:image/jpeg;base64,{{ .Image}}" />
-                            <div class="col-md-6">
-                                <table class="table table-bordered">
-                                    <tr>
-                                        <th>
-                                            Year
-                                        </th>
-                                        <td>
-                                            {{.Year}}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>
-                                            Vin Number
-                                        </th>
-                                        <td>
-                                            {{.Vin}}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>
-                                            BRAND NAME
-                                        </th>
-                                        <td>
-                                            {{getbrand .CompanyID}}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>
-                                            ModelName
-                                        </th>
-                                        <td>
-                                            {{.ModelName}}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>
-                                            TitleNumber
-                                        </th>
-                                        <td>
-                                            {{.TitleNumber}}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>
-                                            Price
-                                        </th>
-                                        <td>
-                                            &#8377;{{.Price}}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>
-                                            FuelType
-                                        </th>
-                                        <td>
-                                            {{.FuelType}}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>
-                                            Mileage
-                                        </th>
-                                        <td>
-                                            {{.Mileage}}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>
-                                            Stock
-                                        </th>
-                                        <td>
-                                            {{.Stock}}
-                                        </td>
-                                    </tr>
-                                </table>
-                                <form action="/customer/book/vehicle" method="POST" onsubmit="return confirm('Do you really want to book this car?');">
-                                    <input type="hidden" name="vehicleid" value="{{.ID}}" />
-                                    <button type="submit" class="btn btn-info">BOOK NOW {{.ModelName}} {{getbrand .CompanyID}}</button>
-                                </form>
+                                <div class="table-responsive">
+                                
+                                    <input type="text" class="form-control" id="myInput" onkeyup="myFunction()" placeholder="Search using vehicle name.."
+                                        title="Type in a name">
+                                        <br>
+                                     <input type="text" class="form-control" id="myInput2" onkeyup="myFunction2()" placeholder="Search using customer name.."
+                                            title="Type in a name">
+                                    <br><br><br>
+  
                               
-                            </div>
-                           
-                        </div>
+                                    <table class="table table-hover" id="myTable">
+                                        <thead>
+                                            <tr>
+                                                <th class="border-top-0">Order ID</th>
+                                                <th class="border-top-0">Vehicle ID</th>
+                                                <th class="border-top-0">Customer ID</th>
+                                                <th class="border-top-0">Customer Name</th>
+                                                <th class="border-top-0">View Customer</th>
+                                                <th class="border-top-0">Vehicle Model Name</th>
+                                                <th class="border-top-0">Brand Image</th>
+                                                <th class="border-top-0">Vehicle Image</th>
+                                                <th class="border-top-0">OrderDate</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {{range .Orders}}
+                                            <tr>
+                                                <td>{{.ID}}</td>
+                                                <td>{{.VehicleID}}</td>
+                                                <td>{{.CustomerID}}</td>
+                                                <td>{{getCustomerNameById .CustomerID}}</td>
+                                                <td><a href="/admin/customer/view/{{.CustomerID}}" class="btn btn-info">VIEW CUSTOMER</a></td>
+                                                <td>{{getVehicleName .VehicleID}} {{getVehicleBrandName .VehicleID}}</td>
+                                                <td><a href="/admin/vehicle/view/{{.VehicleID}}"><img
+                                                            src="data:image/jpeg;base64,{{getVehicleBrandImage .VehicleID}}" height="100px"
+                                                            width=100px" /></a></td>
+                                                <td><a href="/admin/vehicle/view/{{.VehicleID}}"><img
+                                                            src="data:image/jpeg;base64,{{getVehicleImage .VehicleID}}" height="100px"
+                                                            width=100px" /></a></td>
+                                                <td>{{.CreatedAt}}</td>
+                                            </tr>
+                                            {{end}}
+                                        </tbody>
+                                    </table>
+                                </div>
                         </div>
                     </div>
                 </div>
 
+                <script>
+                    function myFunction() {
+                        var input, filter, table, tr, td, i, txtValue;
+                        input = document.getElementById("myInput");
+                        filter = input.value.toUpperCase();
+                        table = document.getElementById("myTable");
+                        tr = table.getElementsByTagName("tr");
+                        for (i = 0; i < tr.length; i++) {
+                            td = tr[i].getElementsByTagName("td")[5];
+                            if (td) {
+                                txtValue = td.textContent || td.innerText;
+                                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                                    tr[i].style.display = "";
+                                } else {
+                                    tr[i].style.display = "none";
+                                }
+                            }
+                        }
+                    }
 
-                
+                     function myFunction2() {
+                            var input, filter, table, tr, td, i, txtValue;
+                            input = document.getElementById("myInput2");
+                            filter = input.value.toUpperCase();
+                            table = document.getElementById("myTable");
+                            tr = table.getElementsByTagName("tr");
+                            for (i = 0; i < tr.length; i++) {
+                                td = tr[i].getElementsByTagName("td")[3];
+                                if (td) {
+                                    txtValue = td.textContent || td.innerText;
+                                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                                        tr[i].style.display = "";
+                                    } else {
+                                        tr[i].style.display = "none";
+                                    }
+                                }
+                            }
+                        }
+                </script>
+
+
+
+                <script type="text/javascript">
+                    $(document).ready(function () {
+                        $(".deletevehicle").each(function () {
+                            $(this).on("click", function () {
+                                var el = this;
+                                vehicleid = $(this).attr("id");
+                                if (confirm("Are you sure you want to delete the Vehicle with ID " + vehicleid + " ? ")) {
+
+                                    fetch('/admin/vehicle/' + vehicleid, {
+                                        method: 'DELETE',
+                                    })
+                                        .then(res => {
+                                            $(el).closest('tr').css('background', 'tomato');
+                                            $(el).closest('tr').fadeOut(500, function () {
+                                                $(this).remove();
+                                                window.location = "/admin/vehicle"
+                                            });
+                                        })
+                                }
+
+                            });
+                        });
+
+                    });
+                </script>
                 <!-- ============================================================== -->
                 <!-- End PAge Content -->
                 <!-- ============================================================== -->

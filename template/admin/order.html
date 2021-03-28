@@ -63,9 +63,10 @@
                         </b>
                         <!--End Logo icon -->
                         <!-- Logo text -->
-                        <span class="logo-text">
+                        <span class="logo-text" style="color:black">
                             <!-- dark Logo text -->
-                            <img src="/static/plugins/images/logo-text.png" alt="homepage" />
+                            CARBAZAAR
+                            <!-- <img src="/static/plugins/images/logo-text.png" alt="homepage" /> -->
                         </span>
                     </a>
                     <!-- ============================================================== -->
@@ -193,13 +194,10 @@
                         <div class="white-box">
                                 <div class="table-responsive">
                                 
-                                    <input type="text" class="form-control" id="myInput" onkeyup="myFunction()" placeholder="Search using vehicle name.."
-                                        title="Type in a name">
-                                        <br>
-                                     <input type="text" class="form-control" id="myInput2" onkeyup="myFunction2()" placeholder="Search using customer name.."
-                                            title="Type in a name">
+                                    <input type="text" class="form-control" id="myInput" onkeyup="searchVehicle()" placeholder="Search vehicle name" title="Type in a name">
+                                    <br>
+                                    <input type="text" class="form-control" id="myInput2" onkeyup="searchCustomer()" placeholder="Search customer name" title="Type in a name">
                                     <br><br><br>
-  
                               
                                     <table class="table table-hover" id="myTable">
                                         <thead>
@@ -209,10 +207,10 @@
                                                 <th class="border-top-0">Customer ID</th>
                                                 <th class="border-top-0">Customer Name</th>
                                                 <th class="border-top-0">View Customer</th>
-                                                <th class="border-top-0">Vehicle Model Name</th>
-                                                <th class="border-top-0">Brand Image</th>
+                                                <th class="border-top-0">Vehicle Model</th>
+                                                <th class="border-top-0">Brand Logo</th>
                                                 <th class="border-top-0">Vehicle Image</th>
-                                                <th class="border-top-0">OrderDate</th>
+                                                <th class="border-top-0">Order Date</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -226,10 +224,10 @@
                                                 <td>{{getVehicleName .VehicleID}} {{getVehicleBrandName .VehicleID}}</td>
                                                 <td><a href="/admin/vehicle/view/{{.VehicleID}}"><img
                                                             src="data:image/jpeg;base64,{{getVehicleBrandImage .VehicleID}}" height="100px"
-                                                            width=100px" /></a></td>
+                                                            width="100px" /></a></td>
                                                 <td><a href="/admin/vehicle/view/{{.VehicleID}}"><img
                                                             src="data:image/jpeg;base64,{{getVehicleImage .VehicleID}}" height="100px"
-                                                            width=100px" /></a></td>
+                                                            width="100px" /></a></td>
                                                 <td>{{.CreatedAt}}</td>
                                             </tr>
                                             {{end}}
@@ -241,7 +239,8 @@
                 </div>
 
                 <script>
-                    function myFunction() {
+                    // search vehicle and customer
+                    function searchVehicle() {
                         var input, filter, table, tr, td, i, txtValue;
                         input = document.getElementById("myInput");
                         filter = input.value.toUpperCase();
@@ -260,7 +259,7 @@
                         }
                     }
 
-                     function myFunction2() {
+                     function searchCustomer() {
                             var input, filter, table, tr, td, i, txtValue;
                             input = document.getElementById("myInput2");
                             filter = input.value.toUpperCase();
@@ -279,8 +278,6 @@
                             }
                         }
                 </script>
-
-
 
                 <script type="text/javascript">
                     $(document).ready(function () {

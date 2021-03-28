@@ -16,7 +16,7 @@ var tpl *template.Template
 
 //GetDatabase is return db connection
 func GetDatabase() *gorm.DB {
-	connection, err := gorm.Open("postgres", "postgres://postgres:password@localhost/carproject?sslmode=disable")
+	connection, err := gorm.Open("postgres", "postgres://postgres:password@localhost/CarProject?sslmode=disable")
 	CheckError(err)
 	sqldb := connection.DB()
 	err = sqldb.Ping()

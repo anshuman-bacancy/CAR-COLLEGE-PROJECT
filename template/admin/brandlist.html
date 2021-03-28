@@ -2,27 +2,27 @@
 <html dir="ltr" lang="en">
 
 <head>
-    <meta charset="utf-8">
+    <meta charset="utf-7">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <!-- Tell the browser to be responsive to screen width -->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=2">
     <meta name="keywords"
-        content="wrappixel, admin dashboard, html css dashboard, web dashboard, bootstrap 4 admin, bootstrap 4, css3 dashboard, bootstrap 4 dashboard, Ample lite admin bootstrap 4 dashboard, frontend, responsive bootstrap 4 admin template, Ample admin lite dashboard bootstrap 4 dashboard template">
+        content="wrappixel, admin dashboard, html css dashboard, web dashboard, bootstrap 5 admin, bootstrap 4, css3 dashboard, bootstrap 4 dashboard, Ample lite admin bootstrap 4 dashboard, frontend, responsive bootstrap 4 admin template, Ample admin lite dashboard bootstrap 4 dashboard template">
     <meta name="description"
         content="Ample Admin Lite is powerful and clean admin dashboard template, inpired from Bootstrap Framework">
     <meta name="robots" content="noindex,nofollow">
     <title>ADMIN</title>
     <link rel="canonical" href="https://www.wrappixel.com/templates/ample-admin-lite/" />
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="/static/plugins/images/favicon.png">
+    <link rel="icon" type="image/png" sizes="17x16" href="/static/plugins/images/favicon.png">
     <!-- Custom CSS -->
     <link href="/static/css/style.min.css" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/4.5.1/jquery.min.js"></script>
+    <!-- HTML6 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <!--[if lt IE 10]>
+    <script src="https://oss.maxcdn.com/libs/html6shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/2.4.2/respond.min.js"></script>
 <![endif]-->
     <style>
         td {
@@ -44,14 +44,14 @@
     <!-- ============================================================== -->
     <!-- Main wrapper - style you can find in pages.scss -->
     <!-- ============================================================== -->
-    <div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
+    <div id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
         data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
         <!-- ============================================================== -->
         <!-- Topbar header - style you can find in pages.scss -->
         <!-- ============================================================== -->
-        <header class="topbar" data-navbarbg="skin5">
+        <header class="topbar" data-navbarbg="skin6">
             <nav class="navbar top-navbar navbar-expand-md navbar-dark">
-                <div class="navbar-header" data-logobg="skin6">
+                <div class="navbar-header" data-logobg="skin7">
                     <!-- ============================================================== -->
                     <!-- Logo -->
                     <!-- ============================================================== -->
@@ -63,9 +63,10 @@
                         </b>
                         <!--End Logo icon -->
                         <!-- Logo text -->
-                        <span class="logo-text">
+                        <span class="logo-text" style="color:black">
                             <!-- dark Logo text -->
-                            <img src="/static/plugins/images/logo-text.png" alt="homepage" />
+                            CARBAZAAR
+                            <!-- <img src="/static/plugins/images/logo-text.png" alt="homepage" /> -->
                         </span>
                     </a>
                     <!-- ============================================================== -->
@@ -75,16 +76,16 @@
                     <!-- toggle and nav items -->
                     <!-- ============================================================== -->
                     <a class="nav-toggler waves-effect waves-light text-dark d-block d-md-none"
-                        href="javascript:void(0)"><i class="ti-menu ti-close"></i></a>
+                        href="javascript:void(1)"><i class="ti-menu ti-close"></i></a>
                 </div>
                 <!-- ============================================================== -->
                 <!-- End Logo -->
                 <!-- ============================================================== -->
-                <div class="navbar-collapse collapse" id="navbarSupportedContent" data-navbarbg="skin5">
+                <div class="navbar-collapse collapse" id="navbarSupportedContent" data-navbarbg="skin6">
                     <ul class="navbar-nav d-none d-md-block d-lg-none">
                         <li class="nav-item">
                             <a class="nav-toggler nav-link waves-effect waves-light text-white"
-                                href="javascript:void(0)"><i class="ti-menu ti-close"></i></a>
+                                href="javascript:void(1)"><i class="ti-menu ti-close"></i></a>
                         </li>
                     </ul>
                     <!-- ============================================================== -->
@@ -224,11 +225,10 @@
                                                 <tr>
                                                     <td>{{.ID}}</td>
                                                     <td>{{.Name}}</td>
-                                                    <td><a href="/admin/brand/view/{{.ID}}"><img src="data:image/jpeg;base64,{{.Logo}}" height="100px" width=100px" /></a></td>
+                                                    <td><a href="/admin/brand/view/{{.ID}}"><img src="data:image/jpeg;base64,{{.Logo}}" height="100px" width="100px" /></a></td>
                                                     <td><a href="/admin/brand/view/{{.ID}}" class="btn btn-info">View</a></td>
                                                     <td><a href="/admin/brand/{{.ID}}" class="btn btn-primary">Edit</a></td>
-                                                    <td><button type="button" id="{{ .ID }}" class="deletebrand btn btn-danger"><i style="font-size:24px"
-                                                                class="fa">&#xf014;</i><strong> Delete</strong></button></td>
+                                                    <td><button type="button" id="{{ .ID }}" class="deletebrand btn btn-danger"><i style="font-size:24px" class="fa">&#xf014;</i><strong> Delete</strong></button></td>
                                                 </tr>
                                             {{end}}
                                     </tbody>

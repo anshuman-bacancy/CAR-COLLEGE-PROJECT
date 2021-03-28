@@ -208,8 +208,8 @@
                                             <td>{{.ID}}</td>
                                             <td>{{.VehicleID}}</td>
                                             <td>{{getVehicleName .VehicleID}} {{getVehicleBrandName .VehicleID}}</td>
-                                            <td><a href="/customer/vehicle/view/{{.VehicleID}}"><img src="data:image/jpeg;base64,{{getVehicleBrandImage .VehicleID}}"height="100px" width=100px" /></a></td>
-                                            <td><a href="/customer/vehicle/view/{{.VehicleID}}"><img src="data:image/jpeg;base64,{{getVehicleImage .VehicleID}}" height="100px" width=100px" /></a></td>
+                                            <td><a href="/customer/vehicle/view/{{.VehicleID}}"><img src="data:image/jpeg;base64,{{getVehicleBrandImage .VehicleID}}"height="100px" width="100px" /></a></td>
+                                            <td><a href="/customer/vehicle/view/{{.VehicleID}}"><img src="data:image/jpeg;base64,{{getVehicleImage .VehicleID}}" height="100px" width="100px" /></a></td>
                                             <td>{{.CreatedAt}}</td>
                                         </tr>
                                         {{end}}
