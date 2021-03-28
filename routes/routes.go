@@ -2,7 +2,6 @@ package routes
 
 import (
 	"fmt"
-	"go/build"
 	"net/http"
 	"project/controller"
 
@@ -55,8 +54,8 @@ func InitializeRoutesbackendCustomer() {
 //InitializeRoutesfrontendAdmin is..
 func InitializeRoutesfrontendAdmin() {
 	//static
-	path := build.Default.GOPATH + "/src/project/static/"
-	fs := http.StripPrefix("/static/", http.FileServer(http.Dir(path)))
+	// path := build.Default.GOPATH + "/src/project/static/"
+	fs := http.StripPrefix("/static/", http.FileServer(http.Dir("./static")))
 	r.PathPrefix("/static/").Handler(fs)
 	http.Handle("/static/", r)
 

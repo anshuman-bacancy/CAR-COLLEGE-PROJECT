@@ -222,12 +222,12 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {{range  .Vehicles}}
+                                        {{range .Vehicles}}
                                         <tr>
                                             <td>{{.ID}}</td>
                                             <td>{{.Vin}}</td>
-                                            <td>{{.ModelName}} {{getbrand .CompanyID}}</td>
-                                            <td>{{getbrand .CompanyID}}</td>
+                                            <td>{{.ModelName}} {{getbrand.CompanyID}}</td>
+                                            <td>{{getbrand.CompanyID}}</td>
                                             <td><a href="/admin/vehicle/view/{{.ID}}"><img src="data:image/jpeg;base64,{{.Image}}" height="100px" width=100px" /></a></td>
                                             <td><a href="/admin/vehicle/view/{{.ID}}" class="btn btn-info">View</a></td>
                                             <td><a href="/admin/vehicle/{{.ID}}" class="btn btn-primary">Edit</a></td>

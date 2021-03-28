@@ -6,7 +6,6 @@ import (
 )
 
 func main() {
-
 	// Sender data.
 	from := "autogradingsystem99999@gmail.com"
 	password := "nedlsjaxafqmlnms"

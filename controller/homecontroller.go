@@ -2,17 +2,17 @@ package controller
 
 import (
 	"fmt"
-	"go/build"
+	"html/template"
 	"net/http"
 	"net/smtp"
 	"project/data/service"
 	"strconv"
-	"text/template"
 
 	"github.com/gorilla/mux"
 	"github.com/gorilla/sessions"
 )
 
+var custtpl, admintpl, hometpl *template.Template
 var registeremail bool
 var customernotexits bool
 var storecustomer = sessions.NewCookieStore([]byte("t0p-s3cr3tcus"))
@@ -21,9 +21,9 @@ var emailnotextits bool
 
 //HomePage is....
 func HomePage(w http.ResponseWriter, r *http.Request) {
-	path := build.Default.GOPATH + "/src/project/template/home/*"
-	tpl := template.Must(template.New("").Funcs(fm).ParseGlob(path))
-	tpl.ExecuteTemplate(w, "index.html", nil)
+	// path := build.Default.GOPATH + "/src/project/template/home/*"
+	// tpl := template.Must(template.New("").Funcs(fm).ParseGlob(path))
+	hometpl.ExecuteTemplate(w, "index.html", nil)
 }
 
 //CustomerRegister is...
@@ -35,9 +35,7 @@ func CustomerRegister(w http.ResponseWriter, r *http.Request) {
 		message = "Email is already taken"
 		registeremail = false
 	}
-	path := build.Default.GOPATH + "/src/project/template/home/*"
-	tpl := template.Must(template.New("").Funcs(fm).ParseGlob(path))
-	tpl.ExecuteTemplate(w, "Register.html", struct {
+	hometpl.ExecuteTemplate(w, "Register.html", struct {
 		HasMessage bool
 		Message    string
 	}{hasmessge, message})
@@ -68,9 +66,7 @@ func CustomerLogin(w http.ResponseWriter, r *http.Request) {
 		message = "Username or Password is wrong"
 		customernotexits = false
 	}
-	path := build.Default.GOPATH + "/src/project/template/home/*"
-	tpl := template.Must(template.New("").Funcs(fm).ParseGlob(path))
-	tpl.ExecuteTemplate(w, "login.html", struct {
+	hometpl.ExecuteTemplate(w, "login.html", struct {
 		HasMessage bool
 		Message    string
 	}{hasmessge, message})
@@ -108,10 +104,8 @@ func CustomerLoginPost(w http.ResponseWriter, r *http.Request) {
 
 //CustomerIndexPage is...
 func CustomerIndexPage(w http.ResponseWriter, r *http.Request) {
-	path := build.Default.GOPATH + "/src/project/template/customer/*"
-	tpl := template.Must(template.New("").Funcs(fm).ParseGlob(path))
 	brand := service.GetAllBrand(r)
-	tpl.ExecuteTemplate(w, "index.html", brand)
+	custtpl.ExecuteTemplate(w, "index.html", brand)
 }
 
 //AuthenticationCustomer is..
@@ -135,9 +129,7 @@ func CustomerLogout(w http.ResponseWriter, r *http.Request) {
 	session.Options.MaxAge = -1
 	delete(session.Values, "customer")
 	session.Save(r, w)
-	//fmt.Fprintf(w, "username is cleared")
 	http.Redirect(w, r, "/", http.StatusSeeOther)
-	//return
 }
 
 //CustomerForgotPassword is..
@@ -156,9 +148,7 @@ func CustomerForgotPassword(w http.ResponseWriter, r *http.Request) {
 		emailnotextits = false
 	}
 
-	path := build.Default.GOPATH + "/src/project/template/home/*"
-	tpl := template.Must(template.New("").Funcs(fm).ParseGlob(path))
-	tpl.ExecuteTemplate(w, "forgotpassword.html", struct {
+	hometpl.ExecuteTemplate(w, "forgotpassword.html", struct {
 		HasMessage bool
 		Message    string
 	}{hasmessge, message})
@@ -201,7 +191,7 @@ func sendemail(email string) {
 	customer := service.GetOneCustomerBYemail(email)
 	customerid := strconv.Itoa(int(customer.ID))
 	subjet := "FORGOT YOUR PASSSWORD EMAIL"
-	body := "http://localhost:8083/customer/setpassword/" + customerid
+	body := "http://localhost:8084/customer/setpassword/" + customerid
 	// smtp server configuration.
 	smtpHost := "smtp.gmail.com"
 	smtpPort := "587"
@@ -239,9 +229,7 @@ func CustomerSetForgotPasswordPage(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	path := build.Default.GOPATH + "/src/project/template/home/*"
-	tpl := template.Must(template.New("").Funcs(fm).ParseGlob(path))
-	tpl.ExecuteTemplate(w, "setforgotpassword.html", id)
+	hometpl.ExecuteTemplate(w, "setforgotpassword.html", id)
 }
 
 //CustomerSuccess is...
@@ -249,7 +237,5 @@ func CustomerSuccess(w http.ResponseWriter, r *http.Request) {
 	session, _ := storecustomer.Get(r, "customerusername")
 	delete(session.Values, "emailid")
 	session.Save(r, w)
-	path := build.Default.GOPATH + "/src/project/template/home/*"
-	tpl := template.Must(template.New("").Funcs(fm).ParseGlob(path))
-	tpl.ExecuteTemplate(w, "success.html", nil)
+	hometpl.ExecuteTemplate(w, "success.html", nil)
 }

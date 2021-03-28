@@ -16,7 +16,7 @@ var tpl *template.Template
 
 //GetDatabase is return db connection
 func GetDatabase() *gorm.DB {
-	connection, err := gorm.Open("postgres", "postgres://postgres:1312@localhost/CarProject?sslmode=disable")
+	connection, err := gorm.Open("postgres", "postgres://postgres:password@localhost/carproject?sslmode=disable")
 	CheckError(err)
 	sqldb := connection.DB()
 	err = sqldb.Ping()
@@ -51,4 +51,11 @@ func Initialmigration() {
 	connection.Model(&model.Order{}).AddForeignKey("customer_id", "customers(id)", "CASCADE", "CASCADE")
 	defer Closedatabase(connection)
 	fmt.Println("migration done")
+
+	// connection.Create(&model.SalesPerson{
+	// 	Name:     "anshuman",
+	// 	Email:    "anshuman@gmail.com",
+	// 	Password: "anshu",
+	// 	City:     "Vadodara",
+	// 	Mobile:   "1234567890"})
 }
