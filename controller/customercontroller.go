@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"fmt"
 	"html/template"
 	"log"
 	"net/http"
@@ -19,7 +18,6 @@ var tpl *template.Template
 //GetallVehicleWithBrandforview is..
 func GetallVehicleWithBrandforview(w http.ResponseWriter, r *http.Request) {
 	vehicles := service.GetParticlullarBrandVehiclewithR(r)
-	fmt.Println(vehicles)
 	// custtpl.ExecuteTemplate(w, "vehiclelist.html", struct {
 	// 	Vehicles []model.Vehicle
 	// }{vehicles})
