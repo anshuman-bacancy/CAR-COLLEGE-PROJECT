@@ -4,7 +4,9 @@ import (
 	"database/sql"
 	"fmt"
 	"project/data/model"
+	"strings"
 	"text/template"
+	"time"
 
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
@@ -58,4 +60,13 @@ func Initialmigration() {
 	// 	Password: "anshu",
 	// 	City:     "Vadodara",
 	// 	Mobile:   "1234567890"})
+}
+
+// FormatDate returns date in dd/mm/yyyy format
+func FormatDate(date string) string {
+	tempDate := strings.Replace(date, "/", "-", -1)
+	dateLayout := "02-01-2006"
+	dateFormat, _ := time.Parse(dateLayout, tempDate)
+	testDriveDate := dateFormat.Format("02-01-2006")
+	return testDriveDate
 }

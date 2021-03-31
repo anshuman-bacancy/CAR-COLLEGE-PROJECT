@@ -18,21 +18,17 @@
 	<!-- Custom CSS -->
 	<link href="/static/css/style.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
-	<link rel="stylesheet" href="http://localhost:8084/static/datetimepicker/jquery.datetimepicker.css" />
-	<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css"></script> -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.min.css" />
 	
 	<!-- JS CDNS -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>                       
-	<script src="http://localhost:8084/static/datetimepicker/jquery.datetimepicker.js" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
-	<!-- <script src="http://localhost:8084/static/bootstrap/dist/js/bootstrap-datetimepicker.min.js"></script> -->
-	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script> -->
-
-	<!-- <style>
-		td { color: black; }
-	</style> -->
+	<style>
+		/* td { color: black; } */
+	</style>
 </head>
 
 <body>
@@ -201,11 +197,7 @@
 															<td>{{.Stock}}</td>
 														</tr>
 												</table>
-												<!-- /customer/book/vehicle -->
-												<button type="submit" class="btn btn-lg btn-primary" data-toggle="modal" data-target="#interestedIn">Interested in {{getbrand .CompanyID}} {{.ModelName}} ?</button>
-												<!-- <form action="" method="POST" onsubmit="">
-													<input type="hidden" name="vehicleid" value="{{.ID}}" />
-												</form> -->
+												<button type="submit" class="btn btn-lg btn-primary" data-toggle="modal" data-target="#interestedIn" >Interested in {{getbrand .CompanyID}} {{.ModelName}} ?</button>
 											</div>
 									</div>
 								</div>
@@ -223,10 +215,10 @@
 											</button>
 									</div>
 									<div class="modal-body">
-										<form action="" method="POST" onsubmit="">
-											<input type="hidden" name="vehicleid" value="{{.ID}}" />
+										<form action="/customer/bookTestDrive"  method="POST">
+											<input type="hidden" name="vehicleId" value="{{.ID}}" />
 											<div class='input-group date'>
-												<input type='text' data-provide="datetimepicker" id="testDriveDateTime" class="form-control" />
+												<input type='text' id="testDriveDate" name="testDriveDate"  class="form-control" />
 												<span class="input-group-addon">
 													<span class="glyphicon glyphicon-calendar"></span>
 												</span>
@@ -234,8 +226,8 @@
 									</div>
 									<div class="modal-footer">
 										<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-										<button type="button" class="btn btn-primary">Confirm Test Drive?</button>
-								</form>
+										<input type="submit" class="btn btn-primary" value="Confirm Test Drive?" />
+									</form>
 								</div>
 							</div>
 						</div>
@@ -246,22 +238,11 @@
 
 	<script>
 		$(document).ready(function() {
-			$.datetimepicker.setDateFormatter({
-				parseDate: function (date, format) {
-        var d = moment(date, format);
-        return d.isValid() ? d.toDate() : false;
-			},
-			formatDate: function (date, format) {
-				return moment(date).format(format);
-			},
-		});
-
-		$("#testDriveDateTime").datetimepicker({
-			format: 'dddd, MMMM D, YYYY h:mm:ssa',
-			formatDate: 'dddd MMMM D, YYYY',
-			formatTime: 'h:mm a'
+		$("#testDriveDate").datepicker({
+			format: 'dd/mm/yyyy'
 		});
 	});
+
 	</script>
 	<!-- ============================================================== -->
 	<!-- End Wrapper -->

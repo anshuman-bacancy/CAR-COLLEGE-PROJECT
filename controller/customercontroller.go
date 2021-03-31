@@ -1,9 +1,11 @@
 package controller
 
 import (
+	"fmt"
 	"html/template"
 	"log"
 	"net/http"
+	"project/common"
 	"project/data/model"
 	"project/data/service"
 )
@@ -94,4 +96,14 @@ func CustomerGetallOrder(w http.ResponseWriter, r *http.Request) {
 		HasMessage bool
 		Message    string
 	}{orders, hasmessge, message})
+}
+
+func CustomerTestDrive(w http.ResponseWriter, r *http.Request) {
+	vehicleId := r.FormValue("vehicleId")
+	testDriveDate := common.FormatDate(r.FormValue("testDriveDate"))
+	fmt.Println(vehicleId, testDriveDate)
+
+	//save to db
+
+	// redirect to customer/index
 }
