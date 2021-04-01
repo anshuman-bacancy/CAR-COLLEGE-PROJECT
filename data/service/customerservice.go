@@ -43,7 +43,7 @@ func SaveCustomer(r *http.Request) (bool, error) {
 	return false, nil
 }
 
-//GetAllCustomer is..
+//Returns all customers
 func GetAllCustomer(r *http.Request) []model.Customer {
 	connection := common.GetDatabase()
 	defer common.Closedatabase(connection)
@@ -52,7 +52,7 @@ func GetAllCustomer(r *http.Request) []model.Customer {
 	return customers
 }
 
-//DeleteOneCustomer is..
+// Deletes one customer
 func DeleteOneCustomer(r *http.Request) {
 	id := mux.Vars(r)["id"]
 	var customer model.Customer
@@ -61,7 +61,7 @@ func DeleteOneCustomer(r *http.Request) {
 	connection.Delete(&customer, id)
 }
 
-//GetOneCustomer is...
+// Returns one customer
 func GetOneCustomer(r *http.Request) model.Customer {
 	id := mux.Vars(r)["id"]
 	connection := common.GetDatabase()
@@ -71,7 +71,7 @@ func GetOneCustomer(r *http.Request) model.Customer {
 	return customer
 }
 
-//GetOneCustomerBYemail is...
+// Returns one customer via email
 func GetOneCustomerBYemail(email interface{}) model.Customer {
 	connection := common.GetDatabase()
 	defer common.Closedatabase(connection)
@@ -130,7 +130,6 @@ func GetParticlullarCustomerTestDrive(r *http.Request, customer model.Customer) 
 	return orders
 }
 
-//GetAllTestDrives is...
 func GetAllTestDrives(r *http.Request) []model.TestDrive {
 	connection := common.GetDatabase()
 	defer common.Closedatabase(connection)
@@ -139,7 +138,6 @@ func GetAllTestDrives(r *http.Request) []model.TestDrive {
 	return orders
 }
 
-//GetCustomerNameByID is..
 func GetCustomerNameByID(id uint) string {
 	connection := common.GetDatabase()
 	defer common.Closedatabase(connection)

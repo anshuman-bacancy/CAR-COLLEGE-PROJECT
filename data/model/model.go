@@ -46,7 +46,7 @@ type Customer struct {
 	City     string `json:"city"`
 }
 
-//Order is...
+// TestDrive model
 type TestDrive struct {
 	gorm.Model
 	VehicleID     uint   `json:"vehicleid,string"`
