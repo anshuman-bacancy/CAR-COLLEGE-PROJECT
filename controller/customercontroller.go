@@ -1,13 +1,13 @@
 package controller
 
 import (
-	"fmt"
 	"html/template"
 	"log"
 	"net/http"
 	"project/common"
 	"project/data/model"
 	"project/data/service"
+	"strconv"
 )
 
 var (
@@ -90,20 +90,31 @@ func CustomerGetallOrder(w http.ResponseWriter, r *http.Request) {
 	session, _ := storecustomer.Get(r, "customerusername")
 	email, _ := session.Values["customer"]
 	customer := service.GetOneCustomerBYemail(email)
-	orders := service.GetParticlullarCustomerOrder(r, customer)
+	orders := service.GetParticlullarCustomerTestDrive(r, customer)
 	custtpl.ExecuteTemplate(w, "order.html", struct {
-		Orders     []model.Order
+		Orders     []model.TestDrive
 		HasMessage bool
 		Message    string
 	}{orders, hasmessge, message})
 }
 
 func CustomerTestDrive(w http.ResponseWriter, r *http.Request) {
-	vehicleId := r.FormValue("vehicleId")
+	tempVehicleId := r.FormValue("vehicleId")
+	vehicleId, _ := strconv.ParseUint(tempVehicleId, 10, 64)
 	testDriveDate := common.FormatDate(r.FormValue("testDriveDate"))
-	fmt.Println(vehicleId, testDriveDate)
+	// fmt.Println(vehicleId, testDriveDate)
+
+	// get customer
+	session, _ := storecustomer.Get(r, "customerusername")
+	email, _ := session.Values["customer"]
+	customer := service.GetOneCustomerBYemail(email)
 
 	//save to db
+	err := service.SaveCustomerTestDrive(customer, vehicleId, testDriveDate)
+	if err != nil {
+		log.Println(err)
+	}
 
 	// redirect to customer/index
+	http.Redirect(w, r, "/customer/index", 302)
 }

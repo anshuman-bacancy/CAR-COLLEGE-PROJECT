@@ -348,9 +348,9 @@ func GetoneCustomerforview(w http.ResponseWriter, r *http.Request) {
 
 //GetAllCustomerOrders is..
 func GetAllCustomerOrders(w http.ResponseWriter, r *http.Request) {
-	orders := service.GetAllOrders(r)
+	orders := service.GetAllTestDrives(r)
 	admintpl.ExecuteTemplate(w, "order.html", struct {
-		Orders []model.Order
+		Orders []model.TestDrive
 	}{orders})
 }
 

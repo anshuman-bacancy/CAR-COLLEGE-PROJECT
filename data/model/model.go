@@ -47,8 +47,9 @@ type Customer struct {
 }
 
 //Order is...
-type Order struct {
+type TestDrive struct {
 	gorm.Model
-	VehicleID  uint `json:"vehicleid,string"`
-	CustomerID uint `json:"Customerid,string"`
+	VehicleID     uint   `json:"vehicleid,string"`
+	CustomerID    uint   `json:"Customerid,string"`
+	TestDriveDate string `jsoon:"testdrivedate,string"`
 }

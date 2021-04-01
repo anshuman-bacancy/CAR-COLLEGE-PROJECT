@@ -113,7 +113,7 @@ func CustomerBookVehicle(r *http.Request, customer model.Customer) error {
 	customerid := customer.ID
 	connection := common.GetDatabase()
 	defer common.Closedatabase(connection)
-	order := model.Order{
+	order := model.TestDrive{
 		VehicleID:  uint(vehicleid),
 		CustomerID: customerid,
 	}
@@ -121,20 +121,20 @@ func CustomerBookVehicle(r *http.Request, customer model.Customer) error {
 	return nil
 }
 
-//GetParticlullarCustomerOrder is..
-func GetParticlullarCustomerOrder(r *http.Request, customer model.Customer) []model.Order {
+//GetParticlullarCustomerTestDrive is..
+func GetParticlullarCustomerTestDrive(r *http.Request, customer model.Customer) []model.TestDrive {
 	connection := common.GetDatabase()
 	defer common.Closedatabase(connection)
-	var orders []model.Order
+	var orders []model.TestDrive
 	connection.Where("customer_id = ?", customer.ID).Find(&orders)
 	return orders
 }
 
-//GetAllOrders is...
-func GetAllOrders(r *http.Request) []model.Order {
+//GetAllTestDrives is...
+func GetAllTestDrives(r *http.Request) []model.TestDrive {
 	connection := common.GetDatabase()
 	defer common.Closedatabase(connection)
-	var orders []model.Order
+	var orders []model.TestDrive
 	connection.Find(&orders)
 	return orders
 }
@@ -146,4 +146,17 @@ func GetCustomerNameByID(id uint) string {
 	var customer model.Customer
 	connection.First(&customer, id)
 	return customer.Name
+}
+
+func SaveCustomerTestDrive(customer model.Customer, vehicleId uint64, testDriveDate string) error {
+	var testDrive model.TestDrive
+	testDrive.CustomerID = customer.ID
+	testDrive.VehicleID = uint(vehicleId)
+	testDrive.TestDriveDate = testDriveDate
+
+	connection := common.GetDatabase()
+	defer common.Closedatabase(connection)
+
+	connection.Create(&testDrive)
+	return nil
 }
