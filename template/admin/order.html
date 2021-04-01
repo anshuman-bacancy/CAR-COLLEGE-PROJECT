@@ -142,7 +142,7 @@
 
                     <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link active"
                          href="/admin/orders"
-                            aria-expanded="false"><i class="fa fa-car" aria-hidden="true"></i><span class="hide-menu">Orders</span></a>
+                            aria-expanded="false"><i class="fa fa-car" aria-hidden="true"></i><span class="hide-menu">Test Drive bookings</span></a>
                     </li>
 
                     <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link " href="/admin/register"
@@ -173,7 +173,7 @@
             <div class="page-breadcrumb bg-white">
                 <div class="row align-items-center">
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                        <h4 class="page-title text-uppercase font-medium font-14">ORDERS</h4>
+                        <h4 class="page-title text-uppercase font-medium font-14">Test Drives Bookings</h4>
                     </div>
 
                 </div>
@@ -202,7 +202,7 @@
                                     <table class="table table-hover" id="myTable">
                                         <thead>
                                             <tr>
-                                                <th class="border-top-0">Order ID</th>
+                                                <th class="border-top-0">Test Drive Booking ID</th>
                                                 <th class="border-top-0">Vehicle ID</th>
                                                 <th class="border-top-0">Customer ID</th>
                                                 <th class="border-top-0">Customer Name</th>
@@ -210,7 +210,7 @@
                                                 <th class="border-top-0">Vehicle Model</th>
                                                 <th class="border-top-0">Brand Logo</th>
                                                 <th class="border-top-0">Vehicle Image</th>
-                                                <th class="border-top-0">Order Date</th>
+                                                <th class="border-top-0">Test Drive date</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -228,7 +228,7 @@
                                                 <td><a href="/admin/vehicle/view/{{.VehicleID}}"><img
                                                             src="data:image/jpeg;base64,{{getVehicleImage .VehicleID}}" height="100px"
                                                             width="100px" /></a></td>
-                                                <td>{{.CreatedAt}}</td>
+                                                <td>{{.TestDriveDate}}</td>
                                             </tr>
                                             {{end}}
                                         </tbody>

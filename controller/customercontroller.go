@@ -84,7 +84,7 @@ func CustomerGetallOrder(w http.ResponseWriter, r *http.Request) {
 	var hasmessge bool
 	if ordersave {
 		ordersave = false
-		message = "Your order process successfully"
+		message = "Your test drive has been booked successfully."
 		hasmessge = true
 	}
 	session, _ := storecustomer.Get(r, "customerusername")
@@ -110,11 +110,12 @@ func CustomerTestDrive(w http.ResponseWriter, r *http.Request) {
 	customer := service.GetOneCustomerBYemail(email)
 
 	//save to db
+	ordersave = true
 	err := service.SaveCustomerTestDrive(customer, vehicleId, testDriveDate)
 	if err != nil {
 		log.Println(err)
 	}
 
 	// redirect to customer/index
-	http.Redirect(w, r, "/customer/index", 302)
+	http.Redirect(w, r, "/customer/orders", 302)
 }
