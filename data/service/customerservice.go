@@ -148,13 +148,26 @@ func GetCustomerNameByID(id uint) string {
 
 func SaveCustomerTestDrive(customer model.Customer, vehicleId uint64, testDriveDate string) error {
 	var testDrive model.TestDrive
+
 	testDrive.CustomerID = customer.ID
 	testDrive.VehicleID = uint(vehicleId)
 	testDrive.TestDriveDate = testDriveDate
+	testDrive.Status = "Pending"
 
 	connection := common.GetDatabase()
 	defer common.Closedatabase(connection)
 
 	connection.Create(&testDrive)
 	return nil
+}
+
+func UpdateCustomerTestDriveStatus(data model.TestDriveStatus) {
+	connection := common.GetDatabase()
+	defer common.Closedatabase(connection)
+
+	var testDrive model.TestDrive
+	connection.Where("id = ?", data.TestDriveID).First(&testDrive)
+
+	testDrive.Status = data.Status
+	connection.Save(&testDrive)
 }

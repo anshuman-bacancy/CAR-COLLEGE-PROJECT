@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"encoding/json"
 	"fmt"
 	"html/template"
 	"log"
@@ -425,4 +426,10 @@ func UpdateAdmin(w http.ResponseWriter, r *http.Request) {
 	updateadmin = true
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(customer)
+}
+
+func UpdateTestDrive(w http.ResponseWriter, r *http.Request) {
+	var data model.TestDriveStatus
+	json.NewDecoder(r.Body).Decode(&data)
+	service.UpdateCustomerTestDriveStatus(data)
 }

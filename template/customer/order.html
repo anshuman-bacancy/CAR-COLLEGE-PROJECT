@@ -200,6 +200,7 @@
                                             <th class="border-top-0">Brand Image</th>
                                             <th class="border-top-0">Vehicle Image</th>
                                             <th class="border-top-0">Test Drive Date</th>
+                                            <th class="border-top-0">Test Drive Status</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -211,6 +212,7 @@
                                             <td><a href="/customer/vehicle/view/{{.VehicleID}}"><img src="data:image/jpeg;base64,{{getVehicleBrandImage .VehicleID}}"height="100px" width="100px" /></a></td>
                                             <td><a href="/customer/vehicle/view/{{.VehicleID}}"><img src="data:image/jpeg;base64,{{getVehicleImage .VehicleID}}" height="100px" width="100px" /></a></td>
                                             <td>{{.TestDriveDate}}</td>
+                                            <td>{{.Status}}</td>
                                         </tr>
                                         {{end}}
                                     </tbody>

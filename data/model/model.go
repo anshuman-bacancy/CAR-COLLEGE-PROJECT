@@ -51,5 +51,12 @@ type TestDrive struct {
 	gorm.Model
 	VehicleID     uint   `json:"vehicleid,string"`
 	CustomerID    uint   `json:"Customerid,string"`
-	TestDriveDate string `jsoon:"testdrivedate,string"`
+	TestDriveDate string `json:"testdrivedate,string"`
+	Status        string `json:"Status"`
+}
+
+// Receive test drive status
+type TestDriveStatus struct {
+	TestDriveID uint   `json:"TestDriveID,string"`
+	Status      string `json:"Status"`
 }

@@ -211,6 +211,7 @@
                                                 <th class="border-top-0">Brand Logo</th>
                                                 <th class="border-top-0">Vehicle Image</th>
                                                 <th class="border-top-0">Test Drive date</th>
+                                                <th class="border-top-0">Status</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -229,6 +230,15 @@
                                                             src="data:image/jpeg;base64,{{getVehicleImage .VehicleID}}" height="100px"
                                                             width="100px" /></a></td>
                                                 <td>{{.TestDriveDate}}</td>
+
+                                                <td>
+                                                <select class="form-select" id="testDriveStatus" onchange="sendStatus(this, '{{.ID}}')" class="form-control select-label">
+                                                    <option value="Pending">Pending</option>
+                                                    <option value="Successful">Successful</option>
+                                                    <option value="Missed">Missed</option>
+                                                </select>
+                                                </td>
+
                                             </tr>
                                             {{end}}
                                         </tbody>
@@ -239,6 +249,23 @@
                 </div>
 
                 <script>
+
+
+                    // handle test drive status drop down
+                    function sendStatus(testDriveStatus, testDriveID) {
+											try {
+												fetch('/admin/updateTestDrive/', {
+												method: 'PUT',
+												body: JSON.stringify({"TestDriveID": testDriveID, "Status": testDriveStatus.value}),
+												headers: {
+													'Content-type': 'application/json' 
+												}	
+											})
+										} catch(e) {
+											return e
+										} 
+									}
+
                     // search vehicle and customer
                     function searchVehicle() {
                         var input, filter, table, tr, td, i, txtValue;

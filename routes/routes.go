@@ -98,6 +98,7 @@ func InitializeRoutesbackendAdmin() {
 	r.HandleFunc("/admin/vehicle/{id}", controller.AuthenticationAdmin(controller.UpdateVehicle)).Methods("PUT")
 	r.HandleFunc("/admin/brand/{id}", controller.AuthenticationAdmin(controller.UpdateBrand)).Methods("PUT")
 	r.HandleFunc("/admin/{id}", controller.AuthenticationAdmin(controller.UpdateAdmin)).Methods("PUT")
+	r.HandleFunc("/admin/updateTestDrive/", controller.AuthenticationAdmin(controller.UpdateTestDrive)).Methods("PUT")
 	//DELETE METHODS
 	r.HandleFunc("/admin/vehicle/{id}", controller.AuthenticationAdmin(controller.DeleteVehicle)).Methods("DELETE")
 	r.HandleFunc("/admin/brand/{id}", controller.AuthenticationAdmin(controller.DeleteBrand)).Methods("DELETE")
