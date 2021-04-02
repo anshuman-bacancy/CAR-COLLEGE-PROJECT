@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"encoding/json"
 	"html/template"
 	"log"
 	"net/http"
@@ -115,7 +116,16 @@ func CustomerTestDrive(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Println(err)
 	}
-
-	// redirect to customer/index
 	http.Redirect(w, r, "/customer/orders", 302)
+}
+
+func CustomerCompare(w http.ResponseWriter, r *http.Request) {
+	allVehicles := service.GetAllVehicle()
+	custtpl.ExecuteTemplate(w, "compareCar.html", allVehicles)
+}
+
+func CustomerGetVehicle(w http.ResponseWriter, r *http.Request) {
+	vehicle := service.GetOneVehicle(r)
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(vehicle)
 }

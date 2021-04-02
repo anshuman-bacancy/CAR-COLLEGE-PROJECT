@@ -12,7 +12,7 @@ import (
 	"github.com/gorilla/mux"
 )
 
-//SaveCustomer is...
+//SaveCustomer
 func SaveCustomer(r *http.Request) (bool, error) {
 	connection := common.GetDatabase()
 	defer common.Closedatabase(connection)
@@ -80,7 +80,7 @@ func GetOneCustomerBYemail(email interface{}) model.Customer {
 	return customer
 }
 
-//CustomerUpdate is...
+//CustomerUpdate
 func CustomerUpdate(r *http.Request) ([]byte, error) {
 	fmt.Println("called update")
 	connection := common.GetDatabase()
@@ -104,7 +104,7 @@ func CustomerUpdate(r *http.Request) ([]byte, error) {
 	return bytedata, nil
 }
 
-//CustomerBookVehicle is....
+//CustomerBookVehicle
 func CustomerBookVehicle(r *http.Request, customer model.Customer) error {
 	vehicleid, err := strconv.Atoi(r.FormValue("vehicleid"))
 	if err != nil {
@@ -121,7 +121,6 @@ func CustomerBookVehicle(r *http.Request, customer model.Customer) error {
 	return nil
 }
 
-//GetParticlullarCustomerTestDrive is..
 func GetParticlullarCustomerTestDrive(r *http.Request, customer model.Customer) []model.TestDrive {
 	connection := common.GetDatabase()
 	defer common.Closedatabase(connection)

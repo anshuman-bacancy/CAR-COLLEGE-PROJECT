@@ -29,8 +29,7 @@ func InitializeRoutesfrontendCustomer() {
 	//GET ALL DATA
 	r.HandleFunc("/customer/index", controller.AuthenticationCustomer(controller.CustomerIndexPage)).Methods("GET")
 	r.HandleFunc("/customer/orders", controller.AuthenticationCustomer(controller.CustomerGetallOrder)).Methods("GET")
-	//r.HandleFunc("/customer/bookTestDrive", controller.AuthenticationCustomer(controller.CustomerTestDrive)).Methods("POST")
-	r.HandleFunc("/customer/bookTestDrive", controller.CustomerTestDrive).Methods("POST")
+	r.HandleFunc("/customer/compare", controller.AuthenticationCustomer(controller.CustomerCompare)).Methods("GET")
 
 	//GET VIEW PAGE
 	r.HandleFunc("/customer/brand/view/{id}", controller.AuthenticationCustomer(controller.GetallVehicleWithBrandforview)).Methods("GET")
@@ -38,6 +37,7 @@ func InitializeRoutesfrontendCustomer() {
 	r.HandleFunc("/customer/account", controller.AuthenticationCustomer(controller.CustomerAccountforview)).Methods("GET")
 	r.HandleFunc("/customer/forgotpassword", controller.CustomerForgotPassword).Methods("GET")
 	r.HandleFunc("/customer/setpassword/{id}", controller.CustomerSetForgotPasswordPage).Methods("GET")
+	r.HandleFunc("/customer/getVehicle/{id}", controller.CustomerGetVehicle).Methods("GET")
 	r.HandleFunc("/success", controller.CustomerSuccess).Methods("GET")
 
 }
@@ -49,6 +49,8 @@ func InitializeRoutesbackendCustomer() {
 	r.HandleFunc("/customer/login", controller.CustomerLoginPost).Methods("POST")
 	r.HandleFunc("/customer/validateemail", controller.CustomerValidateEmail).Methods("POST")
 	r.HandleFunc("/customer/book/vehicle", controller.AuthenticationCustomer(controller.CustomerBookVehicle)).Methods("POST")
+	r.HandleFunc("/customer/bookTestDrive", controller.AuthenticationCustomer(controller.CustomerTestDrive)).Methods("POST")
+
 	//PUT REQUEST
 	r.HandleFunc("/customer/{id}", controller.CustomerUpdate).Methods("PUT")
 }
