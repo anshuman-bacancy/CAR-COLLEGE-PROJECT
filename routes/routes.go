@@ -23,10 +23,10 @@ func CreateRouter() {
 
 // customer frontend routes
 func InitializeRoutesFrontendCustomer() {
+	//GET ALL DATA
 	r.HandleFunc("/Registration", controller.CustomerRegister).Methods("GET")
 	r.HandleFunc("/Login", controller.CustomerLogin).Methods("GET")
 	r.HandleFunc("/customer/Logout", controller.CustomerLogout).Methods("GET")
-	//GET ALL DATA
 	r.HandleFunc("/customer/index", controller.AuthenticationCustomer(controller.CustomerIndexPage)).Methods("GET")
 	r.HandleFunc("/customer/orders", controller.AuthenticationCustomer(controller.CustomerGetallOrder)).Methods("GET")
 	r.HandleFunc("/customer/compare", controller.AuthenticationCustomer(controller.CarCompare)).Methods("GET")
@@ -48,7 +48,7 @@ func InitializeRoutesBackendCustomer() {
 	r.HandleFunc("/customer/register", controller.CustomerRegisterPOST).Methods("POST")
 	r.HandleFunc("/customer/login", controller.CustomerLoginPost).Methods("POST")
 	r.HandleFunc("/customer/validateemail", controller.CustomerValidateEmail).Methods("POST")
-	r.HandleFunc("/customer/book/vehicle", controller.AuthenticationCustomer(controller.CustomerBookVehicle)).Methods("POST")
+	r.HandleFunc("/customer/book/vehicle", controller.AuthenticationCustomer(controller.CustomerTestDrive)).Methods("POST")
 	r.HandleFunc("/customer/bookTestDrive", controller.AuthenticationCustomer(controller.CustomerTestDrive)).Methods("POST")
 
 	//PUT REQUEST
@@ -101,11 +101,13 @@ func InitializeRoutesBackendAdmin() {
 	r.HandleFunc("/admin/vehicle/{id}", controller.AuthenticationAdmin(controller.UpdateVehicle)).Methods("PUT")
 	r.HandleFunc("/admin/brand/{id}", controller.AuthenticationAdmin(controller.UpdateBrand)).Methods("PUT")
 	r.HandleFunc("/admin/{id}", controller.AuthenticationAdmin(controller.UpdateAdmin)).Methods("PUT")
-	r.HandleFunc("/admin/updateTestDrive/", controller.AuthenticationAdmin(controller.UpdateTestDrive)).Methods("PUT")
+	r.HandleFunc("/admin/updateTestDrive/", controller.AuthenticationAdmin(controller.UpdateCustomerTestDriveStatus)).Methods("PUT")
+
 	//DELETE METHODS
 	r.HandleFunc("/admin/vehicle/{id}", controller.AuthenticationAdmin(controller.DeleteVehicle)).Methods("DELETE")
 	r.HandleFunc("/admin/brand/{id}", controller.AuthenticationAdmin(controller.DeleteBrand)).Methods("DELETE")
 	r.HandleFunc("/admin/customer/{id}", controller.AuthenticationAdmin(controller.DeleteCustomer)).Methods("DELETE")
+
 	//NOT FOUND
 	r.NotFoundHandler = http.HandlerFunc(controller.NotFound)
 }

@@ -2,7 +2,6 @@ package controller
 
 import (
 	"encoding/json"
-	"fmt"
 	"html/template"
 	"log"
 	"net/http"
@@ -137,7 +136,6 @@ func LoginPost(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if !accessadmin {
-		fmt.Println("inside if")
 		chekerror = true
 		http.Redirect(w, r, "/admin", http.StatusSeeOther)
 		return
@@ -265,8 +263,6 @@ func GetAllBrand(w http.ResponseWriter, r *http.Request) {
 	}
 
 	brands := service.GetAllBrand(r)
-
-	fmt.Println(brands)
 
 	admintpl.ExecuteTemplate(w, "brandlist.html", struct {
 		HasMessage bool
@@ -422,7 +418,7 @@ func UpdateAdmin(w http.ResponseWriter, r *http.Request) {
 }
 
 // update test drive
-func UpdateTestDrive(w http.ResponseWriter, r *http.Request) {
+func UpdateCustomerTestDriveStatus(w http.ResponseWriter, r *http.Request) {
 	var data model.TestDriveStatus
 	json.NewDecoder(r.Body).Decode(&data)
 	service.UpdateCustomerTestDriveStatus(data)
