@@ -118,12 +118,11 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	}{hasmessge, message})
 }
 
-//LoginPost is...
+// admin login
 func LoginPost(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 	adminemail := r.PostForm.Get("username")
 	adminpassword := r.PostForm.Get("password")
-	// fmt.Println(adminemail, adminpassword)
 	admins := service.GetAllAdmin(r)
 	if len(admins) == 0 {
 		http.Redirect(w, r, "/", http.StatusSeeOther)
@@ -151,7 +150,7 @@ func LoginPost(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/admin/vehicle", http.StatusSeeOther)
 }
 
-//Logout is....
+// admin logout
 func Logout(w http.ResponseWriter, r *http.Request) {
 	session, _ := store.Get(r, "username")
 	session.Options.MaxAge = -1
@@ -160,13 +159,13 @@ func Logout(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
 
-//CreateVehicleform is....
+// create vehicle
 func CreateVehicleform(w http.ResponseWriter, r *http.Request) {
 	brands := service.GetAllBrand(r)
 	admintpl.ExecuteTemplate(w, "createvehicle.html", brands)
 }
 
-//AuthenticationAdmin is..
+// admin authentication
 func AuthenticationAdmin(handler http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		session, _ := store.Get(r, "username")
@@ -180,12 +179,12 @@ func AuthenticationAdmin(handler http.HandlerFunc) http.HandlerFunc {
 	}
 }
 
-//ServerError is...
+// serve 404 page
 func ServerError(w http.ResponseWriter, r *http.Request) {
 	tpl.ExecuteTemplate(w, "error.html", nil)
 }
 
-//SaveVehicle is....
+// save vehicle
 func SaveVehicle(w http.ResponseWriter, r *http.Request) {
 	err := service.SaveVehicle(r)
 	if err != nil {
@@ -196,13 +195,13 @@ func SaveVehicle(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/admin/vehicle", http.StatusSeeOther)
 }
 
-//GetoneVehicleforview is...
+// view one vehicle
 func GetoneVehicleforview(w http.ResponseWriter, r *http.Request) {
 	vehicle := service.GetOneVehicle(r)
 	admintpl.ExecuteTemplate(w, "viewvehicle.html", vehicle)
 }
 
-//GetoneVehicleforedit is..
+// view one vehicle for edit
 func GetoneVehicleforedit(w http.ResponseWriter, r *http.Request) {
 	vehicle := service.GetOneVehicle(r)
 	brands := service.GetAllBrand(r)
@@ -212,13 +211,13 @@ func GetoneVehicleforedit(w http.ResponseWriter, r *http.Request) {
 	}{vehicle, brands})
 }
 
-//DeleteVehicle is....
+// delete one vehicle
 func DeleteVehicle(w http.ResponseWriter, r *http.Request) {
 	service.DeleteOneVehicle(r)
 	deletevehicle = true
 }
 
-//UpdateVehicle is....
+// update vehicle
 func UpdateVehicle(w http.ResponseWriter, r *http.Request) {
 	data, err := service.UpdateVehicle(r)
 	if err != nil {
@@ -230,12 +229,12 @@ func UpdateVehicle(w http.ResponseWriter, r *http.Request) {
 	w.Write(data)
 }
 
-//CreateBrandform is..
+// brand form
 func CreateBrandform(w http.ResponseWriter, r *http.Request) {
 	admintpl.ExecuteTemplate(w, "createbrand.html", nil)
 }
 
-//SaveBrand is..
+// save brand
 func SaveBrand(w http.ResponseWriter, r *http.Request) {
 	err := service.SaveCompanyLogo(r)
 	if err != nil {
@@ -246,7 +245,7 @@ func SaveBrand(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/admin/brand", http.StatusSeeOther)
 }
 
-//GetAllBrand is....
+// get all brands
 func GetAllBrand(w http.ResponseWriter, r *http.Request) {
 	var message string
 	var hasmessge bool
@@ -280,19 +279,19 @@ func GetAllBrand(w http.ResponseWriter, r *http.Request) {
 	}{hasmessge, message, brands})
 }
 
-//DeleteBrand is....
+// delete brand
 func DeleteBrand(w http.ResponseWriter, r *http.Request) {
 	service.DeleteOneBrand(r)
 	deletebrand = true
 }
 
-//GetoneBrandforedit is..
+// edit brand
 func GetoneBrandforedit(w http.ResponseWriter, r *http.Request) {
 	brand := service.GetOneBrand(r)
 	admintpl.ExecuteTemplate(w, "editbrand.html", brand)
 }
 
-//UpdateBrand is...
+// update brand
 func UpdateBrand(w http.ResponseWriter, r *http.Request) {
 	data, err := service.UpdateBrand(r)
 	if err != nil {
@@ -304,7 +303,7 @@ func UpdateBrand(w http.ResponseWriter, r *http.Request) {
 	w.Write(data)
 }
 
-//GetoneBrandforview is...
+// get one brand
 func GetoneBrandforview(w http.ResponseWriter, r *http.Request) {
 	brand := service.GetOneBrand(r)
 	vehicles := service.GetParticlullarBrandVehicle(brand.ID)
@@ -314,7 +313,7 @@ func GetoneBrandforview(w http.ResponseWriter, r *http.Request) {
 	}{brand, vehicles})
 }
 
-//GetAllCustomer is....
+// get all customer
 func GetAllCustomer(w http.ResponseWriter, r *http.Request) {
 	var message string
 	var hasmessge bool
@@ -333,13 +332,13 @@ func GetAllCustomer(w http.ResponseWriter, r *http.Request) {
 	}{hasmessge, message, customer})
 }
 
-//DeleteCustomer is...
+// delete customer
 func DeleteCustomer(w http.ResponseWriter, r *http.Request) {
 	deletecustomer = true
 	service.DeleteOneCustomer(r)
 }
 
-//GetoneCustomerforview is...
+// get one customer
 func GetoneCustomerforview(w http.ResponseWriter, r *http.Request) {
 	customer := service.GetOneCustomer(r)
 	admintpl.ExecuteTemplate(w, "viewcustomer.html", struct {
@@ -347,7 +346,7 @@ func GetoneCustomerforview(w http.ResponseWriter, r *http.Request) {
 	}{customer})
 }
 
-//GetAllCustomerOrders is..
+// get all customer test drives
 func GetAllCustomerOrders(w http.ResponseWriter, r *http.Request) {
 	orders := service.GetAllTestDrives(r)
 	admintpl.ExecuteTemplate(w, "order.html", struct {
@@ -355,7 +354,7 @@ func GetAllCustomerOrders(w http.ResponseWriter, r *http.Request) {
 	}{orders})
 }
 
-//AdminRegister is..
+// register admin
 func AdminRegister(w http.ResponseWriter, r *http.Request) {
 	var message string
 	var hasmessge bool
@@ -378,8 +377,7 @@ func AdminRegister(w http.ResponseWriter, r *http.Request) {
 		Hasmessgesuccess bool
 	}{hasmessge, message, hasmessgesuccess})
 }
-
-//AdminRegisterPOST is...
+ 
 func AdminRegisterPOST(w http.ResponseWriter, r *http.Request) {
 	emailcheck, err := service.SaveAdmin(r)
 	if err != nil {
@@ -392,12 +390,11 @@ func AdminRegisterPOST(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/admin/register", http.StatusSeeOther)
 		return
 	}
-	//fmt.Fprintf(w, "Register data")
 	adminregister = true
 	http.Redirect(w, r, "/admin/register", http.StatusSeeOther)
 }
 
-//GetAdminAccountPage is..
+// admin account
 func GetAdminAccountPage(w http.ResponseWriter, r *http.Request) {
 	session, _ := store.Get(r, "username")
 	email, _ := session.Values["username"]
@@ -416,7 +413,7 @@ func GetAdminAccountPage(w http.ResponseWriter, r *http.Request) {
 	}{hasmessge, message, admin})
 }
 
-//UpdateAdmin is..
+// update admin
 func UpdateAdmin(w http.ResponseWriter, r *http.Request) {
 	customer, err := service.AdminUpdate(r)
 	if err != nil {
@@ -428,6 +425,7 @@ func UpdateAdmin(w http.ResponseWriter, r *http.Request) {
 	w.Write(customer)
 }
 
+// update test drive
 func UpdateTestDrive(w http.ResponseWriter, r *http.Request) {
 	var data model.TestDriveStatus
 	json.NewDecoder(r.Body).Decode(&data)

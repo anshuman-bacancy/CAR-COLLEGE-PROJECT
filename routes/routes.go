@@ -29,7 +29,7 @@ func InitializeRoutesFrontendCustomer() {
 	//GET ALL DATA
 	r.HandleFunc("/customer/index", controller.AuthenticationCustomer(controller.CustomerIndexPage)).Methods("GET")
 	r.HandleFunc("/customer/orders", controller.AuthenticationCustomer(controller.CustomerGetallOrder)).Methods("GET")
-	r.HandleFunc("/customer/compare", controller.AuthenticationCustomer(controller.CustomerCompare)).Methods("GET")
+	r.HandleFunc("/customer/compare", controller.AuthenticationCustomer(controller.CarCompare)).Methods("GET")
 
 	//GET VIEW PAGE
 	r.HandleFunc("/customer/brand/view/{id}", controller.AuthenticationCustomer(controller.GetallVehicleWithBrandforview)).Methods("GET")

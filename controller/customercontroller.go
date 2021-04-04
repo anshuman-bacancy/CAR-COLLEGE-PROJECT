@@ -18,23 +18,19 @@ var (
 
 var tpl *template.Template
 
-//GetallVehicleWithBrandforview is..
+// returns vehicle with brands
 func GetallVehicleWithBrandforview(w http.ResponseWriter, r *http.Request) {
 	vehicles := service.GetParticlullarBrandVehiclewithR(r)
-	// custtpl.ExecuteTemplate(w, "vehiclelist.html", struct {
-	// 	Vehicles []model.Vehicle
-	// }{vehicles})
-
 	custtpl.ExecuteTemplate(w, "vehiclelist.html", vehicles)
 }
 
-//CustomerGetoneVehicleforview is...
+// returns one vehicle for customer
 func CustomerGetoneVehicleforview(w http.ResponseWriter, r *http.Request) {
 	vehicle := service.GetOneVehicle(r)
 	custtpl.ExecuteTemplate(w, "viewvehicle.html", vehicle)
 }
 
-//CustomerAccountforview is..
+// shows customer account
 func CustomerAccountforview(w http.ResponseWriter, r *http.Request) {
 	session, _ := storecustomer.Get(r, "customerusername")
 	email, _ := session.Values["customer"]
@@ -53,7 +49,7 @@ func CustomerAccountforview(w http.ResponseWriter, r *http.Request) {
 	}{hasmessge, message, customer})
 }
 
-//CustomerUpdate is...
+// customer update
 func CustomerUpdate(w http.ResponseWriter, r *http.Request) {
 	customer, err := service.CustomerUpdate(r)
 	if err != nil {
@@ -65,21 +61,7 @@ func CustomerUpdate(w http.ResponseWriter, r *http.Request) {
 	w.Write(customer)
 }
 
-//CustomerBookVehicle is.
-func CustomerBookVehicle(w http.ResponseWriter, r *http.Request) {
-	session, _ := storecustomer.Get(r, "customerusername")
-	email, _ := session.Values["customer"]
-	customer := service.GetOneCustomerBYemail(email)
-	err := service.CustomerBookVehicle(r, customer)
-	if err != nil {
-		http.Redirect(w, r, "/error", http.StatusSeeOther)
-		return
-	}
-	ordersave = true
-	http.Redirect(w, r, "/customer/orders", http.StatusSeeOther)
-}
-
-//CustomerGetallOrder is..
+// shows all test drives for customer
 func CustomerGetallOrder(w http.ResponseWriter, r *http.Request) {
 	var message string
 	var hasmessge bool
@@ -99,11 +81,11 @@ func CustomerGetallOrder(w http.ResponseWriter, r *http.Request) {
 	}{orders, hasmessge, message})
 }
 
+// saves customer test drive
 func CustomerTestDrive(w http.ResponseWriter, r *http.Request) {
 	tempVehicleId := r.FormValue("vehicleId")
 	vehicleId, _ := strconv.ParseUint(tempVehicleId, 10, 64)
 	testDriveDate := common.FormatDate(r.FormValue("testDriveDate"))
-	// fmt.Println(vehicleId, testDriveDate)
 
 	// get customer
 	session, _ := storecustomer.Get(r, "customerusername")
@@ -119,11 +101,13 @@ func CustomerTestDrive(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/customer/orders", 302)
 }
 
-func CustomerCompare(w http.ResponseWriter, r *http.Request) {
+// returns list of vehicles in dropdown 
+func CarCompare(w http.ResponseWriter, r *http.Request) {
 	allVehicles := service.GetAllVehicle()
 	custtpl.ExecuteTemplate(w, "compareCar.html", allVehicles)
 }
 
+// returns vehicle for car compare
 func CustomerGetVehicle(w http.ResponseWriter, r *http.Request) {
 	vehicle := service.GetOneVehicle(r)
 	w.Header().Set("Content-Type", "application/json")

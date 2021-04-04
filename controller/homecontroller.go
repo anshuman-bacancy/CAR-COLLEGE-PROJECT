@@ -30,14 +30,12 @@ var storecustomer = sessions.NewCookieStore([]byte("t0p-s3cr3tcus"))
 var emailfound bool
 var emailnotextits bool
 
-//HomePage is....
+// home page
 func HomePage(w http.ResponseWriter, r *http.Request) {
-	// path := build.Default.GOPATH + "/src/project/template/home/*"
-	// tpl := template.Must(template.New("").Funcs(fm).ParseGlob(path))
 	hometpl.ExecuteTemplate(w, "index.html", nil)
 }
 
-//CustomerRegister is...
+// view customer registration
 func CustomerRegister(w http.ResponseWriter, r *http.Request) {
 	var message string
 	var hasmessge bool
@@ -52,7 +50,7 @@ func CustomerRegister(w http.ResponseWriter, r *http.Request) {
 	}{hasmessge, message})
 }
 
-//CustomerRegisterPOST is...
+// successful customer registration
 func CustomerRegisterPOST(w http.ResponseWriter, r *http.Request) {
 	emailcheck, err := service.SaveCustomer(r)
 	if err != nil {
@@ -68,7 +66,7 @@ func CustomerRegisterPOST(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/Login", http.StatusSeeOther)
 }
 
-//CustomerLogin is...
+// view customer login
 func CustomerLogin(w http.ResponseWriter, r *http.Request) {
 	var message string
 	var hasmessge bool
@@ -83,7 +81,7 @@ func CustomerLogin(w http.ResponseWriter, r *http.Request) {
 	}{hasmessge, message})
 }
 
-//CustomerLoginPost is...
+// successful customer login
 func CustomerLoginPost(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 	usercustomer := r.PostForm.Get("username")
@@ -109,18 +107,17 @@ func CustomerLoginPost(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/Login", http.StatusSeeOther)
 		return
 	}
-
 	http.Redirect(w, r, "/customer/index", http.StatusSeeOther)
 }
 
-//CustomerIndexPage is...
+// customer index page
 func CustomerIndexPage(w http.ResponseWriter, r *http.Request) {
 	brand := service.GetAllBrand(r)
 	// fmt.Println(brand)
 	custtpl.ExecuteTemplate(w, "index.html", brand)
 }
 
-//AuthenticationCustomer is..
+// customer authentication
 func AuthenticationCustomer(handler http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		session, _ := storecustomer.Get(r, "customerusername")
@@ -135,7 +132,7 @@ func AuthenticationCustomer(handler http.HandlerFunc) http.HandlerFunc {
 	}
 }
 
-//CustomerLogout is....
+// customer logout
 func CustomerLogout(w http.ResponseWriter, r *http.Request) {
 	session, _ := storecustomer.Get(r, "customerusername")
 	session.Options.MaxAge = -1
@@ -144,7 +141,7 @@ func CustomerLogout(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
 
-//CustomerForgotPassword is..
+// customer forgot password
 func CustomerForgotPassword(w http.ResponseWriter, r *http.Request) {
 	var message string
 	var hasmessge bool
@@ -166,7 +163,7 @@ func CustomerForgotPassword(w http.ResponseWriter, r *http.Request) {
 	}{hasmessge, message})
 }
 
-//CustomerValidateEmail is...
+// customer validate email
 func CustomerValidateEmail(w http.ResponseWriter, r *http.Request) {
 	emailfound = false
 	email := r.FormValue("email")
@@ -190,21 +187,17 @@ func CustomerValidateEmail(w http.ResponseWriter, r *http.Request) {
 }
 
 func sendemail(email string) {
-	// Sender data.
-
 	from := "autogradingsystem99999@gmail.com"
 	password := "nedlsjaxafqmlnms"
 	to := []string{
 		email,
 	}
-	// Receiver email address.
 	Receivermail := email
 
 	customer := service.GetOneCustomerBYemail(email)
 	customerid := strconv.Itoa(int(customer.ID))
 	subjet := "FORGOT YOUR PASSSWORD EMAIL"
 	body := "http://localhost:8084/customer/setpassword/" + customerid
-	// smtp server configuration.
 	smtpHost := "smtp.gmail.com"
 	smtpPort := "587"
 
@@ -226,7 +219,7 @@ func sendemail(email string) {
 	fmt.Println("Email Sent Successfully!")
 }
 
-//CustomerSetForgotPasswordPage is...
+// customer set new password
 func CustomerSetForgotPasswordPage(w http.ResponseWriter, r *http.Request) {
 	session, _ := storecustomer.Get(r, "customerusername")
 	id := mux.Vars(r)["id"]
@@ -244,7 +237,7 @@ func CustomerSetForgotPasswordPage(w http.ResponseWriter, r *http.Request) {
 	hometpl.ExecuteTemplate(w, "setforgotpassword.html", id)
 }
 
-//CustomerSuccess is...
+// customer successful login
 func CustomerSuccess(w http.ResponseWriter, r *http.Request) {
 	session, _ := storecustomer.Get(r, "customerusername")
 	delete(session.Values, "emailid")
