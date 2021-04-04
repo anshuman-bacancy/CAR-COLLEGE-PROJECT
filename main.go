@@ -6,11 +6,11 @@ import (
 )
 
 func main() {
-	common.Initialmigration()
+	common.InitialMigration()
 	routes.CreateRouter()
-	routes.InitializeRoutesfrontendCustomer()
-	routes.InitializeRoutesbackendCustomer()
-	routes.InitializeRoutesbackendAdmin()
-	routes.InitializeRoutesfrontendAdmin()
+	routes.InitializeRoutesFrontendCustomer()
+	routes.InitializeRoutesBackendCustomer()
+	routes.InitializeRoutesBackendAdmin()
+	routes.InitializeRoutesFrontendAdmin()
 	routes.StartServer()
 }

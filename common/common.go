@@ -27,7 +27,7 @@ func GetDatabase() *gorm.DB {
 	return connection
 }
 
-//Closedatabase is...
+//Closedatabase closes the database connection
 func Closedatabase(connection *gorm.DB) {
 	sqldb := connection.DB()
 	sqldb.Close()
@@ -40,8 +40,8 @@ func CheckError(err error) {
 	}
 }
 
-//Initialmigration is....
-func Initialmigration() {
+//Initialmigration migrates models to database
+func InitialMigration() {
 	connection := GetDatabase()
 	connection.AutoMigrate(&model.SalesPerson{})
 	connection.AutoMigrate(&model.Company{})
@@ -52,7 +52,7 @@ func Initialmigration() {
 	connection.Model(&model.TestDrive{}).AddForeignKey("vehicle_id", "vehicles(id)", "CASCADE", "CASCADE")
 	connection.Model(&model.TestDrive{}).AddForeignKey("customer_id", "customers(id)", "CASCADE", "CASCADE")
 	defer Closedatabase(connection)
-	fmt.Println("migration done")
+	fmt.Println("Migration done... ")
 
 	// connection.Create(&model.SalesPerson{
 	// 	Name:     "anshuman",

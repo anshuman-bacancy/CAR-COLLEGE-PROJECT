@@ -10,19 +10,19 @@ import (
 
 var r *mux.Router
 
-//StartServer is started at 8082
+// starts server at 8084
 func StartServer() {
 	fmt.Println("Server is started at http://localhost:8084")
 	http.ListenAndServe(":8084", r)
 }
 
-//CreateRouter is...
+// initializes mux router
 func CreateRouter() {
 	r = mux.NewRouter()
 }
 
-//InitializeRoutesfrontendCustomer is..
-func InitializeRoutesfrontendCustomer() {
+// customer frontend routes
+func InitializeRoutesFrontendCustomer() {
 	r.HandleFunc("/Registration", controller.CustomerRegister).Methods("GET")
 	r.HandleFunc("/Login", controller.CustomerLogin).Methods("GET")
 	r.HandleFunc("/customer/Logout", controller.CustomerLogout).Methods("GET")
@@ -42,8 +42,8 @@ func InitializeRoutesfrontendCustomer() {
 
 }
 
-//InitializeRoutesbackendCustomer is...
-func InitializeRoutesbackendCustomer() {
+// customer backend routes
+func InitializeRoutesBackendCustomer() {
 	//POST REQUEST
 	r.HandleFunc("/customer/register", controller.CustomerRegisterPOST).Methods("POST")
 	r.HandleFunc("/customer/login", controller.CustomerLoginPost).Methods("POST")
@@ -55,8 +55,8 @@ func InitializeRoutesbackendCustomer() {
 	r.HandleFunc("/customer/{id}", controller.CustomerUpdate).Methods("PUT")
 }
 
-//InitializeRoutesfrontendAdmin is..
-func InitializeRoutesfrontendAdmin() {
+// admin frontend routes
+func InitializeRoutesFrontendAdmin() {
 	//static
 	// path := build.Default.GOPATH + "/src/project/static/"
 	fs := http.StripPrefix("/static/", http.FileServer(http.Dir("./static")))
@@ -68,6 +68,7 @@ func InitializeRoutesfrontendAdmin() {
 	r.HandleFunc("/admin/logout", controller.Logout).Methods("GET")
 	r.HandleFunc("/error", controller.ServerError).Methods("GET")
 	r.HandleFunc("/admin/register", controller.AuthenticationAdmin(controller.AdminRegister)).Methods("GET")
+	
 	//GET ALL DATA
 	r.HandleFunc("/admin/vehicle", controller.AuthenticationAdmin(controller.AdminIndexpageProcess)).Methods("GET")
 	r.HandleFunc("/admin/brand", controller.AuthenticationAdmin(controller.GetAllBrand)).Methods("GET")
@@ -88,8 +89,8 @@ func InitializeRoutesfrontendAdmin() {
 	r.HandleFunc("/admin/account", controller.AuthenticationAdmin(controller.GetAdminAccountPage)).Methods("GET")
 }
 
-//InitializeRoutesbackendAdmin is...
-func InitializeRoutesbackendAdmin() {
+// admin backend routes
+func InitializeRoutesBackendAdmin() {
 	//POST METHODS
 	r.HandleFunc("/admin/login", controller.LoginPost).Methods("POST")
 	r.HandleFunc("/admin/register", controller.AdminRegisterPOST).Methods("POST")
