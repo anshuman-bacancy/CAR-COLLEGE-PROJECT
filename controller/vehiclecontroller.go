@@ -86,10 +86,6 @@ func AdminIndexpageProcess(w http.ResponseWriter, r *http.Request) {
 		message = "Vehicle updated successfully"
 	}
 	vehicles := service.GetAllVehicle()
-	// path := build.Default.GOPATH + "/src/project/template/admin/*"
-	// path := "template/admin/*"
-
-	// tpl := template.Must(template.New("").Funcs(fm).ParseGlob(path))
 	admintpl.ExecuteTemplate(w, "index.html", struct {
 		HasMessage bool
 		Message    string
