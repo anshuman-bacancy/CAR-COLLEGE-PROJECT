@@ -1,6 +1,5 @@
 ### Todo ###
  * Add proper comments
  * refactor
- * reduce LOC
- * add compare cars (done, but needs improvement)
+ * add compare cars for 4 cars
  * automate test drive status
