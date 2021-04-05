@@ -147,13 +147,13 @@
   }
 
   .cd-products-table.scrolling .features::after {
-    opacity: 1;
+    /*opacity: 1;*/
   }
 
   .cd-products-wrapper {
-    overflow-x: auto;
+    /*overflow-x: auto;*/
     /* this fixes the buggy scrolling on webkit browsers - mobile devices only - when overflow property is applied */
-    -webkit-overflow-scrolling: touch;
+    /*-webkit-overflow-scrolling: touch;*/
   }
 
   .cd-products-columns {
@@ -212,15 +212,15 @@
   }
   .cd-features-list li.rate {
     /* rating stars */
-    padding: 21px 0;
+    /*padding: 21px 0;*/
   }
   .cd-features-list li.rate span {
-    display: inline-block;
+/*    display: inline-block;
     height: 22px;
     width: 110px;
     background: url(../img/cd-star.svg);
     color: transparent;
-  }
+*/  }
   @media only screen and (min-width: 1170px) {
     .cd-features-list li {
       font-size: 1.6rem;
@@ -230,10 +230,19 @@
     }
   }
 
+
+  .features .cd-features-list .top-info {
+    font-size: 1.4rem;
+    font-weight: bold;
+    padding: 25px 40px;
+  } 
+
+
+
   .features .cd-features-list li,
   .cd-products-table .features .top-info {
     /* fixed left column - items */
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     font-weight: bold;
     /* set line-height value equal to font-size of text inside product cells */
     line-height: 14px;
@@ -252,9 +261,9 @@
 
   .features .cd-features-list li {
     /* truncate text with dots */
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
+    font-size: 1.4rem;
+    font-weight: bold;
+    padding: 25px 40px;
   }
 
   .cd-products-table .top-info {
@@ -420,28 +429,28 @@
 
   @media only screen and (min-width: 1170px) {
     .cd-products-table.top-fixed .cd-products-columns > li,
-    .cd-products-table.top-scrolling .cd-products-columns > li,
+    /*.cd-products-table.top-scrolling .cd-products-columns > li,*/
     .cd-products-table.top-fixed .features,
-    .cd-products-table.top-scrolling .features {
+    /*.cd-products-table.top-scrolling .features {*/
       padding-top: 160px;
     }
 
     .cd-products-table.top-fixed .top-info,
-    .cd-products-table.top-scrolling .top-info {
+    /*.cd-products-table.top-scrolling .top-info {*/
       height: 160px;
       position: fixed;
       top: 0;
     }
     .no-cssgradients .cd-products-table.top-fixed .top-info, .no-cssgradients
-    .cd-products-table.top-scrolling .top-info {
+    /*.cd-products-table.top-scrolling .top-info {*/
       /*border-bottom: 1px solid #e6e6e6;*/
     }
     .cd-products-table.top-fixed .top-info::after,
-    .cd-products-table.top-scrolling .top-info::after {
+    /*.cd-products-table.top-scrolling .top-info::after {*/
       opacity: 1;
     }
     .cd-products-table.top-fixed .top-info h3,
-    .cd-products-table.top-scrolling .top-info h3 {
+    /*.cd-products-table.top-scrolling .top-info h3 {*/
       -webkit-transform: translateY(-116px);
       -moz-transform: translateY(-116px);
       -ms-transform: translateY(-116px);
@@ -449,7 +458,7 @@
       transform: translateY(-116px);
     }
     .cd-products-table.top-fixed .top-info img,
-    .cd-products-table.top-scrolling .top-info img {
+    /*.cd-products-table.top-scrolling .top-info img {*/
       -webkit-transform: translateY(-62px) scale(0.4);
       -moz-transform: translateY(-62px) scale(0.4);
       -ms-transform: translateY(-62px) scale(0.4);
@@ -457,7 +466,7 @@
       transform: translateY(-62px) scale(0.4);
     }
 
-    .cd-products-table.top-scrolling .top-info {
+    /*.cd-products-table.top-scrolling .top-info {*/
       position: absolute;
     }
   }
@@ -519,14 +528,14 @@
     .top-fixed .cd-table-navigation a {
       position: fixed;
     }
-    .top-fixed .cd-table-navigation a, .top-scrolling .cd-table-navigation a {
+    /*.top-fixed .cd-table-navigation a, .top-scrolling .cd-table-navigation a {*/
       -webkit-transform: translateY(45px);
       -moz-transform: translateY(45px);
       -ms-transform: translateY(45px);
       -o-transform: translateY(45px);
       transform: translateY(45px);
     }
-    .top-fixed .cd-table-navigation a.prev, .top-scrolling .cd-table-navigation a.prev {
+    /*.top-fixed .cd-table-navigation a.prev, .top-scrolling .cd-table-navigation a.prev {*/
       -webkit-transform: translateY(45px) translateX(15px) rotate(180deg);
       -moz-transform: translateY(45px) translateX(15px) rotate(180deg);
       -ms-transform: translateY(45px) translateX(15px) rotate(180deg);

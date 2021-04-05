@@ -3,6 +3,7 @@ package controller
 import (
 	"encoding/json"
 	"html/template"
+	"fmt"
 	"log"
 	"net/http"
 	"project/common"
@@ -104,7 +105,21 @@ func CustomerTestDrive(w http.ResponseWriter, r *http.Request) {
 // returns list of vehicles in dropdown 
 func CarCompare(w http.ResponseWriter, r *http.Request) {
 	allVehicles := service.GetAllVehicle()
-	custtpl.ExecuteTemplate(w, "compareCar.html", allVehicles)
+	ids := make(map[string]uint, 0)
+	// for idx := 1; idx <= len(allVehicles); idx++ {
+	// 	ids["car" + strconv.Itoa(idx)] = idx
+	// }
+
+	for _, vehicle := range allVehicles {
+		ids["car" + strconv.Itoa(int(vehicle.ID))] = vehicle.ID
+	}
+
+	fmt.Println(ids)
+
+	custtpl.ExecuteTemplate(w, "compareCar.html", struct { 
+		AllVehicles []model.Vehicle
+		Ids map[string]uint
+		}{allVehicles, ids})
 }
 
 // returns vehicle for car compare

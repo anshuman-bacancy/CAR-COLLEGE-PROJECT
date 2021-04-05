@@ -168,7 +168,7 @@
                 <!-- ============================================================== -->
     <div class="cd-products-table">
       <div class="features">
-        <div class="top-info">Models</div>
+        <div class="top-info"></div>
         <ul class="cd-features-list">
           <li>Model Name</li>
           <li>Price</li>
@@ -184,19 +184,14 @@
             <div class="top-info">
               <div class="check"></div>
               <img src="img/product.png" alt="product image">
-              <select class="form-control" id="secondCar" onchange="displayCar(this)" aria-label="Default select example">
-              {{range .}}
-                <option value="{{.ID}}">{{.ModelName}}</option>
-              {{end}}
+              <select class="form-control" onchange="displayCar1(this)" aria-label="Default select example">
+                <option selected>Select a car</option>
+                {{range .AllVehicles}}
+                  <option value="{{.ID}}">{{.ModelName}}</option>
+                {{end}}
               </select>
             </div> <!-- .top-info -->
-
-            <ul class="cd-features-list">
-              <li>$600</li>
-              <li>mpeg4</li>
-              <li>1 Side</li>
-              <li>3 Port</li>
-              <li>1 Rear</li>
+            <ul class="cd-features-list" id="car1">
             </ul>
           </li> <!-- .product -->
 
@@ -204,19 +199,15 @@
             <div class="top-info">
               <div class="check"></div>
               <img src="img/product.png" alt="product image">
-              <select class="form-control" id="secondCar" onchange="displayCar(this)" aria-label="Default select example">
-              {{range .}}
-                <option value="{{.ID}}">{{.ModelName}}</option>
-              {{end}}
+              <select class="form-control" id="secondCar" onchange="displayCar2(this)" aria-label="Default select example">
+                <option selected>Select a car</option>
+                {{range .AllVehicles}}
+                  <option value="{{.ID}}">{{.ModelName}}</option>
+                {{end}}
               </select>
             </div> <!-- .top-info -->
 
-            <ul class="cd-features-list">
-              <li>$600</li>
-              <li>mpeg4</li>
-              <li>1 Side</li>
-              <li>3 Port</li>
-              <li>1 Rear</li>
+            <ul class="cd-features-list" id="car2">
             </ul>
           </li> <!-- .product -->
 
@@ -224,19 +215,15 @@
             <div class="top-info">
               <div class="check"></div>
               <img src="img/product.png" alt="product image">
-              <select class="form-control" id="secondCar" onchange="displayCar(this)" aria-label="Default select example">
-              {{range .}}
-                <option value="{{.ID}}">{{.ModelName}}</option>
-              {{end}}
+              <select class="form-control" id="secondCar" onchange="displayCar3(this)" aria-label="Default select example">
+                <option selected>Select a car</option>
+                {{range .AllVehicles}}
+                  <option value="{{.ID}}">{{.ModelName}}</option>
+                {{end}}
               </select>
             </div> <!-- .top-info -->
 
-            <ul class="cd-features-list">
-              <li>$600</li>
-              <li>mpeg4</li>
-              <li>1 Side</li>
-              <li>3 Port</li>
-              <li>1 Rear</li>
+            <ul class="cd-features-list" id="car3">
             </ul>
           </li> <!-- .product -->
 
@@ -244,86 +231,28 @@
             <div class="top-info">
               <div class="check"></div>
               <img src="img/product.png" alt="product image">
-              <select class="form-control" id="secondCar" onchange="displayCar(this)" aria-label="Default select example">
-              {{range .}}
-                <option value="{{.ID}}">{{.ModelName}}</option>
-              {{end}}
+              <select class="form-control" id="secondCar" onchange="displayCar4(this)" aria-label="Default select example">
+                <option selected>Select a car</option>
+                {{range .AllVehicles}}
+                  <option value="{{.ID}}">{{.ModelName}}</option>
+                {{end}}
               </select>
             </div> <!-- .top-info -->
 
-            <ul class="cd-features-list">
-              <li>$600</li>
-              <li>2015</li>
-              <li>mpeg4</li>
-              <li>3 Port</li>
-              <li>1 Rear</li>
+            <ul class="cd-features-list" id="car4">
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
             </ul>
-          </li> 
-        </ul>
+
+          </li> <!-- .product -->
+        </ul> <!-- cd-products-column -->
       </div>
 
-          <!-- Content Section -->
-<!--               <div class="row">
-                <div class="col-lg-12">
-                  <div class="row">
-                    <div class="col-xs-12">
-                      <div class="col-xs-2 col-xs-offset-1" id="p1">
-                        <table class="table borderless">
-                          <tr><td><h4></h4></td></tr>
-                          <tr><td><h4><b>Model Name</b></h4></td></tr>
-                          <tr><td><h4><b>Price</b></td></h4></tr>
-                          <tr><td><h4><b>Fuel Type</b></h4></td></tr>
-                          <tr><td><h4><b>Mileage</b></h4></td></tr>
-                          <tr><td><h4><b>Year</b></h4></td></tr>
-                        </table>
-                      </div>
-                      <div class="col-xs-2" id="p2"> 
-                        <select class="form-control" id="secondCar" onchange="displayCar(this)" aria-label="Default select example">
-                        {{range .}}
-                          <option value="{{.ID}}">{{.ModelName}}</option>
-                        {{end}}
-                        </select>
-                        <table id="car1">
-                        </table>
-                      </div>
-
-                      <div class="col-xs-2" id="p3">
-                        <select class="form-control" id="secondCar" onchange="displayCar(this)" aria-label="Default select example">
-                        {{range .}}
-                          <option value="{{.ID}}">{{.ModelName}}</option>
-                        {{end}}
-                        </select>
-                        <table id="car2">
-                        </table>
-                      </div>
-
-                      <div class="col-xs-2" id="p4">
-                        <select class="form-control" id="secondCar" onchange="displayCar(this)" aria-label="Default select example">
-                        {{range .}}
-                          <option value="{{.ID}}">{{.ModelName}}</option>
-                        {{end}}
-                        </select>
-                        <table id="car3">
-                        </table>
-                      </div>
-
-                      <div class="col-xs-2" id="p5">
-                        <select class="form-control" id="secondCar" onchange="displayCar(this)" aria-label="Default select example">
-                        {{range .}}
-                          <option value="{{.ID}}">{{.ModelName}}</option>
-                        {{end}}
-                        </select>
-                        <table id="car4">
-                        </table>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
- -->				<script>
-					function displayCar(car) {
+ 				<script>
+					function displayCar1(car) {
 						var id = car.value
 						fetch('/customer/getVehicle/'+id, {
 							method: 'GET',
@@ -331,40 +260,70 @@
 								data = response.json()
 								return data 
 						}).then(function(vehicle) {
-							// console.log(data)
-							var disp = $("#car1")
-							// disp.remove()
-							disp.append(
-								`<tbody><tr><td><h4>${vehicle.model}</h4></td></tr>
-								<tr><td><h4>${vehicle.price}</h4></td></tr>
-								<tr><td><h4>${vehicle.fueltype}</h4></td></tr>
-								<tr><td><h4>${vehicle.mileage}</h4></td></tr>
-								<tr><td><h4>${vehicle.year}</h4></td></tr>
-							</tbody>`)
-						})
+              var disp = $("#car1")
+              disp.empty()
+              disp.append(
+                `<li>${vehicle.model}</li>
+                <li>${vehicle.price}</li>
+                <li>${vehicle.mileage}</li>
+                <li>${vehicle.fueltype}</li>
+               <li>${vehicle.year}</li>`)
+            })
 					}
-
-					// function getSecondCar(secondCar) {
-					// 	var id = secondCar.value
-					// 	fetch('/customer/getVehicle/'+id, {
-					// 		method: 'GET',
-					// 	}).then(function(response) {
-					// 			data = response.json()
-					// 			return data 
-					// 	}).then(function(vehicle) {
-					// 			console.log(vehicle)
-					// 			var disp = $("#car2")
-					// 			// disp.remove()
-					// 			disp.append(
-					// 				`<tbody><tr><td><h3>${vehicle.model}</h3></td></tr>
-					// 				<tr><td><h3>${vehicle.price}</h3></td></tr>
-					// 				<tr><td><h3>${vehicle.fueltype}</h3></td></tr>
-					// 				<tr><td><h3>${vehicle.mileage}</h3></td></tr>
-					// 				<tr><td><h3>${vehicle.year}</h3></td></tr>
-					// 				<tr><td><h3>${vehicle.image}</h3></td></tr>
-					// 			</tbody>`)
-					// 		})
-					// }
+          function displayCar2(car) {
+            var id = car.value
+            fetch('/customer/getVehicle/'+id, {
+              method: 'GET',
+            }).then(function(response) {
+                data = response.json()
+                return data 
+            }).then(function(vehicle) {
+              var disp = $("#car2")
+              disp.empty()
+              disp.append(
+                `<li>${vehicle.model}</li>
+                <li>${vehicle.price}</li>
+                <li>${vehicle.mileage}</li>
+                <li>${vehicle.fueltype}</li>
+               <li>${vehicle.year}</li>`)
+            })
+          }
+          function displayCar3(car) {
+            var id = car.value
+            fetch('/customer/getVehicle/'+id, {
+              method: 'GET',
+            }).then(function(response) {
+                data = response.json()
+                return data 
+            }).then(function(vehicle) {
+              var disp = $("#car3")
+              disp.empty()
+              disp.append(
+                `<li>${vehicle.model}</li>
+                <li>${vehicle.price}</li>
+                <li>${vehicle.mileage}</li>
+                <li>${vehicle.fueltype}</li>
+               <li>${vehicle.year}</li>`)
+            })
+          }
+          function displayCar4(car) {
+            var id = car.value
+            fetch('/customer/getVehicle/'+id, {
+              method: 'GET',
+            }).then(function(response) {
+                data = response.json()
+                return data 
+            }).then(function(vehicle) {
+              var disp = $("#car4")
+              disp.empty()
+              disp.append(
+                `<li>${vehicle.model}</li>
+                <li>${vehicle.price}</li>
+                <li>${vehicle.mileage}</li>
+                <li>${vehicle.fueltype}</li>
+               <li>${vehicle.year}</li>`)
+            })
+          }
 				</script>
 
 
