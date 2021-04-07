@@ -261,8 +261,8 @@
 
   .features .cd-features-list li {
     /* truncate text with dots */
-    font-size: 1.4rem;
-    font-weight: bold;
+    font-size: 18px;
+    font-weight: normal;
     padding: 25px 40px;
   }
 
