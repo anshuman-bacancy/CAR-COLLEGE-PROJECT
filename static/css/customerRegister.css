@@ -1,0 +1,36 @@
+   @import url(https://fonts.googleapis.com/css?family=Roboto:300);
+
+        .register-page {
+            /*width: 360px;*/
+            width: 40%;
+            padding: 8% 0 0;
+            margin: auto;
+        }
+
+        label {
+          font-size: 18px;
+        }
+
+        .reg {
+          font-size: 50px;
+        }
+
+        .error {
+            color: red;
+            margin-top: 5px;
+            font-size: 17px;
+            font-weight: normal;
+        }
+
+        body {
+            background: #76b852;
+
+            /* fallback for old browsers */
+            background: -webkit-linear-gradient(right, #76b852, #8DC26F);
+            background: -moz-linear-gradient(right, #76b852, #8DC26F);
+            background: -o-linear-gradient(right, #76b852, #8DC26F);
+            background: linear-gradient(to left, #76b852, #8DC26F);
+            font-family: "Roboto", sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
