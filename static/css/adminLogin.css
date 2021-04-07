@@ -1,20 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LOGIN</title>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <style>
-        @import url(https://fonts.googleapis.com/css?family=Roboto:300);
+@import url(https://fonts.googleapis.com/css?family=Roboto:300);
 
 .login-page {
   width: 360px;
   padding: 8% 0 0;
   margin: auto;
 }
+
 .form {
   position: relative;
   z-index: 1;
@@ -108,28 +99,3 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;      
 }
-    </style>
-    <script>
-
-        $('.message a').click(function () {
-                $('form').animate({ height: "toggle", opacity: "toggle" }, "slow");
-            });
-    </script>
-</head>
-<body>
-        <div class="login-page">
-            <div class="form">
-                
-                {{if .HasMessage}}
-                <div class="alert alert-danger text-center" style="font-weight:bold;" role="alert">{{.Message}}</div>
-                <br>
-                {{end}}
-                <form class="login-form" action="/admin/login" method="POST">
-                    <input type="text" name="username" placeholder="username" />
-                    <input type="password" name="password" placeholder="password" />
-                    <button>login</button>
-                </form>
-            </div>
-        </div>
-</body>
-</html>
