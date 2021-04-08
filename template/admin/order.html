@@ -192,48 +192,44 @@
                                 <br><br><br>
 
                                 <table class="table table-hover" id="myTable">
-                                    <thead>
-                                        <tr>
-                                            <th class="border-top-0">Test Drive Booking ID</th>
-                                            <th class="border-top-0">Vehicle ID</th>
-                                            <th class="border-top-0">Customer ID</th>
-                                            <th class="border-top-0">Customer Name</th>
-                                            <th class="border-top-0">View Customer</th>
-                                            <th class="border-top-0">Vehicle Model</th>
-                                            <th class="border-top-0">Brand Logo</th>
-                                            <th class="border-top-0">Vehicle Image</th>
-                                            <th class="border-top-0">Test Drive date</th>
-                                            <th class="border-top-0">Status</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {{range .Orders}}
-                                        <tr>
-                                            <td>{{.ID}}</td>
-                                            <td>{{.VehicleID}}</td>
-                                            <td>{{.CustomerID}}</td>
-                                            <td>{{getCustomerNameById .CustomerID}}</td>
-                                            <td><a href="/admin/customer/view/{{.CustomerID}}" class="btn btn-info">VIEW CUSTOMER</a></td>
-                                            <td>{{getVehicleName .VehicleID}} {{getVehicleBrandName .VehicleID}}</td>
-                                            <td>
-                                                <a href="/admin/vehicle/view/{{.VehicleID}}"><img src="data:image/jpeg;base64,{{getVehicleBrandImage .VehicleID}}" height="100px" width="100px" /></a>
-                                            </td>
-                                            <td>
-                                                <a href="/admin/vehicle/view/{{.VehicleID}}"><img src="data:image/jpeg;base64,{{getVehicleImage .VehicleID}}" height="100px" width="100px" /></a>
-                                            </td>
-                                            <td>{{.TestDriveDate}}</td>
-
-                                            <td>
-                                                <select class="form-select" id="testDriveStatus" onchange="sendStatus(this, '{{.ID}}')" class="form-control select-label">
-                                                    <option value="Pending">Pending</option>
-                                                    <option value="Successful">Successful</option>
-                                                    <option value="Missed">Missed</option>
-                                                </select>
-                                            </td>
-
-                                        </tr>
-                                        {{end}}
-                                    </tbody>
+                                  <thead>
+                                    <tr>
+                                      <th class="border-top-0">Test Drive Booking ID</th>
+                                      <th class="border-top-0">Vehicle ID</th>
+                                      <th class="border-top-0">Customer ID</th>
+                                      <th class="border-top-0">Customer Name</th>
+                                      <th class="border-top-0">View Customer</th>
+                                      <th class="border-top-0">Vehicle Model</th>
+                                      <th class="border-top-0">Brand Logo</th>
+                                      <th class="border-top-0">Vehicle Image</th>
+                                      <th class="border-top-0">Test Drive date</th>
+                                      <th class="border-top-0">Status</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                  {{range .Orders}}
+	                                  <tr>
+                                      <td>{{.ID}}</td>
+                                      <td>{{.VehicleID}}</td>
+                                      <td>{{.CustomerID}}</td>
+                                      <td>{{getCustomerNameById .CustomerID}}</td>
+                                      <td><a href="/admin/customer/view/{{.CustomerID}}" class="btn btn-info">VIEW CUSTOMER</a></td>
+                                      <td>{{getVehicleName .VehicleID}} {{getVehicleBrandName .VehicleID}}</td>
+                                      <td><a href="/admin/vehicle/view/{{.VehicleID}}"><img src="data:image/jpeg;base64,{{getVehicleBrandImage .VehicleID}}" height="100px" width="100px" /></a>
+                                      </td>
+                                      <td><a href="/admin/vehicle/view/{{.VehicleID}}"><img src="data:image/jpeg;base64,{{getVehicleImage .VehicleID}}" height="100px" width="100px" /></a>
+                                      </td>
+                                      <td>{{.TestDriveDate}}</td>
+                                      <td>
+                                        <select class="form-select" id="testDriveStatus" onchange="sendStatus(this, '{{.ID}}')" class="form-control select-label">
+                                          <option value="Pending">Pending</option>
+                                          <option value="Successful">Successful</option>
+                                          <option value="Missed">Missed</option>
+                                        </select>
+                                      </td>
+                                    </tr>
+                                  {{end}}
+                                  </tbody>
                                 </table>
                             </div>
                         </div>
@@ -241,88 +237,84 @@
                 </div>
 
                 <script>
-                    // handle test drive status drop down
-                    function sendStatus(testDriveStatus, testDriveID) {
-                        try {
-                            fetch('/admin/updateTestDrive/', {
-                                method: 'PUT',
-                                body: JSON.stringify({
-                                    "TestDriveID": testDriveID,
-                                    "Status": testDriveStatus.value
-                                }),
-                                headers: {
-                                    'Content-type': 'application/json'
-                                }
-                            })
-                        } catch (e) {
-                            return e
-                        }
-                    }
+                  // handle test drive status drop down
+                  function sendStatus(testDriveStatus, testDriveID) {
+                  try {
+                    fetch('/admin/updateTestDrive/', {
+                      method: 'PUT',
+                      body: JSON.stringify({
+                          "TestDriveID": testDriveID,
+                          "Status": testDriveStatus.value
+                      }),
+                      headers: {
+                        'Content-type': 'application/json'
+                      }
+                    })
+                  } catch (e) {
+                    return e
+                }
+                }
 
-                    // search vehicle and customer
-                    function searchVehicle() {
-                        var input, filter, table, tr, td, i, txtValue;
-                        input = document.getElementById("myInput");
-                        filter = input.value.toUpperCase();
-                        table = document.getElementById("myTable");
-                        tr = table.getElementsByTagName("tr");
-                        for (i = 0; i < tr.length; i++) {
-                            td = tr[i].getElementsByTagName("td")[5];
-                            if (td) {
-                                txtValue = td.textContent || td.innerText;
-                                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                                    tr[i].style.display = "";
-                                } else {
-                                    tr[i].style.display = "none";
-                                }
-                            }
-                        }
+                // search vehicle and customer
+                function searchVehicle() {
+                  var input, filter, table, tr, td, i, txtValue;
+                  input = document.getElementById("myInput");
+                  filter = input.value.toUpperCase();
+                  table = document.getElementById("myTable");
+                  tr = table.getElementsByTagName("tr");
+                  for (i = 0; i < tr.length; i++) {
+                    td = tr[i].getElementsByTagName("td")[5];
+                    if (td) {
+                      txtValue = td.textContent || td.innerText;
+                      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                      } else {
+                        tr[i].style.display = "none";
+                      }
                     }
+                  }
+                }
 
-                    function searchCustomer() {
-                        var input, filter, table, tr, td, i, txtValue;
-                        input = document.getElementById("myInput2");
-                        filter = input.value.toUpperCase();
-                        table = document.getElementById("myTable");
-                        tr = table.getElementsByTagName("tr");
-                        for (i = 0; i < tr.length; i++) {
-                            td = tr[i].getElementsByTagName("td")[3];
-                            if (td) {
-                                txtValue = td.textContent || td.innerText;
-                                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                                    tr[i].style.display = "";
-                                } else {
-                                    tr[i].style.display = "none";
-                                }
-                            }
-                        }
+                function searchCustomer() {
+                  var input, filter, table, tr, td, i, txtValue;
+                  input = document.getElementById("myInput2");
+                  filter = input.value.toUpperCase();
+                  table = document.getElementById("myTable");
+                  tr = table.getElementsByTagName("tr");
+                  for (i = 0; i < tr.length; i++) {
+                    td = tr[i].getElementsByTagName("td")[3];
+                    if (td) {
+                      txtValue = td.textContent || td.innerText;
+                      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                      } else {
+                        tr[i].style.display = "none";
+	                    }
                     }
+                  }
+                }
                 </script>
 
-                <script type="text/javascript">
-                    $(document).ready(function() {
-                        $(".deletevehicle").each(function() {
-                            $(this).on("click", function() {
-                                var el = this;
-                                vehicleid = $(this).attr("id");
-                                if (confirm("Are you sure you want to delete the Vehicle with ID " + vehicleid + " ? ")) {
-
-                                    fetch('/admin/vehicle/' + vehicleid, {
-                                            method: 'DELETE',
-                                        })
-                                        .then(res => {
-                                            $(el).closest('tr').css('background', 'tomato');
-                                            $(el).closest('tr').fadeOut(500, function() {
-                                                $(this).remove();
-                                                window.location = "/admin/vehicle"
-                                            });
-                                        })
-                                }
-
-                            });
-                        });
-
+                <script>
+                $(document).ready(function() {
+                  $(".deletevehicle").each(function() {
+                    $(this).on("click", function() {
+                      var el = this;
+                      vehicleid = $(this).attr("id");
+                      if (confirm("Are you sure you want to delete the Vehicle with ID " + vehicleid + " ? ")) {
+                        fetch('/admin/vehicle/' + vehicleid, {
+                          method: 'DELETE',
+                        }).then(res => {
+                          $(el).closest('tr').css('background', 'tomato');
+                          $(el).closest('tr').fadeOut(500, function() {
+                              $(this).remove();
+                              window.location = "/admin/vehicle"
+                          });
+                        })
+                      }
                     });
+                  });
+                });
                 </script>
                 <!-- ============================================================== -->
                 <!-- End PAge Content -->

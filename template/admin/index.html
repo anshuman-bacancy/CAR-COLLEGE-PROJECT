@@ -202,7 +202,7 @@
                              <a href="/admin/create/vehicle" class="btn btn-danger text-white"
                                     >CREATE VEHICLE</a>
                                 <br><br><br>
-                                <input type="text" class="form-control" id="myInput" onkeyup="myFunction()" placeholder="Search for vehicle.." title="Type in a name">
+                                <input type="text" class="form-control" id="myInput" onkeyup="searchVehicle()" placeholder="Search for vehicle.." title="Type in a name">
                                 <br><br><br>
 
                                 {{if .HasMessage}}
@@ -210,32 +210,32 @@
                                 <br>
                                 {{end}}
                                 <table class="table table-hover" id="myTable">
-                                    <thead>
-                                        <tr>
-                                            <th class="border-top-0">#</th>
-                                            <th class="border-top-0">Vin</th>
-                                            <th class="border-top-0">Model Name</th>
-                                            <th class="border-top-0">Brand Name</th>
-                                            <th class="border-top-0">Image</th>
-                                            <th  class="border-top-0">View</th>
-                                            <th class="border-top-0">Edit</th>
-                                            <th class="border-top-0">Delete</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {{range  .Vehicles}}
-                                        <tr>
-                                            <td>{{.ID}}</td>
-                                            <td>{{.Vin}}</td>
-                                            <td>{{.ModelName}} {{getbrand .CompanyID}}</td>
-                                            <td>{{getbrand .CompanyID}}</td>
-                                            <td><a href="/admin/vehicle/view/{{.ID}}"><img src="data:image/jpeg;base64,{{.Image}}" height="100px" width="100px" /></a></td>
-                                            <td><a href="/admin/vehicle/view/{{.ID}}" class="btn btn-info">View</a></td>
-                                            <td><a href="/admin/vehicle/{{.ID}}" class="btn btn-primary">Edit</a></td>
-                                            <td><button type="button" id="{{ .ID }}" class="deletevehicle btn btn-danger"><i style="font-size:24px" class="fa">&#xf014;</i><strong> Delete</strong></button></td>
-                                        </tr>
-                                        {{end}}
-                                    </tbody>
+                                  <thead>
+                                    <tr>
+                                      <th class="border-top-0">#</th>
+                                      <th class="border-top-0">Vin</th>
+                                      <th class="border-top-0">Model Name</th>
+                                      <th class="border-top-0">Brand Name</th>
+                                      <th class="border-top-0">Image</th>
+                                      <th  class="border-top-0">View</th>
+                                      <th class="border-top-0">Edit</th>
+                                      <th class="border-top-0">Delete</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                  {{range  .Vehicles}}
+                                  <tr>
+                                    <td>{{.ID}}</td>
+                                    <td>{{.Vin}}</td>
+                                    <td>{{.ModelName}} {{getbrand .CompanyID}}</td>
+                                    <td>{{getbrand .CompanyID}}</td>
+                                    <td><a href="/admin/vehicle/view/{{.ID}}"><img src="data:image/jpeg;base64,{{.Image}}" height="100px" width="100px" /></a></td>
+                                    <td><a href="/admin/vehicle/view/{{.ID}}" class="btn btn-info">View</a></td>
+                                    <td><a href="/admin/vehicle/{{.ID}}" class="btn btn-primary">Edit</a></td>
+                                    <td><button type="button" id="{{ .ID }}" class="deletevehicle btn btn-danger"><i style="font-size:24px" class="fa">&#xf014;</i><strong> Delete</strong></button></td>
+                                  </tr>
+                                  {{end}}
+                                  </tbody>
                                 </table>
                             </div>
                         </div>
@@ -243,52 +243,47 @@
                 </div>
 
                 <script>
-                    function myFunction() {
-                        var input, filter, table, tr, td, i, txtValue;
-                        input = document.getElementById("myInput");
-                        filter = input.value.toUpperCase();
-                        table = document.getElementById("myTable");
-                        tr = table.getElementsByTagName("tr");
-                        for (i = 0; i < tr.length; i++) {
-                            td = tr[i].getElementsByTagName("td")[2];
-                            if (td) {
-                                txtValue = td.textContent || td.innerText;
-                                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                                    tr[i].style.display = "";
-                                } else {
-                                    tr[i].style.display = "none";
-                                }
-                            }
-                        }
+                  function searchVehicle() {
+                    var input, filter, table, tr, td, i, txtValue;
+
+                    input = document.getElementById("myInput");
+                    filter = input.value.toUpperCase();
+                    table = document.getElementById("myTable");
+                    tr = table.getElementsByTagName("tr");
+                    for (i = 0; i < tr.length; i++) {
+                      td = tr[i].getElementsByTagName("td")[2];
+                      if (td) {
+                        txtValue = td.textContent || td.innerText;
+                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                          tr[i].style.display = "";
+                        } else {
+                          tr[i].style.display = "none";
+                      }
                     }
+                  }
+                }
                 </script>
 
-
-
-                <script type="text/javascript">
-                    $(document).ready(function () {
-                        $(".deletevehicle").each(function () {
-                            $(this).on("click", function () {
-                                var el = this;
-                                vehicleid = $(this).attr("id");
-                                if (confirm("Are you sure you want to delete the Vehicle with ID " + vehicleid + " ? ")) {
-                             
-                                    fetch('/admin/vehicle/' + vehicleid, {
-                                        method: 'DELETE',
-                                    })
-                                        .then(res => {
-                                            $(el).closest('tr').css('background', 'tomato');
-                                            $(el).closest('tr').fadeOut(500, function () {
-                                                $(this).remove();
-                                                window.location = "/admin/vehicle"
-                                            });
-                                        })
-                                }
-
-                            });
+                <script>
+                $(document).ready(function () {
+                  $(".deletevehicle").each(function () {
+                    $(this).on("click", function () {
+                      var el = this;
+                      vehicleid = $(this).attr("id");
+                      if (confirm("Are you sure you want to delete the Vehicle with ID " + vehicleid + " ? ")) {
+                        fetch('/admin/vehicle/' + vehicleid, {
+                          method: 'DELETE',
+                        }).then(res => {
+                          $(el).closest('tr').css('background', 'tomato');
+                          $(el).closest('tr').fadeOut(500, function () {
+                          $(this).remove();
+                          window.location = "/admin/vehicle"
                         });
-
-                    });
+                      })
+                    }
+                  });
+                });
+              });
                 </script>
                 <!-- ============================================================== -->
                 <!-- End PAge Content -->

@@ -195,7 +195,7 @@
                             <div class="table-responsive">
                                 <a href="/admin/create/brand" class="btn btn-danger text-white">CREATE BRAND</a>
                                 <br><br><br>
-                                <input type="text" class="form-control" id="myInput" onkeyup="myFunction()"
+                                <input type="text" class="form-control" id="myInput" onkeyup="searchBrand()"
                                     placeholder="Search for Brand.." title="Type in a name">
                                 <br><br><br>
 
@@ -219,12 +219,12 @@
                                     <tbody>
                                             {{range .Brands}} 
                                                 <tr>
-                                                    <td>{{.ID}}</td>
-                                                    <td>{{.Name}}</td>
-                                                    <td><a href="/admin/brand/view/{{.ID}}"><img src="data:image/jpeg;base64,{{.Logo}}" height="100px" width="100px" /></a></td>
-                                                    <td><a href="/admin/brand/view/{{.ID}}" class="btn btn-info">View</a></td>
-                                                    <td><a href="/admin/brand/{{.ID}}" class="btn btn-primary">Edit</a></td>
-                                                    <td><button type="button" id="{{ .ID }}" class="deletebrand btn btn-danger"><i style="font-size:24px" class="fa">&#xf014;</i><strong> Delete</strong></button></td>
+                                                  <td>{{.ID}}</td>
+                                                  <td>{{.Name}}</td>
+                                                  <td><a href="/admin/brand/view/{{.ID}}"><img src="data:image/jpeg;base64,{{.Logo}}" height="100px" width="100px" /></a></td>
+                                                  <td><a href="/admin/brand/view/{{.ID}}" class="btn btn-info">View</a></td>
+                                                  <td><a href="/admin/brand/{{.ID}}" class="btn btn-primary">Edit</a></td>
+                                                  <td><button type="button" id="{{ .ID }}" class="deletebrand btn btn-danger"><i style="font-size:24px" class="fa">&#xf014;</i><strong> Delete</strong></button></td>
                                                 </tr>
                                             {{end}}
                                     </tbody>
@@ -235,51 +235,48 @@
                 </div>
 
                 <script>
-                    function myFunction() {
+                    function searchBrand() {
                         var input, filter, table, tr, td, i, txtValue;
                         input = document.getElementById("myInput");
                         filter = input.value.toUpperCase();
                         table = document.getElementById("myTable");
                         tr = table.getElementsByTagName("tr");
                         for (i = 0; i < tr.length; i++) {
-                            td = tr[i].getElementsByTagName("td")[1];
-                            if (td) {
-                                txtValue = td.textContent || td.innerText;
-                                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                                    tr[i].style.display = "";
-                                } else {
-                                    tr[i].style.display = "none";
-                                }
+                          td = tr[i].getElementsByTagName("td")[1];
+                          if (td) {
+                            txtValue = td.textContent || td.innerText;
+                            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                              tr[i].style.display = "";
+                            } else {
+                              tr[i].style.display = "none";
                             }
                         }
+                      }
                     }
                 </script>
 
 
 
-                <script type="text/javascript">
-                    $(document).ready(function () {
-                        $(".deletebrand").each(function () {
-                            $(this).on("click", function () {
-                                var el = this;
-                                brandid = $(this).attr("id");
-                                if (confirm("Are you sure you want to delete the Brand with ID " + brandid + " ? ")) {
-                                    fetch('/admin/brand/' + brandid, {
-                                      method: 'DELETE',
-                                    })
-                                    .then(res => {
-                                        $(el).closest('tr').css('background', 'tomato');
-                                        $(el).closest('tr').fadeOut(500, function () {
-                                            $(this).remove();
-                                            window.location = "/admin/brand"
-                                        });
-                                    })
-                                }
-
-                            });
-                        });
-
+                <script>
+                $(document).ready(function () {
+                  $(".deletebrand").each(function () {
+                    $(this).on("click", function () {
+                      var el = this;
+                      brandid = $(this).attr("id");
+                      if (confirm("Are you sure you want to delete the Brand with ID " + brandid + " ? ")) {
+                        fetch('/admin/brand/' + brandid, {
+                          method: 'DELETE',
+                        }).then(res => {
+                            $(el).closest('tr').css('background', 'tomato');
+                            $(el).closest('tr').fadeOut(500, function () {
+                            $(this).remove();
+                            window.location = "/admin/brand"
+                          });
+                        })
+                      }
                     });
+                  });
+                });
                 </script>
                 <!-- ============================================================== -->
                 <!-- End PAge Content -->

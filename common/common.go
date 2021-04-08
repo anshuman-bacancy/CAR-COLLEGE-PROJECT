@@ -12,9 +12,11 @@ import (
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 )
 
-var db *sql.DB
-var err error
-var tpl *template.Template
+var (
+ db *sql.DB
+ err error
+ tpl *template.Template
+)
 
 //GetDatabase is return db connection
 func GetDatabase() *gorm.DB {
@@ -28,12 +30,12 @@ func GetDatabase() *gorm.DB {
 }
 
 //Closedatabase closes the database connection
-func Closedatabase(connection *gorm.DB) {
+func CloseDatabase(connection *gorm.DB) {
 	sqldb := connection.DB()
 	sqldb.Close()
 }
 
-//CheckError is...
+// panics error based on severity
 func CheckError(err error) {
 	if err != nil {
 		panic(err)

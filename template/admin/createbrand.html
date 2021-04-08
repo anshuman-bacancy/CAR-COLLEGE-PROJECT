@@ -258,39 +258,34 @@
         <!-- ============================================================== -->
     </div>
     <script>
+    function readURL(input) {
+      if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          $('#displayimage').attr('src', e.target.result);
+        }
+        reader.readAsDataURL(input.files[0]); // convert to base64 string
+      }
+    }
 
-         function readURL(input) {
-                if (input.files && input.files[0]) {
-                    var reader = new FileReader();
+    $("#logo").change(function () {
+        readURL(this);
+    });
 
-                    reader.onload = function (e) {
-                        $('#displayimage').attr('src', e.target.result);
-                    }
+    $(document).ready(function () {
+    $("#brand-form").validate({
+      rules: {
+        companyname: "required",
+        logo: "required",
+      },
 
-                    reader.readAsDataURL(input.files[0]); // convert to base64 string
-                }
-            }
+      messages: {
+        companyname: "*PLEASE ENTER BRAND NAME",
+        logo: "*PLEASE ENTER IMAGE",
+      }
+    });
 
-            $("#logo").change(function () {
-                readURL(this);
-            });
-
-        $(document).ready(function () {
-
-            $("#brand-form").validate({
-                rules: {
-                    companyname: "required",
-                    logo: "required",
-                },
-
-                messages: {
-                    companyname: "*PLEASE ENTER BRAND NAME",
-                    logo: "*PLEASE ENTER IMAGE",
-
-                }
-            });
-
-        });
+    });
     </script>
     <!-- ============================================================== -->
     <!-- End Wrapper -->

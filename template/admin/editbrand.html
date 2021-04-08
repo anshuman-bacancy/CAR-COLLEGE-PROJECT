@@ -27,16 +27,16 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
 
     <style>
-        td {
-            color: black;
-        }
+      td {
+        color: black;
+      }
 
-        .error {
-            color: red;
-            margin-top: 5px;
-            font-size: 17px;
-            font-weight: bold;
-        }
+    .error {
+      color: red;
+      margin-top: 5px;
+      font-size: 17px;
+      font-weight: bold;
+    }
     </style>
 </head>
 
@@ -257,63 +257,53 @@
     <script>
 
         function readURL(input) {
-                if (input.files && input.files[0]) {
-                    var reader = new FileReader();
-
-                    reader.onload = function (e) {
-                        $('#displayimage').attr('src', e.target.result);
-                    }
-
-                    reader.readAsDataURL(input.files[0]); // convert to base64 string
-                }
+          if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+              $('#displayimage').attr('src', e.target.result);
             }
+            reader.readAsDataURL(input.files[0]); // convert to base64 string
+          }
+        }
 
-            $("#logo").change(function () {
-                readURL(this);
-            });
+        $("#logo").change(function () {
+          readURL(this);
+        });
 
         $(document).ready(function () {
-
             $("#brand-form").validate({
-                rules: {
-                    companyname: "required",
-                    logo: "required",
-                },
-
-                messages: {
-                    companyname: "*PLEASE ENTER BRAND NAME",
-                    logo: "*PLEASE ENTER IMAGE",
-
-                },
-                submitHandler: function (form) {
-                    //e.preventDefault();
-
-                    var file = document.getElementById("logo").files[0];
-                    var reader = new FileReader();
-                    reader.onload = function () {
-                        //console.log(reader.result);
-                        var brandid = $("#id").val();
-                        var image = reader.result.slice(23);
-                        fetch('/admin/brand/' + brandid, {
-                            method: 'PUT',
-                            body: JSON.stringify({
-                                "name": $("#companyname").val(),
-                                "logo": image,
-                            }),
-                            headers: {
-                                'Content-type': 'application/json; charset=UTF-8'
-                            }
-                        }).then(function (response) {
-                            window.location = "/admin/brand"
-                        });
-
-                    };
-                    reader.readAsDataURL(file);
-
-                }
-
+              rules: {
+                companyname: "required",
+                logo: "required",
+              },
+              messages: {
+                companyname: "*PLEASE ENTER BRAND NAME",
+                logo: "*PLEASE ENTER IMAGE",
+              },
+              submitHandler: function (form) {
+                //e.preventDefault();
+                var file = document.getElementById("logo").files[0];
+                var reader = new FileReader();
+                reader.onload = function () {
+                  //console.log(reader.result);
+                  var brandid = $("#id").val();
+                  var image = reader.result.slice(23);
+                  fetch('/admin/brand/' + brandid, {
+                    method: 'PUT',
+                    body: JSON.stringify({
+                        "name": $("#companyname").val(),
+                        "logo": image,
+                    }),
+                    headers: {
+                        'Content-type': 'application/json; charset=UTF-8'
+                    }
+                  }).then(function (response) {
+                    window.location = "/admin/brand"
+                  });
+                };
+                reader.readAsDataURL(file);
+              }
             });
-
         });
     </script>
     <!-- ============================================================== -->

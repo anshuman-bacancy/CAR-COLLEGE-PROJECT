@@ -247,45 +247,38 @@
                 
                 <script>
                     $(document).ready(function () {
-
-
                         $("#account-form").validate({
-                            rules: {
-                                name: "required",
-                                password: "required",
-                                mobilenumber: {
-                                    required: true,
-                                    minlength: 10,
-                                    maxlength: 10,
+                          rules: {
+                            name: "required",
+                            password: "required",
+                            mobilenumber: {
+                                required: true,
+                                minlength: 10,
+                                maxlength: 10,
 
-                                },
-                                city: "required",
                             },
-
-                            messages: {
-                                name: "*Please Enter Name",
-                                password: "*Please Enter Password",
-                                city: "*Please Enter City",
-                            },
-                            submitHandler: function (form) {
-                                var adminid = $("#id").val();
-                                fetch('/admin/' + adminid, {
-                                    method: 'PUT',
-                                    body: JSON.stringify({
-                                        "name": $("#name").val(),
-                                        "password": $("#password").val(),
-                                        "mobile": $("#mobilenumber").val(),
-                                        "city": $("#city").val(),
-                                    }),
-                                    headers: {
-                                        'Content-type': 'application/json; charset=UTF-8'
-                                    }
-                                }).then(function (response) {
-                                    window.location = "/admin/account"
-                                });
-
-
-                            }
+                            city: "required",
+                          },
+                          messages: {
+                              name: "*Please Enter Name",
+                              password: "*Please Enter Password",
+                              city: "*Please Enter City",
+                          },
+                          submitHandler: function (form) {
+                            var adminid = $("#id").val();
+                            fetch('/admin/' + adminid, {
+                                method: 'PUT',
+                                body: JSON.stringify({
+                                    "name": $("#name").val(),
+                                    "password": $("#password").val(),
+                                    "mobile": $("#mobilenumber").val(),
+                                    "city": $("#city").val(),
+                                }),
+                                headers: {'Content-type': 'application/json; charset=UTF-8'}
+                            }).then(function (response) {
+                                window.location = "/admin/account"
+                            });
+                          }
                         });
                     });
                 </script>

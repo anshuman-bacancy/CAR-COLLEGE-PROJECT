@@ -26,15 +26,15 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
    
     <style>
-        td {
-            color: black;
-        }
-         .error{
-                    color:red;
-                    margin-top:5px;
-                    font-size:17px;
-                    font-weight:bold;
-                }
+    td {
+      color: black;
+    }
+   .error{
+      color:red;
+      margin-top:5px;
+      font-size:17px;
+      font-weight:bold;
+    }
     </style>
 </head>
 
@@ -321,87 +321,73 @@
                 </div>
 
                 <script>
-                     function readURL(input) {
-                            if (input.files && input.files[0]) {
-                                var reader = new FileReader();
-
-                                reader.onload = function (e) {
-                                    $('#displayimage').attr('src', e.target.result);
-                                }
-
-                                reader.readAsDataURL(input.files[0]); // convert to base64 string
-                            }
-                        }
-
-                        $("#image").change(function () {
-                            readURL(this);
-                        });
-                    $(document).ready(function () {
-
-                        $("#vehicle-form").validate({
-                           rules: {
-                                vin: "required",
-                                year: "required",
-                                model: "required",
-                                title: "required",
-                                price: "required",
-                                fueltype: "required",
-                                mileage: "required",
-                                stock: "required",
-                                image: "required",
-            
-                            },
-    
-                            messages: {
-                               vin: "*PLEASE ENTER VIN NUMBER",
-                                year: "*PLEASE ENTER YEAR",
-                                model: "*PLEASE ENTER MODEL",
-                                title: "*PLEASE ENTER TITLE",
-                                price: "*PLEASE ENTER PRICE",
-                                fueltype: "*PLEASE ENTER FUELTYPE",
-                                mileage: "*PLEASE ENTER MIELAGE",
-                                stock: "*PLEASE ENTER STOCK",
-                                image: "*PLEASE ENTER IMAGE",
-
-                            },
-                            submitHandler: function (form) {
-                                //e.preventDefault();
-                                
-                                    var file = document.getElementById("image").files[0];
-                                    var reader = new FileReader();
-                                    reader.onload = function () {
-                                        //console.log(reader.result);
-                                        var vehicleid = $("#id").val();
-                                        var image = reader.result.slice(23);
-                                        
-                                         fetch('/admin/vehicle/' + vehicleid, {
-                                            method: 'PUT',
-                                            body: JSON.stringify({
-                                                "vin": $("#vin").val(),
-                                                "year": $("#year").val(),
-                                                "model": $("#model").val(),
-                                                "title": $("#title").val(),
-                                                "price": $("#price").val(),
-                                                "fueltype": $('#fueltype :selected').val(),
-                                                "mileage": $("#mileage").val(),
-                                                "stock": $("#stock").val(),
-                                                "image": image,
-                                                "companyid": $('#company :selected').val(),
-                                            }),
-                                            headers: {
-                                                'Content-type': 'application/json; charset=UTF-8'
-                                            }
-                                        }).then(function (response) {
-                                            window.location = "/admin/vehicle"
-                                        }); 
-                                      
-                                    };
-                                    reader.readAsDataURL(file);
-                            
-                            }
-                        });
-
-                    });
+                function readURL(input) {
+                  if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                      $('#displayimage').attr('src', e.target.result);
+                    }
+                    reader.readAsDataURL(input.files[0]); // convert to base64 string
+                  }
+                }
+                $("#image").change(function () {
+                    readURL(this);
+                });
+                $(document).ready(function () {
+                  $("#vehicle-form").validate({
+                   rules: {
+                      vin: "required",
+                      year: "required",
+                      model: "required",
+                      title: "required",
+                      price: "required",
+                      fueltype: "required",
+                      mileage: "required",
+                      stock: "required",
+                      image: "required",
+                    },
+                    messages: {
+                      vin: "*PLEASE ENTER VIN NUMBER",
+                      year: "*PLEASE ENTER YEAR",
+                      model: "*PLEASE ENTER MODEL",
+                      title: "*PLEASE ENTER TITLE",
+                      price: "*PLEASE ENTER PRICE",
+                      fueltype: "*PLEASE ENTER FUELTYPE",
+                      mileage: "*PLEASE ENTER MIELAGE",
+                      stock: "*PLEASE ENTER STOCK",
+                      image: "*PLEASE ENTER IMAGE",
+                    },
+                    submitHandler: function (form) {
+                        //e.preventDefault();
+                      var file = document.getElementById("image").files[0];
+                      var reader = new FileReader();
+                      reader.onload = function () {
+                          //console.log(reader.result);
+                        var vehicleid = $("#id").val();
+                        var image = reader.result.slice(23);
+                         fetch('/admin/vehicle/' + vehicleid, {
+                          method: 'PUT',
+                          body: JSON.stringify({
+                            "vin": $("#vin").val(),
+                            "year": $("#year").val(),
+                            "model": $("#model").val(),
+                            "title": $("#title").val(),
+                            "price": $("#price").val(),
+                            "fueltype": $('#fueltype :selected').val(),
+                            "mileage": $("#mileage").val(),
+                            "stock": $("#stock").val(),
+                            "image": image,
+                            "companyid": $('#company :selected').val(),
+                            }),
+                        headers: {'Content-type': 'application/json; charset=UTF-8'}
+                        }).then(function (response) {
+                            window.location = "/admin/vehicle"
+                        }); 
+                      };
+                      reader.readAsDataURL(file);
+                    }
+                  });
+                });
                 </script>
                 <!-- ============================================================== -->
                 <!-- End PAge Content -->

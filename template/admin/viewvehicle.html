@@ -196,83 +196,46 @@
                                 <br><br><br>
                                 <h1>Model Name {{.ModelName}} {{getbrand .CompanyID}}</h1>
                                 <img src="data:image/jpeg;base64,{{ .Image}}" />
-                                <div   class="col-md-6">
-                                        <table class="table table-bordered">
-                                            <tr>
-                                                <th>
-                                                    Year
-                                                </th>
-                                                <td>
-                                                    {{.Year}}
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th>
-                                                    Vin Number
-                                                </th>
-                                                <td>
-                                                    {{.Vin}}
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th>
-                                                    BRAND NAME
-                                                </th>
-                                                <td>
-                                                {{getbrand .CompanyID}}
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th>
-                                                    ModelName
-                                                </th>
-                                                <td>
-                                                    {{.ModelName}}
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th>
-                                                    TitleNumber
-                                                </th>
-                                                <td>
-                                                    {{.TitleNumber}}
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th>
-                                                    Price
-                                                </th>
-                                                <td>
-                                                    &#8377;{{.Price}}
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th>
-                                                    FuelType
-                                                </th>
-                                                <td>
-                                                    {{.FuelType}}
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th>
-                                                    Mileage
-                                                </th>
-                                                <td>
-                                                    {{.Mileage}}
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th>
-                                                    Stock
-                                                </th>
-                                                <td>
-                                                    {{.Stock}}
-                                                </td>
-                                            </tr>
-                                        </table>
+                                <div class="col-md-6">
+                                  <table class="table table-bordered">
+                                    <tr>
+                                      <th>Year</th>
+                                      <td>{{.Year}}</td>
+                                    </tr>
+                                    <tr>
+                                      <th>Vin Number</th>
+                                      <td>{{.Vin}}</td>
+                                    </tr>
+                                    <tr>
+                                      <th>BRAND NAME</th>
+                                      <td>{{getbrand .CompanyID}} </td>
+                                    </tr>
+                                    <tr>
+                                      <th> ModelName </th>
+                                      <td> {{.ModelName}} </td>
+                                    </tr>
+                                    <tr>
+                                      <th> TitleNumber </th>
+                                      <td> {{.TitleNumber}} </td>
+                                    </tr>
+                                    <tr>
+                                      <th> Price </th>
+                                      <td> &#8377;{{.Price}} </td>
+                                    </tr>
+                                    <tr>
+                                      <th> FuelType </th>
+                                      <td> {{.FuelType}} </td>
+                                    </tr>
+                                    <tr>
+                                      <th> Mileage </th>
+                                      <td> {{.Mileage}} </td>
+                                    </tr>
+                                      <tr>
+                                        <th> Stock </th>
+                                        <td> {{.Stock}} </td>
+                                      </tr>
+                                    </table>
                                 </div>
-                               
                             </div>
                         </div>
                     </div>
