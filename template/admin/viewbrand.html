@@ -201,23 +201,19 @@
                         <div class="white-box">
                             <a href="/admin/brand" class="btn btn-primary text-white">Back</a>
                             <br><br><br>
-                            <h1>VIEW {{ .Brand.Name}}</h1>
+                            <h1>{{.Brand.Name}}</h1>
             
                             <img src="data:image/jpeg;base64,{{.Brand.Logo}}" height="300px" width="300px" />
                          
-                            <input type="text" id="mySearch" onkeyup="searchVehicle()" class="form-control" placeholder="Search vehicle.."
-                                title="Type in a category">
+                            <input type="text" id="mySearch" onkeyup="searchVehicle()" class="form-control" placeholder="Search vehicle in {{.Brand.Name}}" title="Type in a category">
                             <br>
                             <div class="row" id="list">
                                 {{range .Vehicles}}
-                            
                                 <div class="col-md-4">
                                     <a href="/admin/vehicle/view/{{.ID}}"> <img src="data:image/jpeg;base64,{{.Image}}" height="300px" width="400px" /></a>
                                   <h4 style="text-align: center;">{{.ModelName}}</h4> 
                                     <br><br><br>
                                 </div>
-                            
-                            
                                 {{end}}
                             </div>
                         </div>
