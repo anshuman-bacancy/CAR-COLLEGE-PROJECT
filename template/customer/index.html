@@ -95,22 +95,26 @@
                     <!-- Right side toggle and nav items -->
                     <!-- ============================================================== -->
                     <ul class="navbar-nav ml-auto d-flex align-items-center">
-
-                        <!-- ============================================================== -->
-                        <!-- Search -->
-                        <!-- ============================================================== -->
-
-                        <!-- ============================================================== -->
-                        <!-- User profile and search -->
-                        <!-- ============================================================== -->
-                        <li>
-                            <a class="profile-pic" href="/customer/Logout">
-                                <img src="/static/plugins/images/users/varun.jpg" alt="user-img" width="36"
-                                    class="img-circle"><span class="text-white font-medium">Logout</span></a>
-                        </li>
-                        <!-- ============================================================== -->
-                        <!-- User profile and search -->
-                        <!-- ============================================================== -->
+                      <li class="nav-item">
+                        <a class="nav-link" style="color: white; font-size: 26px" href="/">Home</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" style="color: white; font-size: 26px"  href="/Registration">Register</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" style="color: white; font-size: 26px" href="/Login">Login</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" style="color: white; font-size: 26px" href="/#viewabout">About</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" style="color: white; font-size: 26px"  href="#viewcars">Our Featured Cars</a>
+                      </li>
+                      <li>
+                          <a class="profile-pic" href="/customer/Logout">
+                              <img src="/static/plugins/images/users/varun.jpg" alt="user-img" width="36"
+                                  class="img-circle"><span class="text-white font-medium">Logout</span></a>
+                      </li>
                     </ul>
                 </div>
             </nav>
@@ -184,7 +188,11 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="white-box">
-                            <div class="row">
+                            <a href="/customer/index" class="btn btn-primary text-white">Back</a>
+                            <br><br><br>
+                            <input type="text" id="myInput" onkeyup="searchBrands()" class="form-control" placeholder="Search brands.." title="Type in a category">
+                            <br>
+                            <div class="row" id="list">
                             {{range .}}
                                      <div class="col-md-4">
                                         <center><a href="/customer/brand/view/{{.ID}}"><img src="data:image/jpeg;base64,{{.Logo}}" height="200px" width="200px" /></a></center>
@@ -200,7 +208,23 @@
                 </div>
 
 
-               
+                <script>
+                function searchBrands() {
+                    var input, filter, ul, li, a, i;
+                    input = document.getElementById("myInput");
+                    filter = input.value.toUpperCase();
+                    ul = document.getElementById("list");
+                    li = ul.getElementsByTagName("div");
+                    for (i = 0; i < li.length; i++) {
+                        a = li[i].getElementsByTagName("h4")[0];
+                        if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                            li[i].style.display = "";
+                        } else {
+                         li[i].style.display = "none";
+                        }
+                    }
+                }
+                </script>
                 <!-- ============================================================== -->
                 <!-- End PAge Content -->
                 <!-- ============================================================== -->

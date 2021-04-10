@@ -95,22 +95,26 @@
                     <!-- Right side toggle and nav items -->
                     <!-- ============================================================== -->
                     <ul class="navbar-nav ml-auto d-flex align-items-center">
-
-                        <!-- ============================================================== -->
-                        <!-- Search -->
-                        <!-- ============================================================== -->
-
-                        <!-- ============================================================== -->
-                        <!-- User profile and search -->
-                        <!-- ============================================================== -->
+                      <li class="nav-item">
+                        <a class="nav-link" style="color: white; font-size: 26px" href="/">Home</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" style="color: white; font-size: 26px"  href="/Registration">Register</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" style="color: white; font-size: 26px" href="/Login">Login</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" style="color: white; font-size: 26px" href="/#viewabout">About</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" style="color: white; font-size: 26px"  href="#viewcars">Our Featured Cars</a>
+                      </li>
                         <li>
                             <a class="profile-pic" href="/customer/Logout">
                                 <img src="/static/plugins/images/users/varun.jpg" alt="user-img" width="36"
                                     class="img-circle"><span class="text-white font-medium">Logout</span></a>
                         </li>
-                        <!-- ============================================================== -->
-                        <!-- User profile and search -->
-                        <!-- ============================================================== -->
                     </ul>
                 </div>
             </nav>
@@ -185,7 +189,7 @@
                         <div class="white-box">
                             <a href="/customer/index" class="btn btn-primary text-white">Back</a>
                             <br><br><br>
-                            <input type="text" id="mySearch" onkeyup="myFunction()" class="form-control" placeholder="Search vehicle.." title="Type in a category">
+                            <input type="text" id="mySearch" onkeyup="searchVehicle()" class="form-control" placeholder="Search vehicle.." title="Type in a category">
                             <br>
                                 <div class="row" id="list">
                                     {{range .}}
@@ -201,7 +205,7 @@
                 </div>
 
               <script>
-                function myFunction() {
+                function searchVehicle() {
                     var input, filter, ul, li, a, i;
                     input = document.getElementById("mySearch");
                     filter = input.value.toUpperCase();

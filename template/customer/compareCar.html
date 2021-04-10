@@ -29,9 +29,9 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
 
     <style>
-        td {
-            color: black;
-        }
+      td {
+        color: black;
+      }
     </style>
 </head>
 
@@ -90,18 +90,23 @@
                             <a class="nav-toggler nav-link waves-effect waves-light text-white" href="javascript:void(0)"><i class="ti-menu ti-close"></i></a>
                         </li>
                     </ul>
-                    <!-- ============================================================== -->
-                    <!-- Right side toggle and nav items -->
-                    <!-- ============================================================== -->
                     <ul class="navbar-nav ml-auto d-flex align-items-center">
+                      <li class="nav-item">
+                        <a class="nav-link" style="color: white; font-size: 26px" href="/">Home</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" style="color: white; font-size: 26px"  href="/Registration">Register</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" style="color: white; font-size: 26px" href="/Login">Login</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" style="color: white; font-size: 26px" href="/#viewabout">About</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" style="color: white; font-size: 26px"  href="#viewcars">Our Featured Cars</a>
+                      </li>
 
-                        <!-- ============================================================== -->
-                        <!-- Search -->
-                        <!-- ============================================================== -->
-
-                        <!-- ============================================================== -->
-                        <!-- User profile and search -->
-                        <!-- ============================================================== -->
                         <li>
                             <a class="profile-pic" href="/customer/Logout">
                                 <img src="/static/plugins/images/users/varun.jpg" alt="user-img" width="36" class="img-circle"><span class="text-white font-medium">Logout</span></a>
@@ -173,28 +178,26 @@
             <!-- ============================================================== -->
             <!-- Container fluid  -->
             <!-- ============================================================== -->
-            <div class="container-fluid">
+            <div class="container-fluid" style="background: white">
                 <!-- ============================================================== -->
                 <!-- Start Page Content -->
                 <!-- ============================================================== -->
     <div class="cd-products-table">
-      <div class="features">
-        <div class="top-info"></div>
-        <ul class="cd-features-list">
-          <li>Model Name</li>
-          <li>Price</li>
-          <li>Mileage</li>
-          <li>Fuel Type</li>
-          <li>Year</li>
+      <div class="features" style="padding-top: 0px; background: white">
+        <div class="" style="background: white"></div>
+        <ul class="cd-features-list" style="padding-bottom:150px; background: white">
+          <li style="line-height: 20px">Name</li>
+          <li style="line-height: 20px">Price</li>
+          <li style="line-height: 20px">Mileage</li>
+          <li style="line-height: 20px">Fuel Type</li>
+          <li style="line-height: 20px">Year</li>
         </ul>
       </div> <!-- .features -->
       
       <div class="cd-products-wrapper">
         <ul class="cd-products-columns">
           <li class="product">
-            <div class="top-info">
-              <div class="check"></div>
-              <img src="img/product.png" alt="product image">
+            <div class="">
               <select class="form-control" onchange="displayCar1(this)" aria-label="Default select example">
                 <option selected>Select a car</option>
                 {{range .AllVehicles}}
@@ -207,9 +210,7 @@
           </li> <!-- .product -->
 
           <li class="product">
-            <div class="top-info">
-              <div class="check"></div>
-              <img src="img/product.png" alt="product image">
+            <div class="">
               <select class="form-control" id="secondCar" onchange="displayCar2(this)" aria-label="Default select example">
                 <option selected>Select a car</option>
                 {{range .AllVehicles}}
@@ -223,9 +224,7 @@
           </li> <!-- .product -->
 
           <li class="product">
-            <div class="top-info">
-              <div class="check"></div>
-              <img src="img/product.png" alt="product image">
+            <div class="">
               <select class="form-control" id="secondCar" onchange="displayCar3(this)" aria-label="Default select example">
                 <option selected>Select a car</option>
                 {{range .AllVehicles}}
@@ -239,9 +238,7 @@
           </li> <!-- .product -->
 
           <li class="product">
-            <div class="top-info">
-              <div class="check"></div>
-              <img src="img/product.png" alt="product image">
+            <div class="">
               <select class="form-control" id="secondCar" onchange="displayCar4(this)" aria-label="Default select example">
                 <option selected>Select a car</option>
                 {{range .AllVehicles}}
@@ -256,92 +253,98 @@
               <li></li>
               <li></li>
               <li></li>
+              <li></li>
+              <li></li>
             </ul>
 
           </li> <!-- .product -->
         </ul> <!-- cd-products-column -->
       </div>
-
- 				<script>
-					function displayCar1(car) {
-						var id = car.value
-						fetch('/customer/getVehicle/'+id, {
-							method: 'GET',
-						}).then(function(response) {
-								data = response.json()
-								return data 
-						}).then(function(vehicle) {
-              var disp = $("#car1")
-              disp.empty()
-              disp.append(
-                `<li>${vehicle.model}</li>
-                <li>${vehicle.price}</li>
-                <li>${vehicle.mileage}</li>
-                <li>${vehicle.fueltype}</li>
-               <li>${vehicle.year}</li>`)
-            })
-					}
-          function displayCar2(car) {
-            var id = car.value
-            fetch('/customer/getVehicle/'+id, {
-              method: 'GET',
-            }).then(function(response) {
-                data = response.json()
-                return data 
-            }).then(function(vehicle) {
-              var disp = $("#car2")
-              disp.empty()
-              disp.append(
-                `<li>${vehicle.model}</li>
-                <li>${vehicle.price}</li>
-                <li>${vehicle.mileage}</li>
-                <li>${vehicle.fueltype}</li>
-               <li>${vehicle.year}</li>`)
-            })
-          }
-          function displayCar3(car) {
-            var id = car.value
-            fetch('/customer/getVehicle/'+id, {
-              method: 'GET',
-            }).then(function(response) {
-                data = response.json()
-                return data 
-            }).then(function(vehicle) {
-              var disp = $("#car3")
-              disp.empty()
-              disp.append(
-                `<li>${vehicle.model}</li>
-                <li>${vehicle.price}</li>
-                <li>${vehicle.mileage}</li>
-                <li>${vehicle.fueltype}</li>
-               <li>${vehicle.year}</li>`)
-            })
-          }
-          function displayCar4(car) {
-            var id = car.value
-            fetch('/customer/getVehicle/'+id, {
-              method: 'GET',
-            }).then(function(response) {
-                data = response.json()
-                return data 
-            }).then(function(vehicle) {
-              var disp = $("#car4")
-              disp.empty()
-              disp.append(
-                `<li>${vehicle.model}</li>
-                <li>${vehicle.price}</li>
-                <li>${vehicle.mileage}</li>
-                <li>${vehicle.fueltype}</li>
-               <li>${vehicle.year}</li>`)
-            })
-          }
-				</script>
+    </div>
 
 
         <!-- ============================================================== -->
         <!-- End Page wrapper  -->
         <!-- ============================================================== -->
-    </div>
+    <script>
+      function displayCar1(car) {
+        var id = car.value
+        fetch('/customer/getVehicle/'+id, {
+          method: 'GET',
+        }).then(function(response) {
+            data = response.json()
+            return data 
+        }).then(function(vehicle) {
+          var disp = $("#car1")
+          disp.empty()
+          disp.append(
+            `<li><img src="data:image/png;base64, ${vehicle.image}" height="75" width="75" /></li>
+            <li style="line-height: 20px">${vehicle.model}</li>
+            <li style="line-height: 20px">${vehicle.price}</li>
+            <li style="line-height: 20px">${vehicle.mileage}</li>
+            <li style="line-height: 20px">${vehicle.fueltype}</li>
+           <li style="line-height: 20px">${vehicle.year}</li>`)
+        })
+      }
+      function displayCar2(car) {
+        var id = car.value
+        fetch('/customer/getVehicle/'+id, {
+          method: 'GET',
+        }).then(function(response) {
+            data = response.json()
+            return data 
+        }).then(function(vehicle) {
+          var disp = $("#car2")
+          disp.empty()
+          disp.append(
+            `<li><img src="data:image/png;base64, ${vehicle.image}" height="75" width="75" /></li>
+            <li style="line-height: 20px">${vehicle.model}</li>
+            <li style="line-height: 20px">${vehicle.price}</li>
+            <li style="line-height: 20px">${vehicle.mileage}</li>
+            <li style="line-height: 20px">${vehicle.fueltype}</li>
+           <li style="line-height: 20px">${vehicle.year}</li>`)
+        })
+      }
+      function displayCar3(car) {
+        var id = car.value
+        fetch('/customer/getVehicle/'+id, {
+          method: 'GET',
+        }).then(function(response) {
+            data = response.json()
+            return data 
+        }).then(function(vehicle) {
+          var disp = $("#car3")
+          disp.empty()
+          console.log(vehicle)
+          disp.append(
+            `<li><img src="data:image/png;base64, ${vehicle.image}" height="75" width="75" /></li>
+            <li style="line-height: 20px">${vehicle.model}</li>
+            <li style="line-height: 20px">${vehicle.price}</li>
+            <li style="line-height: 20px">${vehicle.mileage}</li>
+            <li style="line-height: 20px">${vehicle.fueltype}</li>
+           <li style="line-height: 20px">${vehicle.year}</li>`)
+        })
+      }
+      function displayCar4(car) {
+        var id = car.value
+        fetch('/customer/getVehicle/'+id, {
+          method: 'GET',
+        }).then(function(response) {
+            data = response.json()
+            return data 
+        }).then(function(vehicle) {
+          var disp = $("#car4")
+          disp.empty()
+          disp.append(
+            `<li><img src="data:image/png;base64, ${vehicle.image}" height="75" width="75" /></li>
+            <li style="line-height: 20px">${vehicle.model}</li>
+            <li style="line-height: 20px">${vehicle.price}</li>
+            <li style="line-height: 20px">${vehicle.mileage}</li>
+            <li style="line-height: 20px">${vehicle.fueltype}</li>
+           <li style="line-height: 20px">${vehicle.year}</li>`)
+        })
+      }
+    </script>
     <!-- ============================================================== -->
     <!-- End Wrapper -->
     <!-- ============================================================== -->
