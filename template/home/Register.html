@@ -31,50 +31,49 @@
     </div>
 
     <div class="register-page">
+      {{if .HasMessage}}
+      <div class="alert alert-danger text-center" style="font-weight:bold;" role="alert">{{.Message}}</div>
+      <br>
+      {{end}}
 
-        {{if .HasMessage}}
-        <div class="alert alert-danger text-center" style="font-weight:bold;" role="alert">{{.Message}}</div>
-        <br>
-        {{end}}
+      <form action="/customer/register" id="register-form" method="POST">
 
-        <form action="/customer/register" id="register-form" method="POST">
+        <center><legend class="reg">Registration</legend></center>
 
-          <center><legend class="reg">Registration</legend></center>
+          <div class="mb-3">
+            <label class="form-label" for="name">Name</label>
+            <input type="text" name="name" id="name" class="form-control" placeholder="Enter Name" autocomplete="off" />
+          </div>
 
-            <div class="mb-3">
-              <label class="form-label" for="name">Name</label>
-              <input type="text" name="name" id="name" class="form-control" placeholder="Enter Name" autocomplete="off" />
-            </div>
-
-            <div class="mb-3">
-              <label class="form-label" for="email">Email</label>
-              <input type="email" name="email" id="email" class="form-control" placeholder="Enter Email" autocomplete="off" />
-            </div>
-
-
-            <div class="mb-3">
-              <label class="form-label" for="password">Password</label>
-              <input type="password" name="password"  id="password" class="form-control" placeholder="Enter password" autocomplete="off" />
-            </div>
+          <div class="mb-3">
+            <label class="form-label" for="email">Email</label>
+            <input type="email" name="email" id="email" class="form-control" placeholder="Enter Email" autocomplete="off" />
+          </div>
 
 
-            <div class="mb-3">
-              <label class="form-label" id="mobilenumber">Mobile Number</label>
-              <input type="text" name="mobilenumber" id="mobilenumber" class="form-control" placeholder="Enter Mobile Number"
-                  autocomplete="off" />
-            </div>
+          <div class="mb-3">
+            <label class="form-label" for="password">Password</label>
+            <input type="password" name="password"  id="password" class="form-control" placeholder="Enter password" autocomplete="off" />
+          </div>
 
-            <div class="mb-3">
-              <label class="form-label" for="city">City</label>
-              <input type="text" name="city"id="city" class="form-control" placeholder="Enter City" autocomplete="off" />
-            </div>
 
-            <div class="mb-3">
-              <button type="submit" class="btn btn-lg btn-primary">Register</button>
-            </div>
-        </form>
+          <div class="mb-3">
+            <label class="form-label" id="mobilenumber">Mobile Number</label>
+            <input type="text" name="mobilenumber" id="mobilenumber" class="form-control" placeholder="Enter Mobile Number"
+                autocomplete="off" />
+          </div>
 
-        <br><br><br>
+          <div class="mb-3">
+            <label class="form-label" for="city">City</label>
+            <input type="text" name="city"id="city" class="form-control" placeholder="Enter City" autocomplete="off" />
+          </div>
+
+          <div class="mb-3">
+            <button type="submit" class="btn btn-lg btn-primary">Register</button>
+          </div>
+      </form>
+
+      <br><br><br>
     </div>
 
     <script>
