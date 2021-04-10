@@ -72,7 +72,7 @@ func CustomerLogin(w http.ResponseWriter, r *http.Request) {
 	var hasmessge bool
 	if customernotexits {
 		hasmessge = true
-		message = "Username or Password is wrong"
+		message = "Wrong Username or Password"
 		customernotexits = false
 	}
 	hometpl.ExecuteTemplate(w, "login.html", struct {
@@ -153,7 +153,7 @@ func CustomerForgotPassword(w http.ResponseWriter, r *http.Request) {
 
 	if emailnotextits {
 		hasmessge = true
-		message = "Email is does not Exits"
+		message = "Email does not exists!"
 		emailnotextits = false
 	}
 
@@ -187,8 +187,9 @@ func CustomerValidateEmail(w http.ResponseWriter, r *http.Request) {
 }
 
 func sendemail(email string) {
-	from := "autogradingsystem99999@gmail.com"
-	password := "nedlsjaxafqmlnms"
+	// from := "autogradingsystem99999@gmail.com"
+	from := "anshumanaich99@gmail.com"
+	password := "anshumanaich32"
 	to := []string{
 		email,
 	}
