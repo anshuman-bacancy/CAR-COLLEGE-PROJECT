@@ -16,7 +16,7 @@ import (
 func SaveVehicle(r *http.Request) error {
 	connection := common.GetDatabase()
 	image, _, err := r.FormFile("image")
-	defer common.Closedatabase(connection)
+	defer common.CloseDatabase(connection)
 	if err != nil {
 		return err
 	}
@@ -48,7 +48,7 @@ func SaveVehicle(r *http.Request) error {
 //GetAllVehicle
 func GetAllVehicle() []model.Vehicle {
 	connection := common.GetDatabase()
-	defer common.Closedatabase(connection)
+	defer common.CloseDatabase(connection)
 	var vehicles []model.Vehicle
 	connection.Find(&vehicles)
 	return vehicles
@@ -58,7 +58,7 @@ func GetAllVehicle() []model.Vehicle {
 func GetOneVehicle(r *http.Request) model.Vehicle {
 	id := mux.Vars(r)["id"]
 	connection := common.GetDatabase()
-	defer common.Closedatabase(connection)
+	defer common.CloseDatabase(connection)
 	var vehicle model.Vehicle
 	connection.First(&vehicle, id)
 	return vehicle
@@ -69,14 +69,14 @@ func DeleteOneVehicle(r *http.Request) {
 	id := mux.Vars(r)["id"]
 	var vehicle model.Vehicle
 	connection := common.GetDatabase()
-	defer common.Closedatabase(connection)
+	defer common.CloseDatabase(connection)
 	connection.Delete(&vehicle, id)
 }
 
 //UpdateVehicle
 func UpdateVehicle(r *http.Request) ([]byte, error) {
 	connection := common.GetDatabase()
-	defer common.Closedatabase(connection)
+	defer common.CloseDatabase(connection)
 	id := mux.Vars(r)["id"]
 	var findvehicle model.Vehicle
 	connection.First(&findvehicle, id)
@@ -101,7 +101,7 @@ func UpdateVehicle(r *http.Request) ([]byte, error) {
 func SaveCompanyLogo(r *http.Request) error {
 	connection := common.GetDatabase()
 	image, _, err := r.FormFile("logo")
-	defer common.Closedatabase(connection)
+	defer common.CloseDatabase(connection)
 	if err != nil {
 		return err
 	}
@@ -121,7 +121,7 @@ func SaveCompanyLogo(r *http.Request) error {
 //GetAllBrand
 func GetAllBrand(r *http.Request) []model.Company {
 	connection := common.GetDatabase()
-	defer common.Closedatabase(connection)
+	defer common.CloseDatabase(connection)
 	var companies []model.Company
 	connection.Find(&companies)
 	return companies
@@ -132,7 +132,7 @@ func DeleteOneBrand(r *http.Request) {
 	id := mux.Vars(r)["id"]
 	var company model.Company
 	connection := common.GetDatabase()
-	defer common.Closedatabase(connection)
+	defer common.CloseDatabase(connection)
 	connection.Delete(&company, id)
 }
 
@@ -140,7 +140,7 @@ func DeleteOneBrand(r *http.Request) {
 func GetOneBrand(r *http.Request) model.Company {
 	id := mux.Vars(r)["id"]
 	connection := common.GetDatabase()
-	defer common.Closedatabase(connection)
+	defer common.CloseDatabase(connection)
 	var company model.Company
 	connection.First(&company, id)
 	return company
@@ -149,7 +149,7 @@ func GetOneBrand(r *http.Request) model.Company {
 //GetOneBrandNameByID
 func GetOneBrandNameByID(id uint) string {
 	connection := common.GetDatabase()
-	defer common.Closedatabase(connection)
+	defer common.CloseDatabase(connection)
 	var company model.Company
 	connection.First(&company, id)
 	return company.Name
@@ -158,7 +158,7 @@ func GetOneBrandNameByID(id uint) string {
 //GetOneBrandImageByID
 func GetOneBrandImageByID(id uint) string {
 	connection := common.GetDatabase()
-	defer common.Closedatabase(connection)
+	defer common.CloseDatabase(connection)
 	var company model.Company
 	connection.First(&company, id)
 	return company.Logo
@@ -167,7 +167,7 @@ func GetOneBrandImageByID(id uint) string {
 //UpdateBrand
 func UpdateBrand(r *http.Request) ([]byte, error) {
 	connection := common.GetDatabase()
-	defer common.Closedatabase(connection)
+	defer common.CloseDatabase(connection)
 	id := mux.Vars(r)["id"]
 	var company model.Company
 	connection.First(&company, id)
@@ -190,7 +190,7 @@ func UpdateBrand(r *http.Request) ([]byte, error) {
 //GetParticlullarBrandVehicle
 func GetParticlullarBrandVehicle(id uint) []model.Vehicle {
 	connection := common.GetDatabase()
-	defer common.Closedatabase(connection)
+	defer common.CloseDatabase(connection)
 	var vehicles []model.Vehicle
 	connection.Where("company_id = ?", id).Find(&vehicles)
 	return vehicles
@@ -200,7 +200,7 @@ func GetParticlullarBrandVehicle(id uint) []model.Vehicle {
 func GetParticlullarBrandVehiclewithR(r *http.Request) []model.Vehicle {
 	id := mux.Vars(r)["id"]
 	connection := common.GetDatabase()
-	defer common.Closedatabase(connection)
+	defer common.CloseDatabase(connection)
 	var vehicles []model.Vehicle
 	connection.Where("company_id = ?", id).Find(&vehicles)
 	return vehicles
@@ -209,7 +209,7 @@ func GetParticlullarBrandVehiclewithR(r *http.Request) []model.Vehicle {
 //GetOneVehicleNameByID
 func GetOneVehicleNameByID(vehicleid uint) string {
 	connection := common.GetDatabase()
-	defer common.Closedatabase(connection)
+	defer common.CloseDatabase(connection)
 	var vehicle model.Vehicle
 	connection.First(&vehicle, vehicleid)
 	return vehicle.ModelName
@@ -218,7 +218,7 @@ func GetOneVehicleNameByID(vehicleid uint) string {
 //GetOneVehicleImageByID
 func GetOneVehicleImageByID(vehicleid uint) string {
 	connection := common.GetDatabase()
-	defer common.Closedatabase(connection)
+	defer common.CloseDatabase(connection)
 	var vehicle model.Vehicle
 	connection.First(&vehicle, vehicleid)
 	return vehicle.Image
@@ -227,7 +227,7 @@ func GetOneVehicleImageByID(vehicleid uint) string {
 //GetVehicleBrandID
 func GetVehicleBrandID(vehicleid uint) uint {
 	connection := common.GetDatabase()
-	defer common.Closedatabase(connection)
+	defer common.CloseDatabase(connection)
 	var vehicle model.Vehicle
 	connection.First(&vehicle, vehicleid)
 	return vehicle.CompanyID
@@ -236,7 +236,7 @@ func GetVehicleBrandID(vehicleid uint) uint {
 //SaveAdmin
 func SaveAdmin(r *http.Request) (bool, error) {
 	connection := common.GetDatabase()
-	defer common.Closedatabase(connection)
+	defer common.CloseDatabase(connection)
 	sqldb := connection.DB()
 	rows, err := sqldb.Query("SELECT email FROM sales_people")
 	defer rows.Close()
@@ -267,7 +267,7 @@ func SaveAdmin(r *http.Request) (bool, error) {
 //GetAllAdmin
 func GetAllAdmin(r *http.Request) []model.SalesPerson {
 	connection := common.GetDatabase()
-	defer common.Closedatabase(connection)
+	defer common.CloseDatabase(connection)
 	var salesperson []model.SalesPerson
 	connection.Find(&salesperson)
 	return salesperson
@@ -276,7 +276,7 @@ func GetAllAdmin(r *http.Request) []model.SalesPerson {
 //GetOneAdminBYemail
 func GetOneAdminBYemail(email interface{}) model.SalesPerson {
 	connection := common.GetDatabase()
-	defer common.Closedatabase(connection)
+	defer common.CloseDatabase(connection)
 	var admin model.SalesPerson
 	connection.Where("email = 	?", email).First(&admin)
 	return admin
@@ -285,7 +285,7 @@ func GetOneAdminBYemail(email interface{}) model.SalesPerson {
 //AdminUpdate
 func AdminUpdate(r *http.Request) ([]byte, error) {
 	connection := common.GetDatabase()
-	defer common.Closedatabase(connection)
+	defer common.CloseDatabase(connection)
 	id := mux.Vars(r)["id"]
 	var admin model.SalesPerson
 	connection.First(&admin, id)

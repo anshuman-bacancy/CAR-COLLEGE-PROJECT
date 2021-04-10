@@ -15,7 +15,7 @@ import (
 //SaveCustomer
 func SaveCustomer(r *http.Request) (bool, error) {
 	connection := common.GetDatabase()
-	defer common.Closedatabase(connection)
+	defer common.CloseDatabase(connection)
 	sqldb := connection.DB()
 	rows, err := sqldb.Query("SELECT email FROM customers")
 	defer rows.Close()
@@ -46,7 +46,7 @@ func SaveCustomer(r *http.Request) (bool, error) {
 //Returns all customers
 func GetAllCustomer(r *http.Request) []model.Customer {
 	connection := common.GetDatabase()
-	defer common.Closedatabase(connection)
+	defer common.CloseDatabase(connection)
 	var customers []model.Customer
 	connection.Find(&customers)
 	return customers
@@ -57,7 +57,7 @@ func DeleteOneCustomer(r *http.Request) {
 	id := mux.Vars(r)["id"]
 	var customer model.Customer
 	connection := common.GetDatabase()
-	defer common.Closedatabase(connection)
+	defer common.CloseDatabase(connection)
 	connection.Delete(&customer, id)
 }
 
@@ -65,7 +65,7 @@ func DeleteOneCustomer(r *http.Request) {
 func GetOneCustomer(r *http.Request) model.Customer {
 	id := mux.Vars(r)["id"]
 	connection := common.GetDatabase()
-	defer common.Closedatabase(connection)
+	defer common.CloseDatabase(connection)
 	var customer model.Customer
 	connection.First(&customer, id)
 	return customer
@@ -74,7 +74,7 @@ func GetOneCustomer(r *http.Request) model.Customer {
 // Returns one customer via email
 func GetOneCustomerBYemail(email interface{}) model.Customer {
 	connection := common.GetDatabase()
-	defer common.Closedatabase(connection)
+	defer common.CloseDatabase(connection)
 	var customer model.Customer
 	connection.Where("email = 	?", email).First(&customer)
 	return customer
@@ -84,7 +84,7 @@ func GetOneCustomerBYemail(email interface{}) model.Customer {
 func CustomerUpdate(r *http.Request) ([]byte, error) {
 	fmt.Println("called update")
 	connection := common.GetDatabase()
-	defer common.Closedatabase(connection)
+	defer common.CloseDatabase(connection)
 	id := mux.Vars(r)["id"]
 	var customer model.Customer
 	connection.First(&customer, id)
@@ -112,7 +112,7 @@ func CustomerBookVehicle(r *http.Request, customer model.Customer) error {
 	}
 	customerid := customer.ID
 	connection := common.GetDatabase()
-	defer common.Closedatabase(connection)
+	defer common.CloseDatabase(connection)
 	order := model.TestDrive{
 		VehicleID:  uint(vehicleid),
 		CustomerID: customerid,
@@ -123,7 +123,7 @@ func CustomerBookVehicle(r *http.Request, customer model.Customer) error {
 
 func GetParticlullarCustomerTestDrive(r *http.Request, customer model.Customer) []model.TestDrive {
 	connection := common.GetDatabase()
-	defer common.Closedatabase(connection)
+	defer common.CloseDatabase(connection)
 	var orders []model.TestDrive
 	connection.Where("customer_id = ?", customer.ID).Find(&orders)
 	return orders
@@ -131,7 +131,7 @@ func GetParticlullarCustomerTestDrive(r *http.Request, customer model.Customer) 
 
 func GetAllTestDrives(r *http.Request) []model.TestDrive {
 	connection := common.GetDatabase()
-	defer common.Closedatabase(connection)
+	defer common.CloseDatabase(connection)
 	var orders []model.TestDrive
 	connection.Find(&orders)
 	return orders
@@ -139,7 +139,7 @@ func GetAllTestDrives(r *http.Request) []model.TestDrive {
 
 func GetCustomerNameByID(id uint) string {
 	connection := common.GetDatabase()
-	defer common.Closedatabase(connection)
+	defer common.CloseDatabase(connection)
 	var customer model.Customer
 	connection.First(&customer, id)
 	return customer.Name
@@ -154,7 +154,7 @@ func SaveCustomerTestDrive(customer model.Customer, vehicleId uint64, testDriveD
 	testDrive.Status = "Pending"
 
 	connection := common.GetDatabase()
-	defer common.Closedatabase(connection)
+	defer common.CloseDatabase(connection)
 
 	connection.Create(&testDrive)
 	return nil
@@ -162,7 +162,7 @@ func SaveCustomerTestDrive(customer model.Customer, vehicleId uint64, testDriveD
 
 func UpdateCustomerTestDriveStatus(data model.TestDriveStatus) {
 	connection := common.GetDatabase()
-	defer common.Closedatabase(connection)
+	defer common.CloseDatabase(connection)
 
 	var testDrive model.TestDrive
 	connection.Where("id = ?", data.TestDriveID).First(&testDrive)

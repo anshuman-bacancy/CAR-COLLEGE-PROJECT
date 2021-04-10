@@ -2,7 +2,7 @@ package common
 
 import (
 	"database/sql"
-	"fmt"
+	"log"
 	"project/data/model"
 	"strings"
 	"text/template"
@@ -25,7 +25,7 @@ func GetDatabase() *gorm.DB {
 	sqldb := connection.DB()
 	err = sqldb.Ping()
 	CheckError(err)
-	fmt.Println("connected to database")
+	log.Println("connected to database")
 	return connection
 }
 
@@ -53,8 +53,9 @@ func InitialMigration() {
 	connection.AutoMigrate(&model.TestDrive{})
 	connection.Model(&model.TestDrive{}).AddForeignKey("vehicle_id", "vehicles(id)", "CASCADE", "CASCADE")
 	connection.Model(&model.TestDrive{}).AddForeignKey("customer_id", "customers(id)", "CASCADE", "CASCADE")
-	defer Closedatabase(connection)
-	fmt.Println("Migration done... ")
+	defer CloseDatabase(connection)
+
+	log.Println("Migration done... ")
 
 	// connection.Create(&model.SalesPerson{
 	// 	Name:     "anshuman",
@@ -69,6 +70,6 @@ func FormatDate(date string) string {
 	tempDate := strings.Replace(date, "/", "-", -1)
 	dateLayout := "02-01-2006"
 	dateFormat, _ := time.Parse(dateLayout, tempDate)
-	testDriveDate := dateFormat.Format("02-01-2006")
+	testDriveDate := dateFormat.Format(dateLayout)
 	return testDriveDate
 }
