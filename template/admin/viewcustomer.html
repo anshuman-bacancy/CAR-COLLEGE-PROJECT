@@ -200,7 +200,7 @@
                         <div class="white-box">
                           <a href="javascript:history.go(-1);" class="btn btn-primary text-white">Back</a>
                           <br><br><br>
-                          <h1>CUSTOMER {{.Customer.Name}}</h1>
+                          <h1>{{.Customer.Name}}</h1>
                           <br>
                           <div class="col-md-6">
                             <table class="table table-bordered">
@@ -223,6 +223,15 @@
                               <tr>
                                 <th> City </th>
                                 <td> {{.Customer.City}} </td>
+                              </tr>
+                              <tr>
+                                <th> Test Drives booked </th>
+                                 <td>
+                                  {{range .CustomerTestDrives}}
+                                    <tr>
+                                      <td>{{.TestDriveDate}}</td><td>{{getVehicleBrandName .VehicleID}}</td><td>{{getVehicleName .VehicleID}}</td><td><img src="data:image/jpeg;base64,{{getVehicleBrandImage .VehicleID}}" height="100px" width="100px" /></td>
+                                    </tr>
+                                  {{end}}
                               </tr>
                             </table>
                           </div>

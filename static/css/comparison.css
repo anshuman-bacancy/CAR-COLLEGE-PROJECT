@@ -160,6 +160,7 @@
     /* products list wrapper */
     width: 1200px;
     margin-left: 120px;
+    /*height: 50%;*/
   }
   .cd-products-columns::after {
     clear: both;
@@ -170,6 +171,7 @@
     .cd-products-columns {
       width: 2480px;
       margin-left: 210px;
+      margin-bottom: 170px;
     }
   }
 
@@ -206,9 +208,9 @@
   }
 
   .cd-features-list li {
-    font-size: 1.4rem;
-    font-weight: bold;
-    padding: 25px 40px;
+    /*font-size: 1.4rem;*/
+    /*font-weight: bold;*/
+    padding: 16px 40px;
   }
   .cd-features-list li.rate {
     /* rating stars */
@@ -233,8 +235,8 @@
 
   .features .cd-features-list .top-info {
     font-size: 1.4rem;
-    font-weight: bold;
-    padding: 25px 40px;
+    font-weight: normal;
+    padding: 16px 40px;
   } 
 
 
@@ -243,10 +245,10 @@
   .cd-products-table .features .top-info {
     /* fixed left column - items */
     font-size: 1.4rem;
-    font-weight: bold;
+    font-weight: normal;
     /* set line-height value equal to font-size of text inside product cells */
     line-height: 14px;
-    padding: 25px 10px;
+    padding: 16px 10px;
     text-align: left;
   }
   @media only screen and (min-width: 1170px) {
@@ -254,7 +256,7 @@
     .cd-products-table .features .top-info {
       text-transform: uppercase;
       line-height: 16px;
-      padding: 25px 20px;
+      padding: 16px 20px;
       letter-spacing: 1px;
     }
   }
@@ -263,7 +265,7 @@
     /* truncate text with dots */
     font-size: 18px;
     font-weight: normal;
-    padding: 25px 40px;
+    padding: 16px 40px;
   }
 
   .cd-products-table .top-info {
@@ -339,9 +341,9 @@
   }
   @media only screen and (min-width: 1170px) {
     .cd-products-table .top-info {
-      height: 280px;
+/*      height: 280px;
       width: 310px;
-    }
+*/    }
     .cd-products-table .top-info h3 {
       padding-top: 1.4em;
       font-size: 1.6rem;

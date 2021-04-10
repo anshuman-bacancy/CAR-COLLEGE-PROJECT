@@ -214,7 +214,7 @@
                                       <td>{{.CustomerID}}</td>
                                       <td>{{getCustomerNameById .CustomerID}}</td>
                                       <td><a href="/admin/customer/view/{{.CustomerID}}" class="btn btn-info">VIEW CUSTOMER</a></td>
-                                      <td>{{getVehicleName .VehicleID}} {{getVehicleBrandName .VehicleID}}</td>
+                                      <td>{{getVehicleBrandName .VehicleID}} {{getVehicleName .VehicleID}}</td>
                                       <td><a href="/admin/vehicle/view/{{.VehicleID}}"><img src="data:image/jpeg;base64,{{getVehicleBrandImage .VehicleID}}" height="100px" width="100px" /></a>
                                       </td>
                                       <td><a href="/admin/vehicle/view/{{.VehicleID}}"><img src="data:image/jpeg;base64,{{getVehicleImage .VehicleID}}" height="100px" width="100px" /></a>

@@ -8,6 +8,7 @@ import (
 	"project/data/model"
 	"project/data/service"
 
+
 	"github.com/gorilla/sessions"
 )
 
@@ -333,9 +334,11 @@ func DeleteCustomer(w http.ResponseWriter, r *http.Request) {
 // get one customer
 func GetoneCustomerforview(w http.ResponseWriter, r *http.Request) {
 	customer := service.GetOneCustomer(r)
+	custTestDrives := service.GetParticlullarCustomerTestDrive(r, customer)
 	admintpl.ExecuteTemplate(w, "viewcustomer.html", struct {
 		Customer model.Customer
-	}{customer})
+		CustomerTestDrives []model.TestDrive
+	}{customer, custTestDrives})
 }
 
 // get all customer test drives
