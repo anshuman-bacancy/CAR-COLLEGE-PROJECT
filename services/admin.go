@@ -1,4 +1,4 @@
-package service
+package services
 
 import (
 	"encoding/base64"
@@ -6,7 +6,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"project/common"
-	"project/data/model"
+	"project/models"
 	"strconv"
 
 	"github.com/gorilla/mux"
@@ -29,10 +29,10 @@ func SaveVehicle(r *http.Request) error {
 	if err != nil {
 		return err
 	}
-	vehicle := model.Vehicle{
+	vehicle := models.Vehicle{
 		Vin:         r.FormValue("vin"),
 		Year:        r.FormValue("year"),
-		ModelName:   r.FormValue("model"),
+		ModelName:   r.FormValue("models"),
 		TitleNumber: r.FormValue("title"),
 		Price:       r.FormValue("price"),
 		FuelType:    r.FormValue("fueltype"),
@@ -46,20 +46,20 @@ func SaveVehicle(r *http.Request) error {
 }
 
 //GetAllVehicle
-func GetAllVehicle() []model.Vehicle {
+func GetAllVehicle() []models.Vehicle {
 	connection := common.GetDatabase()
 	defer common.CloseDatabase(connection)
-	var vehicles []model.Vehicle
+	var vehicles []models.Vehicle
 	connection.Find(&vehicles)
 	return vehicles
 }
 
 //GetOneVehicle
-func GetOneVehicle(r *http.Request) model.Vehicle {
+func GetOneVehicle(r *http.Request) models.Vehicle {
 	id := mux.Vars(r)["id"]
 	connection := common.GetDatabase()
 	defer common.CloseDatabase(connection)
-	var vehicle model.Vehicle
+	var vehicle models.Vehicle
 	connection.First(&vehicle, id)
 	return vehicle
 }
@@ -67,7 +67,7 @@ func GetOneVehicle(r *http.Request) model.Vehicle {
 //DeleteOneVehicle
 func DeleteOneVehicle(r *http.Request) {
 	id := mux.Vars(r)["id"]
-	var vehicle model.Vehicle
+	var vehicle models.Vehicle
 	connection := common.GetDatabase()
 	defer common.CloseDatabase(connection)
 	connection.Delete(&vehicle, id)
@@ -78,7 +78,7 @@ func UpdateVehicle(r *http.Request) ([]byte, error) {
 	connection := common.GetDatabase()
 	defer common.CloseDatabase(connection)
 	id := mux.Vars(r)["id"]
-	var findvehicle model.Vehicle
+	var findvehicle models.Vehicle
 	connection.First(&findvehicle, id)
 	bodydata, err := ioutil.ReadAll(r.Body)
 	if err != nil {
@@ -110,7 +110,7 @@ func SaveCompanyLogo(r *http.Request) error {
 		return err
 	}
 	logoimagestring := base64.StdEncoding.EncodeToString(imagebyte)
-	company := model.Company{
+	company := models.Company{
 		Name: r.FormValue("companyname"),
 		Logo: logoimagestring,
 	}
@@ -119,10 +119,10 @@ func SaveCompanyLogo(r *http.Request) error {
 }
 
 //GetAllBrand
-func GetAllBrand(r *http.Request) []model.Company {
+func GetAllBrand(r *http.Request) []models.Company {
 	connection := common.GetDatabase()
 	defer common.CloseDatabase(connection)
-	var companies []model.Company
+	var companies []models.Company
 	connection.Find(&companies)
 	return companies
 }
@@ -130,18 +130,18 @@ func GetAllBrand(r *http.Request) []model.Company {
 //DeleteOneBrand
 func DeleteOneBrand(r *http.Request) {
 	id := mux.Vars(r)["id"]
-	var company model.Company
+	var company models.Company
 	connection := common.GetDatabase()
 	defer common.CloseDatabase(connection)
 	connection.Delete(&company, id)
 }
 
 //GetOneBrand
-func GetOneBrand(r *http.Request) model.Company {
+func GetOneBrand(r *http.Request) models.Company {
 	id := mux.Vars(r)["id"]
 	connection := common.GetDatabase()
 	defer common.CloseDatabase(connection)
-	var company model.Company
+	var company models.Company
 	connection.First(&company, id)
 	return company
 }
@@ -150,7 +150,7 @@ func GetOneBrand(r *http.Request) model.Company {
 func GetOneBrandNameByID(id uint) string {
 	connection := common.GetDatabase()
 	defer common.CloseDatabase(connection)
-	var company model.Company
+	var company models.Company
 	connection.First(&company, id)
 	return company.Name
 }
@@ -159,7 +159,7 @@ func GetOneBrandNameByID(id uint) string {
 func GetOneBrandImageByID(id uint) string {
 	connection := common.GetDatabase()
 	defer common.CloseDatabase(connection)
-	var company model.Company
+	var company models.Company
 	connection.First(&company, id)
 	return company.Logo
 }
@@ -169,7 +169,7 @@ func UpdateBrand(r *http.Request) ([]byte, error) {
 	connection := common.GetDatabase()
 	defer common.CloseDatabase(connection)
 	id := mux.Vars(r)["id"]
-	var company model.Company
+	var company models.Company
 	connection.First(&company, id)
 	bodydata, err := ioutil.ReadAll(r.Body)
 	if err != nil {
@@ -188,20 +188,20 @@ func UpdateBrand(r *http.Request) ([]byte, error) {
 }
 
 //GetParticlullarBrandVehicle
-func GetParticlullarBrandVehicle(id uint) []model.Vehicle {
+func GetParticlullarBrandVehicle(id uint) []models.Vehicle {
 	connection := common.GetDatabase()
 	defer common.CloseDatabase(connection)
-	var vehicles []model.Vehicle
+	var vehicles []models.Vehicle
 	connection.Where("company_id = ?", id).Find(&vehicles)
 	return vehicles
 }
 
 //GetParticlullarBrandVehiclewithR
-func GetParticlullarBrandVehiclewithR(r *http.Request) []model.Vehicle {
+func GetParticlullarBrandVehiclewithR(r *http.Request) []models.Vehicle {
 	id := mux.Vars(r)["id"]
 	connection := common.GetDatabase()
 	defer common.CloseDatabase(connection)
-	var vehicles []model.Vehicle
+	var vehicles []models.Vehicle
 	connection.Where("company_id = ?", id).Find(&vehicles)
 	return vehicles
 }
@@ -210,7 +210,7 @@ func GetParticlullarBrandVehiclewithR(r *http.Request) []model.Vehicle {
 func GetOneVehicleNameByID(vehicleid uint) string {
 	connection := common.GetDatabase()
 	defer common.CloseDatabase(connection)
-	var vehicle model.Vehicle
+	var vehicle models.Vehicle
 	connection.First(&vehicle, vehicleid)
 	return vehicle.ModelName
 }
@@ -219,7 +219,7 @@ func GetOneVehicleNameByID(vehicleid uint) string {
 func GetOneVehicleImageByID(vehicleid uint) string {
 	connection := common.GetDatabase()
 	defer common.CloseDatabase(connection)
-	var vehicle model.Vehicle
+	var vehicle models.Vehicle
 	connection.First(&vehicle, vehicleid)
 	return vehicle.Image
 }
@@ -228,7 +228,7 @@ func GetOneVehicleImageByID(vehicleid uint) string {
 func GetVehicleBrandID(vehicleid uint) uint {
 	connection := common.GetDatabase()
 	defer common.CloseDatabase(connection)
-	var vehicle model.Vehicle
+	var vehicle models.Vehicle
 	connection.First(&vehicle, vehicleid)
 	return vehicle.CompanyID
 }
@@ -253,7 +253,7 @@ func SaveAdmin(r *http.Request) (bool, error) {
 	if emails[r.FormValue("email")] {
 		return true, nil
 	}
-	salesPerson := model.SalesPerson{
+	salesPerson := models.SalesPerson{
 		Name:     r.FormValue("name"),
 		Email:    r.FormValue("email"),
 		Password: r.FormValue("password"),
@@ -265,19 +265,19 @@ func SaveAdmin(r *http.Request) (bool, error) {
 }
 
 //GetAllAdmin
-func GetAllAdmin(r *http.Request) []model.SalesPerson {
+func GetAllAdmin(r *http.Request) []models.SalesPerson {
 	connection := common.GetDatabase()
 	defer common.CloseDatabase(connection)
-	var salesperson []model.SalesPerson
+	var salesperson []models.SalesPerson
 	connection.Find(&salesperson)
 	return salesperson
 }
 
 //GetOneAdminBYemail
-func GetOneAdminBYemail(email interface{}) model.SalesPerson {
+func GetOneAdminBYemail(email interface{}) models.SalesPerson {
 	connection := common.GetDatabase()
 	defer common.CloseDatabase(connection)
-	var admin model.SalesPerson
+	var admin models.SalesPerson
 	connection.Where("email = 	?", email).First(&admin)
 	return admin
 }
@@ -287,7 +287,7 @@ func AdminUpdate(r *http.Request) ([]byte, error) {
 	connection := common.GetDatabase()
 	defer common.CloseDatabase(connection)
 	id := mux.Vars(r)["id"]
-	var admin model.SalesPerson
+	var admin models.SalesPerson
 	connection.First(&admin, id)
 	bodydata, err := ioutil.ReadAll(r.Body)
 	if err != nil {

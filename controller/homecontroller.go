@@ -5,7 +5,7 @@ import (
 	"html/template"
 	"net/http"
 	"net/smtp"
-	"project/data/service"
+	"project/services"
 	"strconv"
 
 	"github.com/gorilla/mux"
@@ -52,7 +52,7 @@ func CustomerRegister(w http.ResponseWriter, r *http.Request) {
 
 // successful customer registration
 func CustomerRegisterPOST(w http.ResponseWriter, r *http.Request) {
-	emailcheck, err := service.SaveCustomer(r)
+	emailcheck, err := services.SaveCustomer(r)
 	if err != nil {
 		http.Redirect(w, r, "/error", http.StatusSeeOther)
 		return
@@ -86,7 +86,7 @@ func CustomerLoginPost(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 	usercustomer := r.PostForm.Get("username")
 	passcustomer := r.PostForm.Get("password")
-	customers := service.GetAllCustomer(r)
+	customers := services.GetAllCustomer(r)
 	if len(customers) == 0 {
 		http.Redirect(w, r, "/", http.StatusSeeOther)
 		return
@@ -112,7 +112,7 @@ func CustomerLoginPost(w http.ResponseWriter, r *http.Request) {
 
 // customer index page
 func CustomerIndexPage(w http.ResponseWriter, r *http.Request) {
-	brand := service.GetAllBrand(r)
+	brand := services.GetAllBrand(r)
 	// fmt.Println(brand)
 	custtpl.ExecuteTemplate(w, "index.html", brand)
 }
@@ -167,7 +167,7 @@ func CustomerForgotPassword(w http.ResponseWriter, r *http.Request) {
 func CustomerValidateEmail(w http.ResponseWriter, r *http.Request) {
 	emailfound = false
 	email := r.FormValue("email")
-	customers := service.GetAllCustomer(r)
+	customers := services.GetAllCustomer(r)
 	for _, customer := range customers {
 		if customer.Email == email {
 			emailfound = true
@@ -195,7 +195,7 @@ func sendemail(email string) {
 	}
 	Receivermail := email
 
-	customer := service.GetOneCustomerBYemail(email)
+	customer := services.GetOneCustomerBYemail(email)
 	customerid := strconv.Itoa(int(customer.ID))
 	subjet := "FORGOT YOUR PASSSWORD EMAIL"
 	body := "http://localhost:8084/customer/setpassword/" + customerid
@@ -229,7 +229,7 @@ func CustomerSetForgotPasswordPage(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/", http.StatusSeeOther)
 		return
 	}
-	customer := service.GetOneCustomerBYemail(email)
+	customer := services.GetOneCustomerBYemail(email)
 	if email != customer.Email {
 		http.Redirect(w, r, "/", http.StatusSeeOther)
 		return

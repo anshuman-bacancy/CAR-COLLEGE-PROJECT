@@ -2,13 +2,13 @@ package controller
 
 import (
 	"encoding/json"
-	"html/template"
 	"fmt"
+	"html/template"
 	"log"
 	"net/http"
 	"project/common"
-	"project/data/model"
-	"project/data/service"
+	model "project/models"
+	"project/services"
 	"strconv"
 )
 
@@ -21,13 +21,13 @@ var tpl *template.Template
 
 // returns vehicle with brands
 func GetallVehicleWithBrandforview(w http.ResponseWriter, r *http.Request) {
-	vehicles := service.GetParticlullarBrandVehiclewithR(r)
+	vehicles := services.GetParticlullarBrandVehiclewithR(r)
 	custtpl.ExecuteTemplate(w, "vehiclelist.html", vehicles)
 }
 
 // returns one vehicle for customer
 func CustomerGetoneVehicleforview(w http.ResponseWriter, r *http.Request) {
-	vehicle := service.GetOneVehicle(r)
+	vehicle := services.GetOneVehicle(r)
 	custtpl.ExecuteTemplate(w, "viewvehicle.html", vehicle)
 }
 
@@ -35,7 +35,7 @@ func CustomerGetoneVehicleforview(w http.ResponseWriter, r *http.Request) {
 func CustomerAccountforview(w http.ResponseWriter, r *http.Request) {
 	session, _ := storecustomer.Get(r, "customerusername")
 	email, _ := session.Values["customer"]
-	customer := service.GetOneCustomerBYemail(email)
+	customer := services.GetOneCustomerBYemail(email)
 	var message string
 	var hasmessge bool
 	if updatecustomer {
@@ -52,7 +52,7 @@ func CustomerAccountforview(w http.ResponseWriter, r *http.Request) {
 
 // customer update
 func CustomerUpdate(w http.ResponseWriter, r *http.Request) {
-	customer, err := service.CustomerUpdate(r)
+	customer, err := services.CustomerUpdate(r)
 	if err != nil {
 		log.Fatalln(err)
 		return
@@ -73,8 +73,8 @@ func CustomerGetallOrder(w http.ResponseWriter, r *http.Request) {
 	}
 	session, _ := storecustomer.Get(r, "customerusername")
 	email, _ := session.Values["customer"]
-	customer := service.GetOneCustomerBYemail(email)
-	orders := service.GetParticlullarCustomerTestDrive(r, customer)
+	customer := services.GetOneCustomerBYemail(email)
+	orders := services.GetParticlullarCustomerTestDrive(r, customer)
 	custtpl.ExecuteTemplate(w, "order.html", struct {
 		Orders     []model.TestDrive
 		HasMessage bool
@@ -91,40 +91,40 @@ func CustomerTestDrive(w http.ResponseWriter, r *http.Request) {
 	// get customer
 	session, _ := storecustomer.Get(r, "customerusername")
 	email, _ := session.Values["customer"]
-	customer := service.GetOneCustomerBYemail(email)
+	customer := services.GetOneCustomerBYemail(email)
 
 	//save to db
 	ordersave = true
-	err := service.SaveCustomerTestDrive(customer, vehicleId, testDriveDate)
+	err := services.SaveCustomerTestDrive(customer, vehicleId, testDriveDate)
 	if err != nil {
 		log.Println(err)
 	}
 	http.Redirect(w, r, "/customer/orders", 302)
 }
 
-// returns list of vehicles in dropdown 
+// returns list of vehicles in dropdown
 func CarCompare(w http.ResponseWriter, r *http.Request) {
-	allVehicles := service.GetAllVehicle()
+	allVehicles := services.GetAllVehicle()
 	ids := make(map[string]uint, 0)
 	// for idx := 1; idx <= len(allVehicles); idx++ {
 	// 	ids["car" + strconv.Itoa(idx)] = idx
 	// }
 
 	for _, vehicle := range allVehicles {
-		ids["car" + strconv.Itoa(int(vehicle.ID))] = vehicle.ID
+		ids["car"+strconv.Itoa(int(vehicle.ID))] = vehicle.ID
 	}
 
 	fmt.Println(ids)
 
-	custtpl.ExecuteTemplate(w, "compareCar.html", struct { 
+	custtpl.ExecuteTemplate(w, "compareCar.html", struct {
 		AllVehicles []model.Vehicle
-		Ids map[string]uint
-		}{allVehicles, ids})
+		Ids         map[string]uint
+	}{allVehicles, ids})
 }
 
 // returns vehicle for car compare
 func CustomerGetVehicle(w http.ResponseWriter, r *http.Request) {
-	vehicle := service.GetOneVehicle(r)
+	vehicle := services.GetOneVehicle(r)
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(vehicle)
 }

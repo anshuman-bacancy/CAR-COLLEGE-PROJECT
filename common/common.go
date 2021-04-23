@@ -3,7 +3,7 @@ package common
 import (
 	"database/sql"
 	"log"
-	"project/data/model"
+	"project/models"
 	"strings"
 	"text/template"
 	"time"
@@ -13,9 +13,9 @@ import (
 )
 
 var (
- db *sql.DB
- err error
- tpl *template.Template
+	db  *sql.DB
+	err error
+	tpl *template.Template
 )
 
 //GetDatabase is return db connection
@@ -42,22 +42,22 @@ func CheckError(err error) {
 	}
 }
 
-//Initialmigration migrates models to database
+//Initialmigration migrates modelss to database
 func InitialMigration() {
 	connection := GetDatabase()
-	connection.AutoMigrate(&model.SalesPerson{})
-	connection.AutoMigrate(&model.Company{})
-	connection.AutoMigrate(&model.Vehicle{})
-	connection.Model(&model.Vehicle{}).AddForeignKey("company_id", "companies(id)", "CASCADE", "CASCADE")
-	connection.AutoMigrate(&model.Customer{})
-	connection.AutoMigrate(&model.TestDrive{})
-	connection.Model(&model.TestDrive{}).AddForeignKey("vehicle_id", "vehicles(id)", "CASCADE", "CASCADE")
-	connection.Model(&model.TestDrive{}).AddForeignKey("customer_id", "customers(id)", "CASCADE", "CASCADE")
+	connection.AutoMigrate(&models.SalesPerson{})
+	connection.AutoMigrate(&models.Company{})
+	connection.AutoMigrate(&models.Vehicle{})
+	connection.Model(&models.Vehicle{}).AddForeignKey("company_id", "companies(id)", "CASCADE", "CASCADE")
+	connection.AutoMigrate(&models.Customer{})
+	connection.AutoMigrate(&models.TestDrive{})
+	connection.Model(&models.TestDrive{}).AddForeignKey("vehicle_id", "vehicles(id)", "CASCADE", "CASCADE")
+	connection.Model(&models.TestDrive{}).AddForeignKey("customer_id", "customers(id)", "CASCADE", "CASCADE")
 	defer CloseDatabase(connection)
 
 	log.Println("Migration done... ")
 
-	// connection.Create(&model.SalesPerson{
+	// connection.Create(&models.SalesPerson{
 	// 	Name:     "anshuman",
 	// 	Email:    "anshuman@gmail.com",
 	// 	Password: "anshu",

@@ -1,4 +1,4 @@
-package service
+package services
 
 import (
 	"encoding/json"
@@ -6,7 +6,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"project/common"
-	"project/data/model"
+	model "project/models"
 	"strconv"
 
 	"github.com/gorilla/mux"

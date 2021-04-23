@@ -5,9 +5,8 @@ import (
 	"html/template"
 	"log"
 	"net/http"
-	"project/data/model"
-	"project/data/service"
-
+	"project/models"
+	"project/services"
 
 	"github.com/gorilla/sessions"
 )
@@ -35,32 +34,32 @@ var Fm = template.FuncMap{
 }
 
 func getCustomerNameByID(customerid uint) string {
-	return service.GetCustomerNameByID(customerid)
+	return services.GetCustomerNameByID(customerid)
 }
 
 func getbrand(brandid uint) string {
-	return service.GetOneBrandNameByID(brandid)
+	return services.GetOneBrandNameByID(brandid)
 }
 
 func getbrandImage(brandid uint) string {
-	return service.GetOneBrandImageByID(brandid)
+	return services.GetOneBrandImageByID(brandid)
 }
 
 func getVehicleName(vehicle uint) string {
-	return service.GetOneVehicleNameByID(vehicle)
+	return services.GetOneVehicleNameByID(vehicle)
 }
 
 func getVehicleImage(vehicle uint) string {
-	return service.GetOneVehicleImageByID(vehicle)
+	return services.GetOneVehicleImageByID(vehicle)
 }
 
 func getVehicleBrandName(vehicle uint) string {
-	brandid := service.GetVehicleBrandID(vehicle)
+	brandid := services.GetVehicleBrandID(vehicle)
 	return getbrand(brandid)
 }
 
 func getVehicleBrandImage(vehicle uint) string {
-	brandid := service.GetVehicleBrandID(vehicle)
+	brandid := services.GetVehicleBrandID(vehicle)
 	return getbrandImage(brandid)
 }
 
@@ -85,11 +84,11 @@ func AdminIndexpageProcess(w http.ResponseWriter, r *http.Request) {
 		hasmessge = true
 		message = "Vehicle updated successfully"
 	}
-	vehicles := service.GetAllVehicle()
+	vehicles := services.GetAllVehicle()
 	admintpl.ExecuteTemplate(w, "index.html", struct {
 		HasMessage bool
 		Message    string
-		Vehicles   []model.Vehicle
+		Vehicles   []models.Vehicle
 	}{hasmessge, message, vehicles})
 }
 
@@ -119,7 +118,7 @@ func LoginPost(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 	adminemail := r.PostForm.Get("username")
 	adminpassword := r.PostForm.Get("password")
-	admins := service.GetAllAdmin(r)
+	admins := services.GetAllAdmin(r)
 	if len(admins) == 0 {
 		http.Redirect(w, r, "/", http.StatusSeeOther)
 		return
@@ -156,7 +155,7 @@ func Logout(w http.ResponseWriter, r *http.Request) {
 
 // create vehicle
 func CreateVehicleform(w http.ResponseWriter, r *http.Request) {
-	brands := service.GetAllBrand(r)
+	brands := services.GetAllBrand(r)
 	admintpl.ExecuteTemplate(w, "createvehicle.html", brands)
 }
 
@@ -181,7 +180,7 @@ func ServerError(w http.ResponseWriter, r *http.Request) {
 
 // save vehicle
 func SaveVehicle(w http.ResponseWriter, r *http.Request) {
-	err := service.SaveVehicle(r)
+	err := services.SaveVehicle(r)
 	if err != nil {
 		http.Redirect(w, r, "/error", http.StatusSeeOther)
 		return
@@ -192,29 +191,29 @@ func SaveVehicle(w http.ResponseWriter, r *http.Request) {
 
 // view one vehicle
 func GetoneVehicleforview(w http.ResponseWriter, r *http.Request) {
-	vehicle := service.GetOneVehicle(r)
+	vehicle := services.GetOneVehicle(r)
 	admintpl.ExecuteTemplate(w, "viewvehicle.html", vehicle)
 }
 
 // view one vehicle for edit
 func GetoneVehicleforedit(w http.ResponseWriter, r *http.Request) {
-	vehicle := service.GetOneVehicle(r)
-	brands := service.GetAllBrand(r)
+	vehicle := services.GetOneVehicle(r)
+	brands := services.GetAllBrand(r)
 	admintpl.ExecuteTemplate(w, "editvehicle.html", struct {
-		Vehicle model.Vehicle
-		Brands  []model.Company
+		Vehicle models.Vehicle
+		Brands  []models.Company
 	}{vehicle, brands})
 }
 
 // delete one vehicle
 func DeleteVehicle(w http.ResponseWriter, r *http.Request) {
-	service.DeleteOneVehicle(r)
+	services.DeleteOneVehicle(r)
 	deletevehicle = true
 }
 
 // update vehicle
 func UpdateVehicle(w http.ResponseWriter, r *http.Request) {
-	data, err := service.UpdateVehicle(r)
+	data, err := services.UpdateVehicle(r)
 	if err != nil {
 		log.Fatalln(err)
 		return
@@ -231,7 +230,7 @@ func CreateBrandform(w http.ResponseWriter, r *http.Request) {
 
 // save brand
 func SaveBrand(w http.ResponseWriter, r *http.Request) {
-	err := service.SaveCompanyLogo(r)
+	err := services.SaveCompanyLogo(r)
 	if err != nil {
 		http.Redirect(w, r, "/error", http.StatusSeeOther)
 		return
@@ -263,30 +262,30 @@ func GetAllBrand(w http.ResponseWriter, r *http.Request) {
 		message = "Brand deleted successfully"
 	}
 
-	brands := service.GetAllBrand(r)
+	brands := services.GetAllBrand(r)
 
 	admintpl.ExecuteTemplate(w, "brandlist.html", struct {
 		HasMessage bool
 		Message    string
-		Brands     []model.Company
+		Brands     []models.Company
 	}{hasmessge, message, brands})
 }
 
 // delete brand
 func DeleteBrand(w http.ResponseWriter, r *http.Request) {
-	service.DeleteOneBrand(r)
+	services.DeleteOneBrand(r)
 	deletebrand = true
 }
 
 // edit brand
 func GetoneBrandforedit(w http.ResponseWriter, r *http.Request) {
-	brand := service.GetOneBrand(r)
+	brand := services.GetOneBrand(r)
 	admintpl.ExecuteTemplate(w, "editbrand.html", brand)
 }
 
 // update brand
 func UpdateBrand(w http.ResponseWriter, r *http.Request) {
-	data, err := service.UpdateBrand(r)
+	data, err := services.UpdateBrand(r)
 	if err != nil {
 		log.Fatalln(err)
 		return
@@ -298,11 +297,11 @@ func UpdateBrand(w http.ResponseWriter, r *http.Request) {
 
 // get one brand
 func GetoneBrandforview(w http.ResponseWriter, r *http.Request) {
-	brand := service.GetOneBrand(r)
-	vehicles := service.GetParticlullarBrandVehicle(brand.ID)
+	brand := services.GetOneBrand(r)
+	vehicles := services.GetParticlullarBrandVehicle(brand.ID)
 	admintpl.ExecuteTemplate(w, "viewbrand.html", struct {
-		Brand    model.Company
-		Vehicles []model.Vehicle
+		Brand    models.Company
+		Vehicles []models.Vehicle
 	}{brand, vehicles})
 }
 
@@ -317,35 +316,35 @@ func GetAllCustomer(w http.ResponseWriter, r *http.Request) {
 		deletecustomer = false
 	}
 
-	customer := service.GetAllCustomer(r)
+	customer := services.GetAllCustomer(r)
 	admintpl.ExecuteTemplate(w, "customerlist.html", struct {
 		HasMessage bool
 		Message    string
-		Customers  []model.Customer
+		Customers  []models.Customer
 	}{hasmessge, message, customer})
 }
 
 // delete customer
 func DeleteCustomer(w http.ResponseWriter, r *http.Request) {
 	deletecustomer = true
-	service.DeleteOneCustomer(r)
+	services.DeleteOneCustomer(r)
 }
 
 // get one customer
 func GetoneCustomerforview(w http.ResponseWriter, r *http.Request) {
-	customer := service.GetOneCustomer(r)
-	custTestDrives := service.GetParticlullarCustomerTestDrive(r, customer)
+	customer := services.GetOneCustomer(r)
+	custTestDrives := services.GetParticlullarCustomerTestDrive(r, customer)
 	admintpl.ExecuteTemplate(w, "viewcustomer.html", struct {
-		Customer model.Customer
-		CustomerTestDrives []model.TestDrive
+		Customer           models.Customer
+		CustomerTestDrives []models.TestDrive
 	}{customer, custTestDrives})
 }
 
 // get all customer test drives
 func GetAllCustomerOrders(w http.ResponseWriter, r *http.Request) {
-	orders := service.GetAllTestDrives(r)
+	orders := services.GetAllTestDrives(r)
 	admintpl.ExecuteTemplate(w, "order.html", struct {
-		Orders []model.TestDrive
+		Orders []models.TestDrive
 	}{orders})
 }
 
@@ -372,9 +371,9 @@ func AdminRegister(w http.ResponseWriter, r *http.Request) {
 		Hasmessgesuccess bool
 	}{hasmessge, message, hasmessgesuccess})
 }
- 
+
 func AdminRegisterPOST(w http.ResponseWriter, r *http.Request) {
-	emailcheck, err := service.SaveAdmin(r)
+	emailcheck, err := services.SaveAdmin(r)
 	if err != nil {
 		http.Redirect(w, r, "/error", http.StatusSeeOther)
 		return
@@ -393,7 +392,7 @@ func AdminRegisterPOST(w http.ResponseWriter, r *http.Request) {
 func GetAdminAccountPage(w http.ResponseWriter, r *http.Request) {
 	session, _ := store.Get(r, "username")
 	email, _ := session.Values["username"]
-	admin := service.GetOneAdminBYemail(email)
+	admin := services.GetOneAdminBYemail(email)
 	var message string
 	var hasmessge bool
 	if updateadmin {
@@ -404,13 +403,13 @@ func GetAdminAccountPage(w http.ResponseWriter, r *http.Request) {
 	admintpl.ExecuteTemplate(w, "account.html", struct {
 		HasMessage bool
 		Message    string
-		Admin      model.SalesPerson
+		Admin      models.SalesPerson
 	}{hasmessge, message, admin})
 }
 
 // update admin
 func UpdateAdmin(w http.ResponseWriter, r *http.Request) {
-	customer, err := service.AdminUpdate(r)
+	customer, err := services.AdminUpdate(r)
 	if err != nil {
 		log.Fatalln(err)
 		return
@@ -422,7 +421,7 @@ func UpdateAdmin(w http.ResponseWriter, r *http.Request) {
 
 // update test drive
 func UpdateCustomerTestDriveStatus(w http.ResponseWriter, r *http.Request) {
-	var data model.TestDriveStatus
+	var data models.TestDriveStatus
 	json.NewDecoder(r.Body).Decode(&data)
-	service.UpdateCustomerTestDriveStatus(data)
+	services.UpdateCustomerTestDriveStatus(data)
 }
