@@ -11,13 +11,13 @@ func InitializeCustomerViewRoutes() {
 	r.HandleFunc("/Login", controller.CustomerLogin).Methods("GET")
 	r.HandleFunc("/customer/Logout", controller.CustomerLogout).Methods("GET")
 	r.HandleFunc("/customer/index", controller.AuthenticationCustomer(controller.CustomerIndexPage)).Methods("GET")
-	r.HandleFunc("/customer/orders", controller.AuthenticationCustomer(controller.CustomerGetallOrder)).Methods("GET")
-	r.HandleFunc("/customer/compare", controller.AuthenticationCustomer(controller.CarCompare)).Methods("GET")
+	r.HandleFunc("/customer/orders", controller.AuthenticationCustomer(controller.CustomerGetAllOrders)).Methods("GET")
+	r.HandleFunc("/customer/compare", controller.AuthenticationCustomer(controller.CompareCar)).Methods("GET")
 
 	//GET VIEW PAGE
-	r.HandleFunc("/customer/brand/view/{id}", controller.AuthenticationCustomer(controller.GetallVehicleWithBrandforview)).Methods("GET")
+	r.HandleFunc("/customer/brand/view/{id}", controller.AuthenticationCustomer(controller.GetAllVehicleWithBrandForView)).Methods("GET")
 	r.HandleFunc("/customer/vehicle/view/{id}", controller.AuthenticationCustomer(controller.CustomerGetoneVehicleforview)).Methods("GET")
-	r.HandleFunc("/customer/account", controller.AuthenticationCustomer(controller.CustomerAccountforview)).Methods("GET")
+	r.HandleFunc("/customer/account", controller.AuthenticationCustomer(controller.CustomerAccountForView)).Methods("GET")
 	r.HandleFunc("/customer/forgotpassword", controller.CustomerForgotPassword).Methods("GET")
 	r.HandleFunc("/customer/setpassword/{id}", controller.CustomerSetForgotPasswordPage).Methods("GET")
 	r.HandleFunc("/customer/getVehicle/{id}", controller.CustomerGetVehicle).Methods("GET")

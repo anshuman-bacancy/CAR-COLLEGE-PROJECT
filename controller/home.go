@@ -86,7 +86,7 @@ func CustomerLoginPost(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 	usercustomer := r.PostForm.Get("username")
 	passcustomer := r.PostForm.Get("password")
-	customers := services.GetAllCustomer(r)
+	customers := services.GetAllCustomers(r)
 	if len(customers) == 0 {
 		http.Redirect(w, r, "/", http.StatusSeeOther)
 		return
@@ -112,7 +112,7 @@ func CustomerLoginPost(w http.ResponseWriter, r *http.Request) {
 
 // customer index page
 func CustomerIndexPage(w http.ResponseWriter, r *http.Request) {
-	brand := services.GetAllBrand(r)
+	brand := services.GetAllBrands(r)
 	// fmt.Println(brand)
 	custtpl.ExecuteTemplate(w, "index.html", brand)
 }
@@ -123,8 +123,6 @@ func AuthenticationCustomer(handler http.HandlerFunc) http.HandlerFunc {
 		session, _ := storecustomer.Get(r, "customerusername")
 		_, ok := session.Values["customer"]
 		if !ok {
-
-			fmt.Println("not exits")
 			http.Redirect(w, r, "/Login", http.StatusSeeOther)
 			return
 		}
@@ -167,7 +165,7 @@ func CustomerForgotPassword(w http.ResponseWriter, r *http.Request) {
 func CustomerValidateEmail(w http.ResponseWriter, r *http.Request) {
 	emailfound = false
 	email := r.FormValue("email")
-	customers := services.GetAllCustomer(r)
+	customers := services.GetAllCustomers(r)
 	for _, customer := range customers {
 		if customer.Email == email {
 			emailfound = true

@@ -20,8 +20,8 @@ var (
 var tpl *template.Template
 
 // returns vehicle with brands
-func GetallVehicleWithBrandforview(w http.ResponseWriter, r *http.Request) {
-	vehicles := services.GetParticlullarBrandVehiclewithR(r)
+func GetAllVehicleWithBrandForView(w http.ResponseWriter, r *http.Request) {
+	vehicles := services.GetParticularBrandVehiclewithR(r)
 	custtpl.ExecuteTemplate(w, "vehiclelist.html", vehicles)
 }
 
@@ -32,7 +32,7 @@ func CustomerGetoneVehicleforview(w http.ResponseWriter, r *http.Request) {
 }
 
 // shows customer account
-func CustomerAccountforview(w http.ResponseWriter, r *http.Request) {
+func CustomerAccountForView(w http.ResponseWriter, r *http.Request) {
 	session, _ := storecustomer.Get(r, "customerusername")
 	email, _ := session.Values["customer"]
 	customer := services.GetOneCustomerBYemail(email)
@@ -63,7 +63,7 @@ func CustomerUpdate(w http.ResponseWriter, r *http.Request) {
 }
 
 // shows all test drives for customer
-func CustomerGetallOrder(w http.ResponseWriter, r *http.Request) {
+func CustomerGetAllOrders(w http.ResponseWriter, r *http.Request) {
 	var message string
 	var hasmessge bool
 	if ordersave {
@@ -103,7 +103,7 @@ func CustomerTestDrive(w http.ResponseWriter, r *http.Request) {
 }
 
 // returns list of vehicles in dropdown
-func CarCompare(w http.ResponseWriter, r *http.Request) {
+func CompareCar(w http.ResponseWriter, r *http.Request) {
 	allVehicles := services.GetAllVehicle()
 	ids := make(map[string]uint, 0)
 	// for idx := 1; idx <= len(allVehicles); idx++ {

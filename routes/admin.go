@@ -18,23 +18,23 @@ func InitializeAdminViewRoutes() {
 	r.HandleFunc("/admin/register", controller.AuthenticationAdmin(controller.AdminRegister)).Methods("GET")
 
 	//GET ALL DATA
-	r.HandleFunc("/admin/vehicle", controller.AuthenticationAdmin(controller.AdminIndexpageProcess)).Methods("GET")
-	r.HandleFunc("/admin/brand", controller.AuthenticationAdmin(controller.GetAllBrand)).Methods("GET")
-	r.HandleFunc("/admin/customer", controller.AuthenticationAdmin(controller.GetAllCustomer)).Methods("GET")
-	r.HandleFunc("/admin/orders", controller.AuthenticationAdmin(controller.GetAllCustomerOrders)).Methods("GET")
+	r.HandleFunc("/admin/vehicle", controller.AuthenticationAdmin(controller.AdminIndexPageProcess)).Methods("GET")
+	r.HandleFunc("/admin/brand", controller.AuthenticationAdmin(controller.GetAllBrands)).Methods("GET")
+	r.HandleFunc("/admin/customer", controller.AuthenticationAdmin(controller.GetAllCustomers)).Methods("GET")
+	r.HandleFunc("/admin/orders", controller.AuthenticationAdmin(controller.GetAllCustomersOrders)).Methods("GET")
 
 	//GET CREATE PAGE
 	r.HandleFunc("/admin/create/vehicle", controller.AuthenticationAdmin(controller.CreateVehicleform)).Methods("GET")
-	r.HandleFunc("/admin/create/brand", controller.AuthenticationAdmin(controller.CreateBrandform)).Methods("GET")
+	r.HandleFunc("/admin/create/brand", controller.AuthenticationAdmin(controller.CreateBrandForm)).Methods("GET")
 
 	//GET EDIT PAGE
-	r.HandleFunc("/admin/vehicle/{id}", controller.AuthenticationAdmin(controller.GetoneVehicleforedit)).Methods("GET")
-	r.HandleFunc("/admin/brand/{id}", controller.AuthenticationAdmin(controller.GetoneBrandforedit)).Methods("GET")
+	r.HandleFunc("/admin/vehicle/{id}", controller.AuthenticationAdmin(controller.GetOneVehicleForEdit)).Methods("GET")
+	r.HandleFunc("/admin/brand/{id}", controller.AuthenticationAdmin(controller.GetOneBrandForEdit)).Methods("GET")
 
 	//GET VIEW PAGE
-	r.HandleFunc("/admin/vehicle/view/{id}", controller.AuthenticationAdmin(controller.GetoneVehicleforview)).Methods("GET")
-	r.HandleFunc("/admin/brand/view/{id}", controller.AuthenticationAdmin(controller.GetoneBrandforview)).Methods("GET")
-	r.HandleFunc("/admin/customer/view/{id}", controller.AuthenticationAdmin(controller.GetoneCustomerforview)).Methods("GET")
+	r.HandleFunc("/admin/vehicle/view/{id}", controller.AuthenticationAdmin(controller.GetOneVehicleForView)).Methods("GET")
+	r.HandleFunc("/admin/brand/view/{id}", controller.AuthenticationAdmin(controller.GetOneBrandForView)).Methods("GET")
+	r.HandleFunc("/admin/customer/view/{id}", controller.AuthenticationAdmin(controller.GetOneCustomerForView)).Methods("GET")
 	r.HandleFunc("/admin/account", controller.AuthenticationAdmin(controller.GetAdminAccountPage)).Methods("GET")
 }
 

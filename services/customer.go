@@ -44,7 +44,7 @@ func SaveCustomer(r *http.Request) (bool, error) {
 }
 
 //Returns all customers
-func GetAllCustomer(r *http.Request) []model.Customer {
+func GetAllCustomers(r *http.Request) []model.Customer {
 	connection := common.GetDatabase()
 	defer common.CloseDatabase(connection)
 	var customers []model.Customer

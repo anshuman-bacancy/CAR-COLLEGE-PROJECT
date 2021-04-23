@@ -118,8 +118,8 @@ func SaveCompanyLogo(r *http.Request) error {
 	return nil
 }
 
-//GetAllBrand
-func GetAllBrand(r *http.Request) []models.Company {
+//GetAllBrands
+func GetAllBrands(r *http.Request) []models.Company {
 	connection := common.GetDatabase()
 	defer common.CloseDatabase(connection)
 	var companies []models.Company
@@ -187,8 +187,8 @@ func UpdateBrand(r *http.Request) ([]byte, error) {
 	return bytedata, nil
 }
 
-//GetParticlullarBrandVehicle
-func GetParticlullarBrandVehicle(id uint) []models.Vehicle {
+//GetParticularBrandVehicle
+func GetParticularBrandVehicle(id uint) []models.Vehicle {
 	connection := common.GetDatabase()
 	defer common.CloseDatabase(connection)
 	var vehicles []models.Vehicle
@@ -196,8 +196,8 @@ func GetParticlullarBrandVehicle(id uint) []models.Vehicle {
 	return vehicles
 }
 
-//GetParticlullarBrandVehiclewithR
-func GetParticlullarBrandVehiclewithR(r *http.Request) []models.Vehicle {
+//GetParticularBrandVehiclewithR
+func GetParticularBrandVehiclewithR(r *http.Request) []models.Vehicle {
 	id := mux.Vars(r)["id"]
 	connection := common.GetDatabase()
 	defer common.CloseDatabase(connection)
@@ -264,7 +264,7 @@ func SaveAdmin(r *http.Request) (bool, error) {
 	return false, nil
 }
 
-//GetAllAdmin
+// returns all admin
 func GetAllAdmin(r *http.Request) []models.SalesPerson {
 	connection := common.GetDatabase()
 	defer common.CloseDatabase(connection)
@@ -273,8 +273,8 @@ func GetAllAdmin(r *http.Request) []models.SalesPerson {
 	return salesperson
 }
 
-//GetOneAdminBYemail
-func GetOneAdminBYemail(email interface{}) models.SalesPerson {
+// returns one admin
+func GetOneAdminByEmail(email interface{}) models.SalesPerson {
 	connection := common.GetDatabase()
 	defer common.CloseDatabase(connection)
 	var admin models.SalesPerson
@@ -282,7 +282,7 @@ func GetOneAdminBYemail(email interface{}) models.SalesPerson {
 	return admin
 }
 
-//AdminUpdate
+// update admin
 func AdminUpdate(r *http.Request) ([]byte, error) {
 	connection := common.GetDatabase()
 	defer common.CloseDatabase(connection)

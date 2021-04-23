@@ -14,7 +14,7 @@ import (
 var updateadmin bool
 var adminregister bool
 var adminregisteremailerror bool
-var chekerror bool
+var checkError bool
 var store = sessions.NewCookieStore([]byte("t0p-s3cr3ta"))
 var vehiclesave bool
 var deletevehicle bool
@@ -63,8 +63,8 @@ func getVehicleBrandImage(vehicle uint) string {
 	return getbrandImage(brandid)
 }
 
-//AdminIndexpageProcess is..
-func AdminIndexpageProcess(w http.ResponseWriter, r *http.Request) {
+//AdminIndexPageProcess is..
+func AdminIndexPageProcess(w http.ResponseWriter, r *http.Request) {
 	var message string
 	var hasmessge bool
 	if vehiclesave {
@@ -92,7 +92,6 @@ func AdminIndexpageProcess(w http.ResponseWriter, r *http.Request) {
 	}{hasmessge, message, vehicles})
 }
 
-//NotFound is...
 func NotFound(w http.ResponseWriter, r *http.Request) {
 	admintpl.ExecuteTemplate(w, "404.html", nil)
 }
@@ -101,10 +100,10 @@ func NotFound(w http.ResponseWriter, r *http.Request) {
 func Login(w http.ResponseWriter, r *http.Request) {
 	var message string
 	var hasmessge bool
-	if chekerror {
+	if checkError {
 		hasmessge = true
 		message = "Username or Password is wrong"
-		chekerror = false
+		checkError = false
 	}
 
 	admintpl.ExecuteTemplate(w, "login.html", struct {
@@ -136,7 +135,7 @@ func LoginPost(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if !accessadmin {
-		chekerror = true
+		checkError = true
 		http.Redirect(w, r, "/admin", http.StatusSeeOther)
 		return
 	}
@@ -155,7 +154,7 @@ func Logout(w http.ResponseWriter, r *http.Request) {
 
 // create vehicle
 func CreateVehicleform(w http.ResponseWriter, r *http.Request) {
-	brands := services.GetAllBrand(r)
+	brands := services.GetAllBrands(r)
 	admintpl.ExecuteTemplate(w, "createvehicle.html", brands)
 }
 
@@ -165,7 +164,7 @@ func AuthenticationAdmin(handler http.HandlerFunc) http.HandlerFunc {
 		session, _ := store.Get(r, "username")
 		_, ok := session.Values["username"]
 		if !ok {
-			chekerror = true
+			checkError = true
 			http.Redirect(w, r, "/", http.StatusSeeOther)
 			return
 		}
@@ -190,15 +189,15 @@ func SaveVehicle(w http.ResponseWriter, r *http.Request) {
 }
 
 // view one vehicle
-func GetoneVehicleforview(w http.ResponseWriter, r *http.Request) {
+func GetOneVehicleForView(w http.ResponseWriter, r *http.Request) {
 	vehicle := services.GetOneVehicle(r)
 	admintpl.ExecuteTemplate(w, "viewvehicle.html", vehicle)
 }
 
 // view one vehicle for edit
-func GetoneVehicleforedit(w http.ResponseWriter, r *http.Request) {
+func GetOneVehicleForEdit(w http.ResponseWriter, r *http.Request) {
 	vehicle := services.GetOneVehicle(r)
-	brands := services.GetAllBrand(r)
+	brands := services.GetAllBrands(r)
 	admintpl.ExecuteTemplate(w, "editvehicle.html", struct {
 		Vehicle models.Vehicle
 		Brands  []models.Company
@@ -224,7 +223,7 @@ func UpdateVehicle(w http.ResponseWriter, r *http.Request) {
 }
 
 // brand form
-func CreateBrandform(w http.ResponseWriter, r *http.Request) {
+func CreateBrandForm(w http.ResponseWriter, r *http.Request) {
 	admintpl.ExecuteTemplate(w, "createbrand.html", nil)
 }
 
@@ -240,7 +239,7 @@ func SaveBrand(w http.ResponseWriter, r *http.Request) {
 }
 
 // get all brands
-func GetAllBrand(w http.ResponseWriter, r *http.Request) {
+func GetAllBrands(w http.ResponseWriter, r *http.Request) {
 	var message string
 	var hasmessge bool
 
@@ -262,7 +261,7 @@ func GetAllBrand(w http.ResponseWriter, r *http.Request) {
 		message = "Brand deleted successfully"
 	}
 
-	brands := services.GetAllBrand(r)
+	brands := services.GetAllBrands(r)
 
 	admintpl.ExecuteTemplate(w, "brandlist.html", struct {
 		HasMessage bool
@@ -278,7 +277,7 @@ func DeleteBrand(w http.ResponseWriter, r *http.Request) {
 }
 
 // edit brand
-func GetoneBrandforedit(w http.ResponseWriter, r *http.Request) {
+func GetOneBrandForEdit(w http.ResponseWriter, r *http.Request) {
 	brand := services.GetOneBrand(r)
 	admintpl.ExecuteTemplate(w, "editbrand.html", brand)
 }
@@ -296,9 +295,9 @@ func UpdateBrand(w http.ResponseWriter, r *http.Request) {
 }
 
 // get one brand
-func GetoneBrandforview(w http.ResponseWriter, r *http.Request) {
+func GetOneBrandForView(w http.ResponseWriter, r *http.Request) {
 	brand := services.GetOneBrand(r)
-	vehicles := services.GetParticlullarBrandVehicle(brand.ID)
+	vehicles := services.GetParticularBrandVehicle(brand.ID)
 	admintpl.ExecuteTemplate(w, "viewbrand.html", struct {
 		Brand    models.Company
 		Vehicles []models.Vehicle
@@ -306,7 +305,7 @@ func GetoneBrandforview(w http.ResponseWriter, r *http.Request) {
 }
 
 // get all customer
-func GetAllCustomer(w http.ResponseWriter, r *http.Request) {
+func GetAllCustomers(w http.ResponseWriter, r *http.Request) {
 	var message string
 	var hasmessge bool
 
@@ -316,7 +315,7 @@ func GetAllCustomer(w http.ResponseWriter, r *http.Request) {
 		deletecustomer = false
 	}
 
-	customer := services.GetAllCustomer(r)
+	customer := services.GetAllCustomers(r)
 	admintpl.ExecuteTemplate(w, "customerlist.html", struct {
 		HasMessage bool
 		Message    string
@@ -331,7 +330,7 @@ func DeleteCustomer(w http.ResponseWriter, r *http.Request) {
 }
 
 // get one customer
-func GetoneCustomerforview(w http.ResponseWriter, r *http.Request) {
+func GetOneCustomerForView(w http.ResponseWriter, r *http.Request) {
 	customer := services.GetOneCustomer(r)
 	custTestDrives := services.GetParticlullarCustomerTestDrive(r, customer)
 	admintpl.ExecuteTemplate(w, "viewcustomer.html", struct {
@@ -341,7 +340,7 @@ func GetoneCustomerforview(w http.ResponseWriter, r *http.Request) {
 }
 
 // get all customer test drives
-func GetAllCustomerOrders(w http.ResponseWriter, r *http.Request) {
+func GetAllCustomersOrders(w http.ResponseWriter, r *http.Request) {
 	orders := services.GetAllTestDrives(r)
 	admintpl.ExecuteTemplate(w, "order.html", struct {
 		Orders []models.TestDrive
@@ -392,7 +391,7 @@ func AdminRegisterPOST(w http.ResponseWriter, r *http.Request) {
 func GetAdminAccountPage(w http.ResponseWriter, r *http.Request) {
 	session, _ := store.Get(r, "username")
 	email, _ := session.Values["username"]
-	admin := services.GetOneAdminBYemail(email)
+	admin := services.GetOneAdminByEmail(email)
 	var message string
 	var hasmessge bool
 	if updateadmin {
