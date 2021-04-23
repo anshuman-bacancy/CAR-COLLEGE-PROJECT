@@ -8,9 +8,12 @@ import (
 func main() {
 	common.InitialMigration()
 	routes.CreateRouter()
-	routes.InitializeRoutesFrontendCustomer()
-	routes.InitializeRoutesBackendCustomer()
-	routes.InitializeRoutesBackendAdmin()
-	routes.InitializeRoutesFrontendAdmin()
+
+	routes.InitializeCustomerViewRoutes()
+	routes.InitializeCustomerBackendRoutes()
+
+	routes.InitializeAdminViewRoutes()
+	routes.InitializeAdminBackendRoutes()
+
 	routes.StartServer()
 }
