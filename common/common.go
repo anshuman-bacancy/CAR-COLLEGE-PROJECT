@@ -18,7 +18,7 @@ var (
 	tpl *template.Template
 )
 
-//GetDatabase is return db connection
+//returns db connection
 func GetDatabase() *gorm.DB {
 	connection, err := gorm.Open("postgres", "postgres://postgres:password@localhost/CarProject?sslmode=disable")
 	CheckError(err)
@@ -29,7 +29,7 @@ func GetDatabase() *gorm.DB {
 	return connection
 }
 
-//Closedatabase closes the database connection
+// closes the database connection
 func CloseDatabase(connection *gorm.DB) {
 	sqldb := connection.DB()
 	sqldb.Close()
@@ -42,7 +42,7 @@ func CheckError(err error) {
 	}
 }
 
-//Initialmigration migrates modelss to database
+// migrates modelss to database
 func InitialMigration() {
 	connection := GetDatabase()
 	connection.AutoMigrate(&models.SalesPerson{})
@@ -65,7 +65,7 @@ func InitialMigration() {
 	// 	Mobile:   "1234567890"})
 }
 
-// FormatDate returns date in dd/mm/yyyy format
+// returns date in dd/mm/yyyy format
 func FormatDate(date string) string {
 	tempDate := strings.Replace(date, "/", "-", -1)
 	dateLayout := "02-01-2006"

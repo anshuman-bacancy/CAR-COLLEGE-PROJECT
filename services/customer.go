@@ -12,7 +12,7 @@ import (
 	"github.com/gorilla/mux"
 )
 
-//SaveCustomer
+// save customer
 func SaveCustomer(r *http.Request) (bool, error) {
 	connection := common.GetDatabase()
 	defer common.CloseDatabase(connection)
@@ -43,7 +43,7 @@ func SaveCustomer(r *http.Request) (bool, error) {
 	return false, nil
 }
 
-//Returns all customers
+// returns all customers
 func GetAllCustomers(r *http.Request) []model.Customer {
 	connection := common.GetDatabase()
 	defer common.CloseDatabase(connection)
@@ -52,7 +52,7 @@ func GetAllCustomers(r *http.Request) []model.Customer {
 	return customers
 }
 
-// Deletes one customer
+// deletes one customer
 func DeleteOneCustomer(r *http.Request) {
 	id := mux.Vars(r)["id"]
 	var customer model.Customer
@@ -61,7 +61,7 @@ func DeleteOneCustomer(r *http.Request) {
 	connection.Delete(&customer, id)
 }
 
-// Returns one customer
+// returns one customer
 func GetOneCustomer(r *http.Request) model.Customer {
 	id := mux.Vars(r)["id"]
 	connection := common.GetDatabase()
@@ -71,7 +71,7 @@ func GetOneCustomer(r *http.Request) model.Customer {
 	return customer
 }
 
-// Returns one customer via email
+// returns one customer via email
 func GetOneCustomerBYemail(email interface{}) model.Customer {
 	connection := common.GetDatabase()
 	defer common.CloseDatabase(connection)
@@ -80,7 +80,7 @@ func GetOneCustomerBYemail(email interface{}) model.Customer {
 	return customer
 }
 
-//CustomerUpdate
+// customer update
 func CustomerUpdate(r *http.Request) ([]byte, error) {
 	fmt.Println("called update")
 	connection := common.GetDatabase()
@@ -104,7 +104,7 @@ func CustomerUpdate(r *http.Request) ([]byte, error) {
 	return bytedata, nil
 }
 
-//CustomerBookVehicle
+// book vehicle
 func CustomerBookVehicle(r *http.Request, customer model.Customer) error {
 	vehicleid, err := strconv.Atoi(r.FormValue("vehicleid"))
 	if err != nil {
@@ -121,7 +121,8 @@ func CustomerBookVehicle(r *http.Request, customer model.Customer) error {
 	return nil
 }
 
-func GetParticlullarCustomerTestDrive(r *http.Request, customer model.Customer) []model.TestDrive {
+// returns customer testdrive 
+func GetParticularCustomerTestDrive(r *http.Request, customer model.Customer) []model.TestDrive {
 	connection := common.GetDatabase()
 	defer common.CloseDatabase(connection)
 	var orders []model.TestDrive
@@ -129,6 +130,7 @@ func GetParticlullarCustomerTestDrive(r *http.Request, customer model.Customer) 
 	return orders
 }
 
+// returns all test drives
 func GetAllTestDrives(r *http.Request) []model.TestDrive {
 	connection := common.GetDatabase()
 	defer common.CloseDatabase(connection)
@@ -137,6 +139,7 @@ func GetAllTestDrives(r *http.Request) []model.TestDrive {
 	return orders
 }
 
+// returns customer name by ID
 func GetCustomerNameByID(id uint) string {
 	connection := common.GetDatabase()
 	defer common.CloseDatabase(connection)
@@ -145,6 +148,7 @@ func GetCustomerNameByID(id uint) string {
 	return customer.Name
 }
 
+// save test drive
 func SaveCustomerTestDrive(customer model.Customer, vehicleId uint64, testDriveDate string) error {
 	var testDrive model.TestDrive
 
@@ -160,6 +164,7 @@ func SaveCustomerTestDrive(customer model.Customer, vehicleId uint64, testDriveD
 	return nil
 }
 
+// update test drive
 func UpdateCustomerTestDriveStatus(data model.TestDriveStatus) {
 	connection := common.GetDatabase()
 	defer common.CloseDatabase(connection)

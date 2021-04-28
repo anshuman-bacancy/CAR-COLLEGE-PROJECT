@@ -15,9 +15,9 @@ import (
 var (
 	updatecustomer bool
 	ordersave      bool
+	tpl *template.Template
 )
 
-var tpl *template.Template
 
 // returns vehicle with brands
 func GetAllVehicleWithBrandForView(w http.ResponseWriter, r *http.Request) {
@@ -74,7 +74,7 @@ func CustomerGetAllOrders(w http.ResponseWriter, r *http.Request) {
 	session, _ := storecustomer.Get(r, "customerusername")
 	email, _ := session.Values["customer"]
 	customer := services.GetOneCustomerBYemail(email)
-	orders := services.GetParticlullarCustomerTestDrive(r, customer)
+	orders := services.GetParticularCustomerTestDrive(r, customer)
 	custtpl.ExecuteTemplate(w, "order.html", struct {
 		Orders     []model.TestDrive
 		HasMessage bool
@@ -106,9 +106,6 @@ func CustomerTestDrive(w http.ResponseWriter, r *http.Request) {
 func CompareCar(w http.ResponseWriter, r *http.Request) {
 	allVehicles := services.GetAllVehicle()
 	ids := make(map[string]uint, 0)
-	// for idx := 1; idx <= len(allVehicles); idx++ {
-	// 	ids["car" + strconv.Itoa(idx)] = idx
-	// }
 
 	for _, vehicle := range allVehicles {
 		ids["car"+strconv.Itoa(int(vehicle.ID))] = vehicle.ID

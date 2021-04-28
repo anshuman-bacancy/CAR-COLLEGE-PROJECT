@@ -13,9 +13,12 @@ import (
 )
 
 var (
-	admintpl *template.Template
-	hometpl  *template.Template
-	custtpl  *template.Template
+	admintpl, hometpl, custtpl *template.Template
+	registeremail bool
+	customernotexits bool
+	storecustomer = sessions.NewCookieStore([]byte("t0p-s3cr3tcus"))
+	emailfound bool
+	emailnotextits bool
 )
 
 func init() {
@@ -24,11 +27,6 @@ func init() {
 	custtpl = template.Must(template.New("").Funcs(Fm).ParseGlob(("./template/customer/*")))
 }
 
-var registeremail bool
-var customernotexits bool
-var storecustomer = sessions.NewCookieStore([]byte("t0p-s3cr3tcus"))
-var emailfound bool
-var emailnotextits bool
 
 // home page
 func HomePage(w http.ResponseWriter, r *http.Request) {

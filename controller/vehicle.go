@@ -96,7 +96,7 @@ func NotFound(w http.ResponseWriter, r *http.Request) {
 	admintpl.ExecuteTemplate(w, "404.html", nil)
 }
 
-//Login is...
+// show admin login
 func Login(w http.ResponseWriter, r *http.Request) {
 	var message string
 	var hasmessge bool
@@ -332,7 +332,7 @@ func DeleteCustomer(w http.ResponseWriter, r *http.Request) {
 // get one customer
 func GetOneCustomerForView(w http.ResponseWriter, r *http.Request) {
 	customer := services.GetOneCustomer(r)
-	custTestDrives := services.GetParticlullarCustomerTestDrive(r, customer)
+	custTestDrives := services.GetParticularCustomerTestDrive(r, customer)
 	admintpl.ExecuteTemplate(w, "viewcustomer.html", struct {
 		Customer           models.Customer
 		CustomerTestDrives []models.TestDrive

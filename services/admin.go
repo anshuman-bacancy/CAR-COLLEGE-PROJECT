@@ -12,7 +12,7 @@ import (
 	"github.com/gorilla/mux"
 )
 
-//SaveVehicle is...
+// saves vehicle to db
 func SaveVehicle(r *http.Request) error {
 	connection := common.GetDatabase()
 	image, _, err := r.FormFile("image")
@@ -45,7 +45,7 @@ func SaveVehicle(r *http.Request) error {
 	return nil
 }
 
-//GetAllVehicle
+// returns all vehicles
 func GetAllVehicle() []models.Vehicle {
 	connection := common.GetDatabase()
 	defer common.CloseDatabase(connection)
@@ -54,7 +54,7 @@ func GetAllVehicle() []models.Vehicle {
 	return vehicles
 }
 
-//GetOneVehicle
+// returns one vehicles
 func GetOneVehicle(r *http.Request) models.Vehicle {
 	id := mux.Vars(r)["id"]
 	connection := common.GetDatabase()
@@ -64,7 +64,7 @@ func GetOneVehicle(r *http.Request) models.Vehicle {
 	return vehicle
 }
 
-//DeleteOneVehicle
+// deletes one vehicle
 func DeleteOneVehicle(r *http.Request) {
 	id := mux.Vars(r)["id"]
 	var vehicle models.Vehicle
@@ -73,7 +73,7 @@ func DeleteOneVehicle(r *http.Request) {
 	connection.Delete(&vehicle, id)
 }
 
-//UpdateVehicle
+// update one vehicle
 func UpdateVehicle(r *http.Request) ([]byte, error) {
 	connection := common.GetDatabase()
 	defer common.CloseDatabase(connection)
@@ -97,7 +97,7 @@ func UpdateVehicle(r *http.Request) ([]byte, error) {
 
 }
 
-//SaveCompanyLogo
+// save company logo
 func SaveCompanyLogo(r *http.Request) error {
 	connection := common.GetDatabase()
 	image, _, err := r.FormFile("logo")
@@ -118,7 +118,7 @@ func SaveCompanyLogo(r *http.Request) error {
 	return nil
 }
 
-//GetAllBrands
+// returns all brands
 func GetAllBrands(r *http.Request) []models.Company {
 	connection := common.GetDatabase()
 	defer common.CloseDatabase(connection)
@@ -127,7 +127,7 @@ func GetAllBrands(r *http.Request) []models.Company {
 	return companies
 }
 
-//DeleteOneBrand
+// delete one brand
 func DeleteOneBrand(r *http.Request) {
 	id := mux.Vars(r)["id"]
 	var company models.Company
@@ -136,7 +136,7 @@ func DeleteOneBrand(r *http.Request) {
 	connection.Delete(&company, id)
 }
 
-//GetOneBrand
+// returns one brand
 func GetOneBrand(r *http.Request) models.Company {
 	id := mux.Vars(r)["id"]
 	connection := common.GetDatabase()
@@ -146,7 +146,7 @@ func GetOneBrand(r *http.Request) models.Company {
 	return company
 }
 
-//GetOneBrandNameByID
+// returns one brand by ID
 func GetOneBrandNameByID(id uint) string {
 	connection := common.GetDatabase()
 	defer common.CloseDatabase(connection)
@@ -155,7 +155,7 @@ func GetOneBrandNameByID(id uint) string {
 	return company.Name
 }
 
-//GetOneBrandImageByID
+// return brand image
 func GetOneBrandImageByID(id uint) string {
 	connection := common.GetDatabase()
 	defer common.CloseDatabase(connection)
@@ -164,7 +164,7 @@ func GetOneBrandImageByID(id uint) string {
 	return company.Logo
 }
 
-//UpdateBrand
+// update brand
 func UpdateBrand(r *http.Request) ([]byte, error) {
 	connection := common.GetDatabase()
 	defer common.CloseDatabase(connection)
@@ -187,7 +187,7 @@ func UpdateBrand(r *http.Request) ([]byte, error) {
 	return bytedata, nil
 }
 
-//GetParticularBrandVehicle
+// return vehicles of brand
 func GetParticularBrandVehicle(id uint) []models.Vehicle {
 	connection := common.GetDatabase()
 	defer common.CloseDatabase(connection)
@@ -196,7 +196,7 @@ func GetParticularBrandVehicle(id uint) []models.Vehicle {
 	return vehicles
 }
 
-//GetParticularBrandVehiclewithR
+// same as above. remove it ?
 func GetParticularBrandVehiclewithR(r *http.Request) []models.Vehicle {
 	id := mux.Vars(r)["id"]
 	connection := common.GetDatabase()
@@ -206,7 +206,7 @@ func GetParticularBrandVehiclewithR(r *http.Request) []models.Vehicle {
 	return vehicles
 }
 
-//GetOneVehicleNameByID
+// returns one vehicle by ID
 func GetOneVehicleNameByID(vehicleid uint) string {
 	connection := common.GetDatabase()
 	defer common.CloseDatabase(connection)
@@ -215,7 +215,7 @@ func GetOneVehicleNameByID(vehicleid uint) string {
 	return vehicle.ModelName
 }
 
-//GetOneVehicleImageByID
+// returns vehicle logo
 func GetOneVehicleImageByID(vehicleid uint) string {
 	connection := common.GetDatabase()
 	defer common.CloseDatabase(connection)
@@ -224,7 +224,7 @@ func GetOneVehicleImageByID(vehicleid uint) string {
 	return vehicle.Image
 }
 
-//GetVehicleBrandID
+// return vehicle brand ID
 func GetVehicleBrandID(vehicleid uint) uint {
 	connection := common.GetDatabase()
 	defer common.CloseDatabase(connection)
@@ -233,7 +233,7 @@ func GetVehicleBrandID(vehicleid uint) uint {
 	return vehicle.CompanyID
 }
 
-//SaveAdmin
+// save admin
 func SaveAdmin(r *http.Request) (bool, error) {
 	connection := common.GetDatabase()
 	defer common.CloseDatabase(connection)

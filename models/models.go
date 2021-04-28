@@ -4,7 +4,6 @@ import (
 	"gorm.io/gorm"
 )
 
-//SalesPerson
 type SalesPerson struct {
 	gorm.Model
 	Name     string `json:"name"`
@@ -14,14 +13,12 @@ type SalesPerson struct {
 	City     string `json:"city"`
 }
 
-//Company
 type Company struct {
 	gorm.Model
 	Name string `json:"name"`
 	Logo string `json:"logo"`
 }
 
-//Vehicle
 type Vehicle struct {
 	gorm.Model
 	Vin         string `json:"vin"`
@@ -36,7 +33,6 @@ type Vehicle struct {
 	CompanyID   uint   `json:"companyid,string"`
 }
 
-//Customer
 type Customer struct {
 	gorm.Model
 	Name     string `json:"name"`
@@ -46,7 +42,6 @@ type Customer struct {
 	City     string `json:"city"`
 }
 
-// TestDrive
 type TestDrive struct {
 	gorm.Model
 	VehicleID     uint   `json:"vehicleid,string"`
@@ -55,7 +50,6 @@ type TestDrive struct {
 	Status        string `json:"Status"`
 }
 
-// Receive test drive status
 type TestDriveStatus struct {
 	TestDriveID uint   `json:"TestDriveID,string"`
 	Status      string `json:"Status"`
