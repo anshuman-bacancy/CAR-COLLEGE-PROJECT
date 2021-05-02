@@ -8,6 +8,7 @@ import (
 	"text/template"
 	"time"
 
+	"github.com/spf13/viper"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 )
@@ -16,16 +17,21 @@ var (
 	db  *sql.DB
 	err error
 	tpl *template.Template
+	config models.Config
 )
+
+func init() {
+	config, err = LoadConfig(".")
+}
 
 //returns db connection
 func GetDatabase() *gorm.DB {
-	connection, err := gorm.Open("postgres", "postgres://postgres:password@localhost/CarProject?sslmode=disable")
+	connection, err := gorm.Open(config.DB_DRIVER, config.DB_SOURCE)
 	CheckError(err)
 	sqldb := connection.DB()
 	err = sqldb.Ping()
 	CheckError(err)
-	log.Println("connected to database")
+	log.Println("Database connected...")
 	return connection
 }
 
@@ -72,4 +78,20 @@ func FormatDate(date string) string {
 	dateFormat, _ := time.Parse(dateLayout, tempDate)
 	testDriveDate := dateFormat.Format(dateLayout)
 	return testDriveDate
+}
+
+func LoadConfig(path string) (config models.Config, err error) {
+	viper.AddConfigPath(path)
+  viper.SetConfigName("env")
+  viper.SetConfigType("env")
+
+  viper.AutomaticEnv()
+
+  err = viper.ReadInConfig()
+  if err != nil {
+  	return 
+  }
+
+  err = viper.Unmarshal(&config)
+  return
 }
