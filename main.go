@@ -21,7 +21,7 @@ func main() {
 	if len(os.Args) == 2 {
 		port = string(":" + os.Args[1])
 	} else {
-		port = ":8080"
+		port = ":8888"
 	}
 
 	routes.StartServer(port)

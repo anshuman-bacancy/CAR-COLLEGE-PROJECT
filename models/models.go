@@ -56,6 +56,6 @@ type TestDriveStatus struct {
 }
 
 type Config struct {
-	DB_DRIVER string `mapstructure:"DB_DRIVER`
-	DB_SOURCE string `mapstructure:"DB_SOURCE`
+	DB_DRIVER string `mapstructure:"DB_DRIVER"`
+	DB_SOURCE string `mapstructure:"DB_SOURCE"`
 }

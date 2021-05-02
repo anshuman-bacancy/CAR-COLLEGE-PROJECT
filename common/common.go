@@ -82,7 +82,7 @@ func FormatDate(date string) string {
 
 func LoadConfig(path string) (config models.Config, err error) {
 	viper.AddConfigPath(path)
-  viper.SetConfigName("env")
+  viper.SetConfigName(".env")
   viper.SetConfigType("env")
 
   viper.AutomaticEnv()
