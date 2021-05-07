@@ -1,7 +1,7 @@
 package main
 
 import (
-	"os"
+	// "os"
 	"project/common"
 	"project/routes"
 )
@@ -16,13 +16,13 @@ func main() {
 	routes.InitializeAdminViewRoutes()
 	routes.InitializeAdminBackendRoutes()
 
-	var port string
+	// var port string
 
-	if len(os.Args) == 2 {
-		port = string(":" + os.Args[1])
-	} else {
-		port = ":8888"
-	}
+	// if len(os.Args) == 2 {
+	// 	port = string(":" + os.Args[1])
+	// } else {
+	// 	port = ":8084"
+	// }
 
-	routes.StartServer(port)
+	routes.StartServer()
 }
